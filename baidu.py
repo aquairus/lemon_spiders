@@ -98,7 +98,7 @@ def get_children(url,headers = fake_headers):
 	NodeList=soup.find_all('div',class_="category-title")
 	length=len(NodeList)
 	if length>1:
-		for i in range(length):
+		for i in range(length-1):
 			for child in NodeList[i].find_all("a"):
 				print child.text
 				childen.append(pre_url+child.get("href"))
