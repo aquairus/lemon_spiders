@@ -40,7 +40,7 @@ def write_names(name):
 
 def get_content(url):
 	try:
-		r = requests.get(url)
+		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
 		text=r.text
 
@@ -80,9 +80,9 @@ def new_node(url):
 
 
 
-def get_children(url,headers = fake_headers):
+def get_children(url):
 	try:
-		r = requests.get(url)
+		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
 		text=r.text
 
