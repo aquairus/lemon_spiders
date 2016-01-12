@@ -102,7 +102,7 @@ def get_children(url,headers = fake_headers):
 			for child in NodeList[i].find_all("a"):
 				print child.text
 				childen.append(pre_url+child.get("href"))
-		return childen,len(NodeList)
+		return childen,length
 	else:
 		return None,0
 
