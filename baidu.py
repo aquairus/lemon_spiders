@@ -16,10 +16,10 @@ import random
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=16
+thread_cnt=12
 delay =0.8
 pause=50
-vocation=4
+vocation=8
 
 exp = re.compile(ur'.*?·.*')
 en_exp = re.compile(ur'.*?·.*')
