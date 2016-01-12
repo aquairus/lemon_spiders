@@ -18,10 +18,10 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=12
 delay =0.8
-pause=50
-vocation=10
+pause=40
+vocation=40
 
-exp = re.compile(ur'.*?·.*')
+exp = re.compile(ur'.{0,4}')
 en_exp = re.compile(ur'.*?·.*')
 
 fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',
@@ -32,9 +32,10 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 def write_names(name):
 	#print name
-	if exp.match(name):
+	if en_exp.match(name):
 		bd_en.write(name+"\n")
-	else:
+	
+	if exp.match(name):
 		bd_of.write(name+"\n")
 
 
