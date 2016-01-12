@@ -66,8 +66,8 @@ def get_content(url):
 def new_node(url):
 	childen,flag=get_children(url)
 
-	print "child"
-	print flag
+	#print "child"
+	#print flag
 	if flag>1:
 		for child in childen:
 			urlqueue.put(child)
@@ -76,7 +76,6 @@ def new_node(url):
 
 	while next:
 		next=get_content(pre_url_fenlei+next)
-		print "-----next_page-----"
 
 
 
