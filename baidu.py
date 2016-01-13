@@ -19,9 +19,9 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=12
 delay =0.8
 pause=40
-vocation=40
+vocation=20
 
-exp = re.compile(ur'.{0,4}')
+exp = re.compile(ur'.{5,}')
 en_exp = re.compile(ur'.*?·.*')
 
 fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',
@@ -34,9 +34,9 @@ def write_names(name):
 	#print name
 	if en_exp.match(name):
 		bd_en.write(name+"\n")
-	
-	if exp.match(name):
-		bd_of.write(name+"\n")
+	else:
+		if not exp.match(name):
+			bd_of.write(name+"\n")
 
 
 def get_content(url):
@@ -124,8 +124,8 @@ test_url=[
 pre_url="http://baike.baidu.com"
 pre_url_fenlei="http://baike.baidu.com/fenlei/"
 
-bd_of =open('baidu_name.txt','w+')
-bd_en=open('en_name.txt','w+')
+bd_of =open('~/Desktop/baidu_name.txt','w+')
+bd_en=open('~/Desktop/en_name.txt','w+')
 
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
