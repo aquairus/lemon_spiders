@@ -124,11 +124,12 @@ def get_question(url):
 		#print q.text
 		Ques_queue.put((q.get("href"),q.text))
 
-def muti_question(cpos):
-	sleep( random.randint(start_p,end_p))
-	get_next_q(cpos,cpos*19-17)
 
 
+def ques_factory(stat,end):
+	for cpos in range(start,end):
+		get_next_q(cpos,cpos*19-17)
+		sleep(delay)
 
 
 
@@ -153,10 +154,8 @@ start_time=time.time()
 
 get_question(start_url[0])
 
-cpos_list=range(start_p,end_p)
-works = threadpool.makeRequests(muti_question,cpos_list)
-[pool.putRequest(work) for work in works]
-
+work = threadpool.WorkRequest(ques_factory,(start_p,end_p))
+pool.putRequest(work) 
 
 print "qa start "
 

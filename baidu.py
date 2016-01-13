@@ -19,7 +19,7 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=12
 delay =0.8
 pause=40
-vocation=20
+vocation=30
 
 exp = re.compile(ur'.{5,}')
 en_exp = re.compile(ur'.*?·.*')
