@@ -18,7 +18,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
-delay =0.8
+delay =1
 pause=50
 vocation=20
 start_p=2
