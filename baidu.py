@@ -21,6 +21,7 @@ thread_cnt=12
 delay =1
 pause=40
 vocation=100
+urlcapacity=1000
 
 exp = re.compile(ur'.{5,}')
 en_exp = re.compile(ur'.*?·.*')
@@ -50,6 +51,7 @@ def get_content(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
+		sleep(delay*10)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
@@ -76,7 +78,7 @@ def new_node(url):
 				urlqueue.put(child)
 				urlfilter.add(child)
 			else:
-				print "\n\n\n repeat\n\n"
+				print "---------repeat\n"
 
 
 	next=get_content(url)
@@ -97,6 +99,7 @@ def get_children(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
+		sleep(delay*10)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
@@ -134,7 +137,7 @@ bd_of =open('../baidu_name.txt','w+')
 bd_en=open('../en.txt','w+')
 
 
-urlfilter = BloomFilter(capacity=10000, error_rate=0.001)
+urlfilter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
@@ -146,12 +149,11 @@ while not urlqueue.empty():
 	data=[urlqueue.get()]
 	works = threadpool.makeRequests(new_node, data)
 	[pool.putRequest(work) for work in works]
-
  	sleep(delay)
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep( random.randint(vocation/2,vocation))
-
+print "empty"
 pool.wait()
 
 

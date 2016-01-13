@@ -44,6 +44,7 @@ def get_answer(url,ques):
 	except BaseException, e:
 		Ques_queue.put((url,ques))
 		print e
+		sleep(delay*10)
 		text=""
 	soup = BeautifulSoup(text,"lxml")
 	ansList=soup.find_all('span',class_="ya-q-full-text")
@@ -92,6 +93,7 @@ def get_next_q(cpos,bpos,sid=None):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
+		sleep(delay*10)
 		text=""
 	
 	text_html=json.loads(text)["YANewDiscoverTabModule"]["html"]
@@ -115,6 +117,7 @@ def get_question(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
+		sleep(delay*10)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
