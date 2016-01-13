@@ -161,7 +161,7 @@ while not urlqueue.empty():
 pool.wait()
 print urlqueue.qsize()
 print "visited url:"
-print len(BloomFilter)
+print len(url_delay)
 
 bd_of.close()
 bd_en.close()
