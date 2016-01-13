@@ -164,7 +164,7 @@ get_question(start_url[0])
 
 cpos_list=range(start_p,end_p)
 ques_works=threadpool.makeRequests(ques_factory,cpos_list)
-print len(ques_works)
+
 
 print "qa start "
 
