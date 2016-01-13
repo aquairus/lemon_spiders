@@ -18,7 +18,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
-delay =0.5
+delay =0.4
 error_delay=2
 url_delay=1
 pause=120
@@ -161,7 +161,7 @@ while not urlqueue.empty():
 pool.wait()
 print urlqueue.qsize()
 print "visited url:"
-print len(url_delay)
+print len(urlfilter)
 
 bd_of.close()
 bd_en.close()
