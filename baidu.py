@@ -75,6 +75,8 @@ def new_node(url):
 			if not child in urlfilter:
 				urlqueue.put(child)
 				urlfilter.add(child)
+			else:
+				print "\n\n\n repeat\n\n"
 
 
 	next=get_content(url)
