@@ -169,6 +169,8 @@ while not Ques_queue.empty():
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/2,vocation))
 pool.wait()
+print "\n\n\n\n\n "
+print "finish "
 
 
 yh_of.close()
