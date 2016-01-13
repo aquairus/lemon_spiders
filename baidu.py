@@ -10,6 +10,7 @@ import threadpool
 import Queue
 from time import sleep
 import random
+from pybloom import BloomFilter
 
 
 
@@ -71,7 +72,10 @@ def new_node(url):
 	#print flag
 	if flag>1:
 		for child in childen:
-			urlqueue.put(child)
+			if not child in urlfilter:
+				urlqueue.put(child)
+				urlfilter.add(child)
+
 
 	next=get_content(url)
 
@@ -127,6 +131,8 @@ pre_url_fenlei="http://baike.baidu.com/fenlei/"
 bd_of =open('../baidu_name.txt','w+')
 bd_en=open('../en.txt','w+')
 
+
+urlfilter = BloomFilter(capacity=10000, error_rate=0.001)
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
