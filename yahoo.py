@@ -176,6 +176,8 @@ while not Ques_queue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
+
+
 pool.wait()
 print "\n\n\n\n\n "
 print "finish "
