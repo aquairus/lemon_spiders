@@ -20,11 +20,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =0.6
+delay =0.5
 error_delay=1
-pause=150
-vocation=80
-ques_delay=120
+pause=200
+vocation=60
+ques_delay=180
 
 start_p=2
 end_p=100
