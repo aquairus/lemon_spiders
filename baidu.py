@@ -21,7 +21,7 @@ thread_cnt=16
 delay =0.8
 error_delay=2
 url_delay=1
-pause=50
+pause=40
 vocation=50
 urlcapacity=2000
 
@@ -157,7 +157,7 @@ while not urlqueue.empty():
  		sleep( random.randint(vocation/4,vocation))
 
 pool.wait()
-print a.qsize()
+print urlqueue.qsize()
 
 bd_of.close()
 bd_en.close()
