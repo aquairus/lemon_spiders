@@ -20,9 +20,9 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 delay =0.8
 error_delay=2
-url_delay=2
-pause=60
-vocation=80
+url_delay=1
+pause=50
+vocation=50
 urlcapacity=2000
 
 
@@ -72,22 +72,21 @@ def get_content(url):
 
 def new_node(url):
 	childen,flag=get_children(url)
-	sleep(delay*url_delay)
+	#sleep(delay*url_delay)
 	#print "child"
 	#print flag
+
+	next=get_content(url)
+	while next:
+		next=get_content(pre_url_fenlei+next)
+
 	if flag>1:
 		for child in childen:
 			if not child in urlfilter:
 				urlqueue.put(child)
 				urlfilter.add(child)
 			else:
-				print "---------repeat"
-
-
-	next=get_content(url)
-
-	while next:
-		next=get_content(pre_url_fenlei+next)
+				print "---------repeat"	
 
 
 
@@ -158,7 +157,7 @@ while not urlqueue.empty():
  		sleep( random.randint(vocation/4,vocation))
 
 pool.wait()
-
+print a.qsize()
 
 bd_of.close()
 bd_en.close()
