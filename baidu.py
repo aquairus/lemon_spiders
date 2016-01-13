@@ -18,9 +18,9 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=12
-delay =1
-pause=40
-vocation=100
+delay =0.8
+pause=60
+vocation=40
 urlcapacity=1000
 
 exp = re.compile(ur'.{5,}')
