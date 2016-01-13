@@ -23,7 +23,7 @@ error_delay=2
 url_delay=2
 pause=60
 vocation=80
-urlcapacity=1000
+urlcapacity=2000
 
 
 exp = re.compile(ur'.{5,}')
