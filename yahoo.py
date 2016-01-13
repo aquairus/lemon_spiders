@@ -20,11 +20,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=8
 
 
-delay =2
+delay =3
 error_delay=1
-pause=40
-vocation=60
-ques_time=8
+pause=30
+vocation=80
+ques_time=15
 
 start_p=2
 end_p=100
@@ -63,7 +63,7 @@ def get_answer(url,ques):
 	except BaseException, e:
 		return	all_ans,None
 	
-	if next.text=="next":
+	if next.text==" next":
 		return all_ans,next.get('href')
 	else:
 		return all_ans,None
@@ -84,7 +84,7 @@ def get_Qa(url,ques):
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
 	yh_of.write(json.dumps(Qa)+"\n")
-	print "------a Q&A"
+	print "--a Q&A"
 
 
 
@@ -111,7 +111,7 @@ def get_next_q(cpos,bpos,sid=None):
 		Ques_queue.put((h3.a.get("href"),h3.a.text))
 		#print h3.a.get("href")
 		#print h3.a.text
-	print "-----------a new page"
+	print "--------a new page"
 
 
 
@@ -178,7 +178,7 @@ while not Ques_queue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
- 		print "---------sleep"
+ 		print "----sleep"
  	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
  		print "add"
  		pool.putRequest(ques_works.pop())
