@@ -17,9 +17,10 @@ import random
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=12
+thread_cnt=16
 delay =1
-pause=40
+error_delay=2
+pause=60
 vocation=100
 start_p=2
 end_p=100
@@ -44,7 +45,7 @@ def get_answer(url,ques):
 	except BaseException, e:
 		Ques_queue.put((url,ques))
 		print e
-		sleep(delay*10)
+		sleep(delay*error_delay)
 		text=""
 	soup = BeautifulSoup(text,"lxml")
 	ansList=soup.find_all('span',class_="ya-q-full-text")
@@ -93,7 +94,7 @@ def get_next_q(cpos,bpos,sid=None):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
-		sleep(delay*10)
+		sleep(delay*error_delay)
 		text=""
 	
 	text_html=json.loads(text)["YANewDiscoverTabModule"]["html"]
@@ -117,7 +118,7 @@ def get_question(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
-		sleep(delay*10)
+		sleep(delay*error_delay)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
@@ -169,7 +170,7 @@ while not Ques_queue.empty():
  	sleep(delay)
  	t=time.time()-start_time
  	if int(t)%pause==0:
- 		sleep(random.randint(vocation/2,vocation))
+ 		sleep(random.randint(vocation/4,vocation))
 pool.wait()
 print "\n\n\n\n\n "
 print "finish "

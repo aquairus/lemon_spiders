@@ -21,7 +21,7 @@ thread_cnt=16
 delay =0.8
 error_delay=2
 pause=60
-vocation=30
+vocation=80
 urlcapacity=1000
 
 
