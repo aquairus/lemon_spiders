@@ -22,7 +22,7 @@ thread_cnt=16
 
 delay =0.8
 error_delay=1
-pause=60
+pause=150
 vocation=80
 ques_delay=120
 
