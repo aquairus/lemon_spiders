@@ -24,7 +24,7 @@ delay =0.5
 error_delay=1
 pause=200
 vocation=60
-
+ques_time=8
 
 start_p=2
 end_p=100
@@ -164,7 +164,7 @@ get_question(start_url[0])
 
 cpos_list=range(start_p,end_p)
 ques_works=threadpool.makeRequests(ques_factory,cpos_list)
-
+print len(ques_works)
 
 print "qa start "
 
@@ -176,7 +176,7 @@ while not Ques_queue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
- 	if Ques_queue.qsize()<10:
+ 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
  		pool.putRequest(ques_works.pop())
 
 
