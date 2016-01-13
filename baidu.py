@@ -20,6 +20,7 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 delay =0.8
 error_delay=2
+url_delay=2
 pause=60
 vocation=80
 urlcapacity=1000
@@ -71,7 +72,7 @@ def get_content(url):
 
 def new_node(url):
 	childen,flag=get_children(url)
-
+	sleep(delay*url_delay)
 	#print "child"
 	#print flag
 	if flag>1:
