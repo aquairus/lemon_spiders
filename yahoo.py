@@ -17,14 +17,14 @@ import random
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=16
+thread_cnt=8
 
 
-delay =1
+delay =2
 error_delay=1
-pause=60
-vocation=60
-ques_time=10
+pause=30
+vocation=160
+ques_time=15
 
 start_p=2
 end_p=100
@@ -78,11 +78,13 @@ def get_Qa(url,ques):
 	for ans in all_ans:
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
+		sleep(delay)
+		print "------------new page"
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
 	yh_of.write(json.dumps(Qa)+"\n")
-	print "a Q&A"
+	print "------a Q&A"
 
 
 
@@ -176,6 +178,7 @@ while not Ques_queue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
+ 		print "---------sleep"
  	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
  		print "add"
  		pool.putRequest(ques_works.pop())
