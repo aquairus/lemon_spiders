@@ -126,7 +126,7 @@ def get_question(url):
 
 
 
-def ques_factory(stat,end):
+def ques_factory(start,end):
 	for cpos in range(start,end):
 		get_next_q(cpos,cpos*19-17)
 		sleep(delay)
