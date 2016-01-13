@@ -124,8 +124,8 @@ test_url=[
 pre_url="http://baike.baidu.com"
 pre_url_fenlei="http://baike.baidu.com/fenlei/"
 
-bd_of =open('~/Desktop/baidu_name.txt','w+')
-bd_en=open('~/Desktop/en_name.txt','w+')
+bd_of =open('../baidu_name.txt','w+')
+bd_en=open('../en.txt','w+')
 
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
@@ -142,7 +142,7 @@ while not urlqueue.empty():
  	sleep(delay)
  	t=time.time()-start_time
  	if int(t)%pause==0:
- 		sleep(vocation*random.random())
+ 		sleep( random.randint(vocation/2,vocation))
 
 pool.wait()
 
