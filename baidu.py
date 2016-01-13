@@ -155,10 +155,13 @@ while not urlqueue.empty():
  	if int(t)%pause==0:
  		sleep( random.randint(vocation/4,vocation))
  	if urlqueue.qsize()<5:
+ 		print t
  		pool.wait()
 
 pool.wait()
 print urlqueue.qsize()
+print "visited url:"
+print len(BloomFilter)
 
 bd_of.close()
 bd_en.close()
