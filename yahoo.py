@@ -20,11 +20,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =0.5
+delay =1
 error_delay=1
-pause=200
+pause=100
 vocation=60
-ques_time=8
+ques_time=10
 
 start_p=2
 end_p=100
@@ -177,6 +177,7 @@ while not Ques_queue.empty():
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
  	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
+ 		print "add"
  		pool.putRequest(ques_works.pop())
 
 
