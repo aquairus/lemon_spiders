@@ -18,7 +18,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
-delay =0.6
+delay =0.5
 error_delay=2
 url_delay=1
 pause=120
@@ -75,10 +75,8 @@ def new_node(url):
 	#sleep(delay*url_delay)
 	#print "child"
 	#print flag
-
 	next=get_content(url)
-	while next:
-		next=get_content(pre_url_fenlei+next)
+						#to balance the  queue 
 
 	if flag>1:
 		for child in childen:
@@ -87,7 +85,8 @@ def new_node(url):
 				urlfilter.add(child)
 			else:
 				print "---------repeat"	
-
+	while next:
+		next=get_content(pre_url_fenlei+next)
 
 
 
@@ -155,6 +154,8 @@ while not urlqueue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep( random.randint(vocation/4,vocation))
+ 	if urlqueue.qsize()<5:
+ 		pool.wait()
 
 pool.wait()
 print urlqueue.qsize()
