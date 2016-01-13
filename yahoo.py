@@ -22,9 +22,9 @@ thread_cnt=8
 
 delay =2
 error_delay=1
-pause=30
-vocation=160
-ques_time=15
+pause=40
+vocation=60
+ques_time=8
 
 start_p=2
 end_p=100
@@ -63,7 +63,7 @@ def get_answer(url,ques):
 	except BaseException, e:
 		return	all_ans,None
 	
-	if next.text==" next":
+	if next.text=="next":
 		return all_ans,next.get('href')
 	else:
 		return all_ans,None
@@ -79,7 +79,7 @@ def get_Qa(url,ques):
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
 		sleep(delay)
-		print "------------new page"
+		print "next"
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
@@ -111,7 +111,7 @@ def get_next_q(cpos,bpos,sid=None):
 		Ques_queue.put((h3.a.get("href"),h3.a.text))
 		#print h3.a.get("href")
 		#print h3.a.text
-	print "a new page"
+	print "-----------a new page"
 
 
 
