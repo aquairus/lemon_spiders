@@ -24,7 +24,7 @@ delay =0.8
 error_delay=2
 pause=60
 vocation=80
-ques_delay=150
+ques_delay=120
 
 start_p=2
 end_p=100
