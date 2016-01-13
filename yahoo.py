@@ -17,10 +17,10 @@ import random
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=16
+thread_cnt=12
 delay =1
-pause=50
-vocation=20
+pause=40
+vocation=100
 start_p=2
 end_p=100
 
@@ -129,7 +129,7 @@ def get_question(url):
 def ques_factory(start,end):
 	for cpos in range(start,end):
 		get_next_q(cpos,cpos*19-17)
-		sleep(delay)
+		sleep(delay*10)
 
 
 
