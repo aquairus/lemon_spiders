@@ -23,7 +23,7 @@ thread_cnt=8
 delay =3
 error_delay=1
 pause=10
-vocation=60
+vocation=100
 ques_time=15
 
 start_p=2
