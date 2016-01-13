@@ -20,7 +20,7 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=12
 delay =0.8
 pause=60
-vocation=40
+vocation=30
 urlcapacity=1000
 
 exp = re.compile(ur'.{5,}')
@@ -152,7 +152,7 @@ while not urlqueue.empty():
  	sleep(delay)
  	t=time.time()-start_time
  	if int(t)%pause==0:
- 		sleep( random.randint(vocation/2,vocation))
+ 		sleep( random.randint(vocation/4,vocation))
 print "empty"
 pool.wait()
 
