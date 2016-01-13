@@ -20,9 +20,9 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=8
 
 
-delay =3
+delay =4
 error_delay=1
-pause=20
+pause=10
 vocation=120
 ques_time=15
 
