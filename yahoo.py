@@ -18,12 +18,17 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
+
+
 delay =1
 error_delay=2
 pause=60
 vocation=100
+ques_delay=200
+
 start_p=2
 end_p=100
+
 
 exp = re.compile(ur'.*?·.*')
 en_exp = re.compile(ur'.*?·.*')
@@ -133,7 +138,7 @@ def get_question(url):
 def ques_factory(start,end):
 	for cpos in range(start,end):
 		get_next_q(cpos,cpos*19-17)
-		sleep(delay*80)
+		sleep(delay*ques_delay)
 
 
 
