@@ -17,11 +17,13 @@ from pybloom import BloomFilter
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=12
+thread_cnt=16
 delay =0.8
+error_delay=2
 pause=60
 vocation=30
 urlcapacity=1000
+
 
 exp = re.compile(ur'.{5,}')
 en_exp = re.compile(ur'.*?·.*')
@@ -51,7 +53,7 @@ def get_content(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
-		sleep(delay*10)
+		sleep(delay*error_delay)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
@@ -78,7 +80,7 @@ def new_node(url):
 				urlqueue.put(child)
 				urlfilter.add(child)
 			else:
-				print "---------repeat\n"
+				print "---------repeat"
 
 
 	next=get_content(url)
@@ -99,7 +101,7 @@ def get_children(url):
 	except BaseException, e:
 		urlqueue.put(url)
 		print e
-		sleep(delay*10)
+		sleep(delay*error_delay)
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
@@ -153,7 +155,7 @@ while not urlqueue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep( random.randint(vocation/4,vocation))
-print "empty"
+
 pool.wait()
 
 
