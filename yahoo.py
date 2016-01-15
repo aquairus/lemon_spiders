@@ -26,7 +26,7 @@ delay =2
 error_delay=1
 pause=12
 vocation=60
-ques_time=100
+ques_time=50
 start_p=2
 end_p=100
 urlcapacity=3000
@@ -124,7 +124,7 @@ def get_next_q(cpos,bpos,sid=None):
 			Ques_queue.put((href,h3.a.text))
 		else:
 			print "-----repeat"	
-	print "--------a new page"
+	
 
 
 
@@ -155,12 +155,12 @@ def get_question(url):
 
 
 def ques_factory(cpos):
-	#get_next_q(cpos,cpos*19-17)
+	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
 		get_next_q(cpos,0,sid)
 		#print sid
 
-
+	print "lots of new pages"
 
 
 
