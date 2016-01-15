@@ -12,7 +12,7 @@ from time import sleep
 import json
 import random
 import os
-from pybloom import BloomFilter
+#from pybloom import BloomFilter
 
 
 
@@ -113,12 +113,12 @@ def get_next_q(cpos,bpos,sid=None):
 	for h3 in soup.find_all("h3"):
 
 		href=h3.a.get("href")
-		
-		if not href in ques_filter:
-			ques_filter.add(href)
-			Ques_queue.put((href,h3.a.text))
-		else:
-			print "-----repeat"	
+		Ques_queue.put((href,h3.a.text))
+		#if not href in ques_filter:
+		#	ques_filter.add(href)
+		#	Ques_queue.put((href,h3.a.text))
+		##else:
+		#	print "-----repeat"	
 	print "--------a new page"
 
 
@@ -168,7 +168,7 @@ Ques_queue=Queue.LifoQueue()
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
-ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+#ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 sid_list=[]
 
 
