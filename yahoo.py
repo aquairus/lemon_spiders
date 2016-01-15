@@ -11,6 +11,7 @@ import Queue
 from time import sleep
 import json
 import random
+import os
 
 
 
@@ -37,6 +38,7 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 				'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
 				'Accept-Encoding':'gzip'
 				 }
+filename="../yahoo.txt"
 
 
 
@@ -151,7 +153,7 @@ test_url2=["https://answers.yahoo.com/question/index?qid=20160110150611AAtKxgF"]
 pre_url="https://answers.yahoo.com"
 
 
-yh_of =open('../yahoo.txt','w+')
+yh_of =open(filename,'w+')
 
 Ques_queue=Queue.LifoQueue()
 urlqueue=Queue.LifoQueue()
@@ -178,6 +180,7 @@ while not Ques_queue.empty():
  	t=time.time()-start_time
  	if int(t)%pause==0:
  		sleep(random.randint(vocation/4,vocation))
+ 		os.path.getsize(filename)
  		print "----sleep"
  	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
  		print "---------------add"
