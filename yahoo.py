@@ -18,10 +18,10 @@ import os
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=8
+thread_cnt=12
 
 
-delay =4
+delay =5
 error_delay=1
 pause=10
 vocation=100
@@ -81,7 +81,7 @@ def get_Qa(url,ques):
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
 		sleep(delay)
-		#print "next"
+		print "next"
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
@@ -163,33 +163,30 @@ start_time=time.time()
 
 
 
+if __name__ == '__main__':
+	get_question(start_url[0])
+	cpos_list=range(start_p,end_p)
+	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+	print "qa start "
 
-get_question(start_url[0])
-
-cpos_list=range(start_p,end_p)
-ques_works=threadpool.makeRequests(ques_factory,cpos_list)
-
-
-print "qa start "
-
-while not Ques_queue.empty():
-	data=Ques_queue.get()
-	work = threadpool.WorkRequest(get_Qa, data)
-	pool.putRequest(work) 
- 	sleep(delay)
- 	t=time.time()-start_time
- 	if int(t)%pause==0:
- 		sleep(random.randint(vocation/4,vocation))
- 		os.path.getsize(filename)
- 		print "----sleep"
- 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
- 		print "---------------add"
- 		pool.putRequest(ques_works.pop())
+	while not Ques_queue.empty():
+		data=Ques_queue.get()
+		work = threadpool.WorkRequest(get_Qa, data)
+		pool.putRequest(work) 
+	 	sleep(delay)
+	 	t=time.time()-start_time
+	 	if int(t)%pause==0:
+	 		sleep(random.randint(vocation/4,vocation))
+	 		os.path.getsize(filename)
+	 		print "----sleep"
+	 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
+	 		print "---------------add"
+	 		pool.putRequest(ques_works.pop())
 
 
-pool.wait()
-print "\n\n\n\n\n "
-print "finish "
+	pool.wait()
+	print "\n\n\n\n\n "
+	print "finish "
 
 
 yh_of.close()
