@@ -22,11 +22,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =2
+delay =1
 error_delay=1
 pause=12
 vocation=60
-ques_time=50
+ques_time=100
 start_p=2
 end_p=100
 urlcapacity=3000
