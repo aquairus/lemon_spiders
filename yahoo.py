@@ -22,7 +22,7 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =4
+delay =3
 error_delay=1
 pause=8
 vocation=60
