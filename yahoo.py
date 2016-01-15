@@ -23,7 +23,7 @@ thread_cnt=16
 
 delay =1
 error_delay=1
-pause=20
+pause=32
 vocation=40
 ques_time=50
 start_p=2
@@ -209,7 +209,7 @@ if __name__ == '__main__':
 			print "-------sleep------"
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
-	 		print "----sleep------"
+
 
 	 		sleep(random.randint(vocation/4,vocation))
 
