@@ -20,7 +20,7 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=8
 
 
-delay =3
+delay =4
 error_delay=1
 pause=10
 vocation=100
@@ -79,7 +79,7 @@ def get_Qa(url,ques):
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
 		sleep(delay)
-		print "next"
+		#print "next"
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
@@ -180,7 +180,7 @@ while not Ques_queue.empty():
  		sleep(random.randint(vocation/4,vocation))
  		print "----sleep"
  	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
- 		print "add"
+ 		print "---------------add"
  		pool.putRequest(ques_works.pop())
 
 
