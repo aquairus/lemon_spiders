@@ -86,7 +86,7 @@ def get_Qa(url,ques):
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
 	yh_of.write(json.dumps(Qa)+"\n")
-	print "--a Q&A"
+	#print "--a Q&A"
 
 
 
