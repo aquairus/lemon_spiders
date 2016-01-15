@@ -25,10 +25,10 @@ delay =1
 error_delay=1
 pause=12
 vocation=60
-ques_time=100
+ques_time=50
 start_p=2
 end_p=100
-urlcapacity=2000
+urlcapacity=20000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -81,7 +81,7 @@ def get_Qa(url,ques):
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
 		sleep(delay)
-		print "next"
+		#print "next"
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
@@ -216,9 +216,15 @@ if __name__ == '__main__':
 
 
 	pool.wait()
-	print Ques_queue.qsize()
+
 	print "\n\n\n\n\n "
 	print "finish "
+	print "total question:"+str(len(ques_filter))
+	print "data size:"+str(os.path.getsize(filename))
+	print "time:"+str(t)
+
+
+
 
 
 yh_of.close()
