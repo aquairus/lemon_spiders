@@ -28,7 +28,7 @@ vocation=60
 ques_time=100
 start_p=2
 end_p=100
-urlcapacity=10000
+urlcapacity=2000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -117,7 +117,7 @@ def get_next_q(cpos,bpos,sid=None):
 
 		href=h3.a.get("href")
 		Ques_queue.put((href,h3.a.text))
-		print href
+		#print href
 		#print h3.a.text
 		if not href in ques_filter:
 			ques_filter.add(href)
@@ -147,7 +147,7 @@ def get_question(url):
 	questionList=soup.find_all('a',class_="Fz-14 Fw-b Clr-b Wow-bw title")
 	for q in questionList:
 		Ques_queue.put((q.get("href"),q.text))
-	sids=soup.find_all('a',class_=" Mstart-3 unselected D-ib")
+	sids=soup.find_all('a',class_=" Mstart-3 unselected D-ib")[1:]
 	for item in sids:
 		sid_list.append(item.get("href")[15:])
 		#print item.get("href")[15:]
@@ -158,7 +158,7 @@ def get_question(url):
 def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
-		print sid
+		#print sid
 		get_next_q(cpos,0,sid)
 
 	print "lots of new pages"
