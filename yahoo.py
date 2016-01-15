@@ -26,7 +26,7 @@ error_delay=1
 pause=12
 vocation=60
 ques_time=100
-start_p=3
+start_p=2
 end_p=100
 urlcapacity=3000
 
@@ -157,6 +157,7 @@ def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
 		get_next_q(cpos,0,sid)
+		print sid
 		#print sid
 
 	print "lots of new pages"
