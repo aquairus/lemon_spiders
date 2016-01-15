@@ -18,12 +18,12 @@ import os
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=12
+thread_cnt=16
 
 
-delay =5
+delay =6
 error_delay=1
-pause=10
+pause=8
 vocation=100
 ques_time=15
 
@@ -182,9 +182,11 @@ if __name__ == '__main__':
 	 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
 	 		print "---------------add"
 	 		pool.putRequest(ques_works.pop())
+	 		pool.wait()
 
 
 	pool.wait()
+	print Ques_queue.qsize()
 	print "\n\n\n\n\n "
 	print "finish "
 
