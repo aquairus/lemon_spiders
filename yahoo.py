@@ -121,7 +121,6 @@ def get_next_q(cpos,bpos,sid=None):
 		#print h3.a.text
 		if not href in ques_filter:
 			ques_filter.add(href)
-			print href
 			Ques_queue.put((href,h3.a.text))
 		else:
 			print "-----repeat"	
