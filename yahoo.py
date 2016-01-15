@@ -12,7 +12,7 @@ from time import sleep
 import json
 import random
 import os
-#from pybloom import BloomFilter
+from pybloom import BloomFilter
 
 
 
@@ -22,11 +22,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =4
+delay =6
 error_delay=1
 pause=8
 vocation=100
-ques_time=40
+ques_time=4000
 start_p=2
 end_p=100
 urlcapacity=2000
@@ -96,6 +96,10 @@ def get_next_q(cpos,bpos,sid=None):
 	if not sid:
 		url="https://answers.yahoo.com/_module?name=YANewDiscoverTabModule&after=pc"+\
 	str(cpos*20-20)+"~p%3A0&disableLoadMore=false&bpos="+str(bpos)+"&cpos="+str(cpos)
+	else:
+		url="https://answers.yahoo.com/_module?name=YANewDiscoverTabModule&after=pc"+\
+	str(cpos*20-20)+"~p%3A0&sid="+sid+"&disableLoadMore=false&bpos="+str(cpos*20-20)+"&cpos="+str(cpos)
+
 	try:
 		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
@@ -114,11 +118,12 @@ def get_next_q(cpos,bpos,sid=None):
 
 		href=h3.a.get("href")
 		Ques_queue.put((href,h3.a.text))
-		#if not href in ques_filter:
-		#	ques_filter.add(href)
-		#	Ques_queue.put((href,h3.a.text))
-		##else:
-		#	print "-----repeat"	
+		#print h3.a.text
+		if not href in ques_filter:
+			ques_filter.add(href)
+			Ques_queue.put((href,h3.a.text))
+		else:
+			print "-----repeat"	
 	print "--------a new page"
 
 
@@ -141,15 +146,19 @@ def get_question(url):
 	questionList=soup.find_all('a',class_="Fz-14 Fw-b Clr-b Wow-bw title")
 	for q in questionList:
 		Ques_queue.put((q.get("href"),q.text))
-	sids=soup.find_all('a',class_="Mstart-3 unselected D-ib")
+	sids=soup.find_all('a',class_=" Mstart-3 unselected D-ib")
 	for item in sids:
-		print item.get("href")
+		sid_list.append(item.get("href")[15:])
+		#print item.get("href")[15:]
 
 
 
 
 def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
+	for sid in sid_list:
+		get_next_q(cpos,0)
+		#print sid
 
 
 
@@ -168,13 +177,14 @@ Ques_queue=Queue.LifoQueue()
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
-#ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 sid_list=[]
 
 
 
 if __name__ == '__main__':
 	get_question(start_url[0])
+
 	cpos_list=range(start_p,end_p)
 
 	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
