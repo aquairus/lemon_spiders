@@ -12,6 +12,7 @@ from time import sleep
 import json
 import random
 import os
+from pybloom import BloomFilter
 
 
 
@@ -21,14 +22,14 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =6
+delay =5
 error_delay=1
 pause=8
 vocation=100
-ques_time=15
-
+ques_time=40
 start_p=2
 end_p=100
+urlcapacity=2000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -110,9 +111,14 @@ def get_next_q(cpos,bpos,sid=None):
 
 	soup = BeautifulSoup(text_html,"lxml")
 	for h3 in soup.find_all("h3"):
-		Ques_queue.put((h3.a.get("href"),h3.a.text))
-		#print h3.a.get("href")
-		#print h3.a.text
+
+		href=h3.a.get("href")
+		
+		if not href in ques_filter:
+			ques_filter.add(href)
+			Ques_queue.put((href,h3.a.text))
+		else:
+			print "-----repeat"	
 	print "--------a new page"
 
 
@@ -134,8 +140,11 @@ def get_question(url):
 	
 	questionList=soup.find_all('a',class_="Fz-14 Fw-b Clr-b Wow-bw title")
 	for q in questionList:
-		#print q.text
 		Ques_queue.put((q.get("href"),q.text))
+	sids=soup.find_all('a',class_="Mstart-3 unselected D-ib")
+	for item in sids:
+		print item.get("href")
+
 
 
 
@@ -159,14 +168,17 @@ Ques_queue=Queue.LifoQueue()
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
-
+ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+sid_list=[]
 
 
 
 if __name__ == '__main__':
 	get_question(start_url[0])
 	cpos_list=range(start_p,end_p)
+
 	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+	#print type(ques_works)
 	print "qa start "
 
 	while not Ques_queue.empty():
@@ -177,10 +189,10 @@ if __name__ == '__main__':
 	 	t=time.time()-start_time
 	 	if int(t)%pause==0:
 	 		sleep(random.randint(vocation/4,vocation))
-	 		os.path.getsize(filename)
+	 		print os.path.getsize(filename)
 	 		print "----sleep"
 	 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		print "---------------add"
+	 		print "-add"
 	 		pool.putRequest(ques_works.pop())
 	 		pool.wait()
 
