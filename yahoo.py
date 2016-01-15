@@ -21,7 +21,6 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-
 delay =1
 error_delay=1
 pause=12
