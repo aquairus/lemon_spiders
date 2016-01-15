@@ -28,7 +28,7 @@ vocation=60
 ques_time=100
 start_p=2
 end_p=100
-urlcapacity=3000
+urlcapacity=10000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -120,6 +120,7 @@ def get_next_q(cpos,bpos,sid=None):
 		#print h3.a.text
 		if not href in ques_filter:
 			ques_filter.add(href)
+			print href
 			Ques_queue.put((href,h3.a.text))
 		else:
 			print "-----repeat"	
@@ -156,9 +157,8 @@ def get_question(url):
 def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
-		get_next_q(cpos,0,sid)
 		print sid
-		#print sid
+		get_next_q(cpos,0,sid)
 
 	print "lots of new pages"
 
