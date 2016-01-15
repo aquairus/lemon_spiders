@@ -22,9 +22,9 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =3
+delay =2
 error_delay=1
-pause=8
+pause=12
 vocation=60
 ques_time=100
 start_p=2
@@ -207,7 +207,7 @@ if __name__ == '__main__':
 	 	if int(t)%pause==0:
 			print "-------sleep------"
 	 		print os.path.getsize(filename)
-	 		print "----sleep"
+	 		print "----sleep------"
 
 	 		sleep(random.randint(vocation/4,vocation))
 
