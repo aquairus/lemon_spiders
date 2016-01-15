@@ -29,7 +29,7 @@ vocation=60
 ques_time=100
 start_p=2
 end_p=100
-urlcapacity=2000
+urlcapacity=3000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -155,9 +155,9 @@ def get_question(url):
 
 
 def ques_factory(cpos):
-	get_next_q(cpos,cpos*19-17)
+	#get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
-		get_next_q(cpos,0)
+		get_next_q(cpos,0,sid)
 		#print sid
 
 
@@ -199,6 +199,7 @@ if __name__ == '__main__':
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
 	 		print "-------adding------"
 	 		print os.path.getsize(filename)
+	 		print len(ques_filter)
 	 		pool.putRequest(ques_works.pop())
 	 		pool.wait()
 
@@ -207,6 +208,7 @@ if __name__ == '__main__':
 	 	if int(t)%pause==0:
 			print "-------sleep------"
 	 		print os.path.getsize(filename)
+	 		print len(ques_filter)
 	 		print "----sleep------"
 
 	 		sleep(random.randint(vocation/4,vocation))
