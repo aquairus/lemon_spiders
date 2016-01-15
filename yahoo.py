@@ -22,11 +22,11 @@ sys.setdefaultencoding( "utf-8" )
 thread_cnt=16
 
 
-delay =6
+delay =5
 error_delay=1
 pause=8
 vocation=100
-ques_time=4000
+ques_time=200
 start_p=2
 end_p=100
 urlcapacity=2000
@@ -195,16 +195,22 @@ if __name__ == '__main__':
 		data=Ques_queue.get()
 		work = threadpool.WorkRequest(get_Qa, data)
 		pool.putRequest(work) 
+
+		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
+	 		print "-------adding------"
+	 		print os.path.getsize(filename)
+	 		pool.putRequest(ques_works.pop())
+	 		pool.wait()
+
 	 	sleep(delay)
 	 	t=time.time()-start_time
 	 	if int(t)%pause==0:
-	 		sleep(random.randint(vocation/4,vocation))
+			print "-------sleep------"
 	 		print os.path.getsize(filename)
 	 		print "----sleep"
-	 	if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		print "-add"
-	 		pool.putRequest(ques_works.pop())
-	 		pool.wait()
+
+	 		sleep(random.randint(vocation/4,vocation))
+
 
 
 	pool.wait()
