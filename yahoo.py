@@ -21,14 +21,14 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =2
+delay =1
 error_delay=10
 pause=32
 vocation=40
 ques_time=50
 start_p=2
 end_p=100
-urlcapacity=20000
+urlcapacity=800000
 
 
 exp = re.compile(ur'.*?·.*')
