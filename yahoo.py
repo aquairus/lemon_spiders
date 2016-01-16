@@ -38,7 +38,13 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 				'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
 				'Accept-Encoding':'gzip'
 				 }
+
+
 filename="../yahoo.txt"
+yahoo_log=open('yahoo_log.txt','w')
+old=sys.stdout 
+sys.stdout=yahoo_log  #
+
 
 
 
@@ -228,4 +234,5 @@ if __name__ == '__main__':
 
 
 yh_of.close()
-
+sys.stdout=old 
+yahoo_log.close() 
