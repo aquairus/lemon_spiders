@@ -41,7 +41,7 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 
 filename="../yahoo.txt"
-yahoo_log=open('yahoo_log.txt','w')
+yahoo_log=open('../yahoo_log.txt','w')
 old=sys.stdout 
 sys.stdout=yahoo_log  #
 
