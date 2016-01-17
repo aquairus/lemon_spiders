@@ -28,7 +28,7 @@ vocation=40
 ques_time=50
 start_p=2
 end_p=100
-urlcapacity=800000
+urlcapacity=50000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -42,8 +42,8 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 yahoo_log=open('../yahoo_log.txt','w')
-old=sys.stdout 
-sys.stdout=yahoo_log  #
+#old=sys.stdout 
+#sys.stdout=yahoo_log  #
 
 
 
@@ -53,7 +53,6 @@ def get_answer(url,ques):
 		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
 		text=r.text
-
 
 	except BaseException, e:
 		Ques_queue.put((url,ques))
@@ -76,13 +75,40 @@ def get_answer(url,ques):
 	else:
 		return all_ans,None
 
+def get_relateQ(url):
+
+	try:
+		r = requests.get(url,headers = fake_headers)
+		r.encoding="utf-8" 
+		text=r.text
+
+	except BaseException, e:
+		print e
+		text=""
+
+	soup = BeautifulSoup(text,"lxml")
+	qList=soup.find_all('div',class_="qTile Px-14 Py-8 Bgc-w")
+	for q in qList:
+		a=q.find("a")
+		text=a.text
+		href=a.get("href")
+		#print text
+		if not href in ques_filter:
+			ques_filter.add(href)
+			Ques_queue.put((href,text))
+		else:
+			print "-----repeat"	
+
+
 
 def get_Qa(url,ques):
 	Qa={}
 	Qa["content"]=ques
 	Qa["review"]=""
 
+	get_relateQ(pre_url+url)
 	all_ans,next=get_answer(pre_url+url,ques)
+
 	for ans in all_ans:
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	while next:
@@ -189,6 +215,8 @@ sid_list=[]
 
 
 if __name__ == '__main__':
+
+
 	get_question(start_url[0])
 
 	cpos_list=range(start_p,end_p)
