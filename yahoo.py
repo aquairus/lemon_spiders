@@ -21,7 +21,7 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =1
+delay =0.8
 error_delay=10
 pause=32
 vocation=40
@@ -42,8 +42,8 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 yahoo_log=open('../yahoo_log.txt','w')
-#old=sys.stdout 
-#sys.stdout=yahoo_log  #
+old=sys.stdout 
+sys.stdout=yahoo_log  #
 
 
 
@@ -96,8 +96,8 @@ def get_relateQ(url):
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put((href,text))
-		else:
-			print "-----repeat"	
+		#else:
+		#	print "-----repeat"	
 
 
 
@@ -154,8 +154,8 @@ def get_next_q(cpos,bpos,sid=None):
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put((href,h3.a.text))
-		else:
-			print "-----repeat"	
+		#else:
+		#	print "-----repeat"	
 	
 
 
@@ -205,7 +205,7 @@ pre_url="https://answers.yahoo.com"
 
 yh_of =open(filename,'w+')
 
-Ques_queue=Queue.LifoQueue()
+Ques_queue=Queue.Queue()
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
