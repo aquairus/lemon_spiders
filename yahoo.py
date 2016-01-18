@@ -21,14 +21,14 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.8
+delay =0.5
 error_delay=10
 pause=32
 vocation=40
-ques_time=50
+ques_time=200
 start_p=2
 end_p=100
-urlcapacity=50000
+urlcapacity=20000
 
 
 exp = re.compile(ur'.*?·.*')
@@ -42,8 +42,8 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 yahoo_log=open('../yahoo_log.txt','w')
-old=sys.stdout 
-sys.stdout=yahoo_log  #
+#old=sys.stdout 
+#sys.stdout=yahoo_log  #
 
 
 
@@ -59,6 +59,7 @@ def get_answer(url,ques):
 		print e
 		sleep(delay*error_delay)
 		text=""
+
 	soup = BeautifulSoup(text,"lxml")
 	ansList=soup.find_all('span',class_="ya-q-full-text")
 	all_ans=[]
@@ -88,11 +89,11 @@ def get_relateQ(url):
 
 	soup = BeautifulSoup(text,"lxml")
 	qList=soup.find_all('div',class_="qTile Px-14 Py-8 Bgc-w")
-	for q in qList:
+	for q in qList[:4]:
 		a=q.find("a")
 		text=a.text
 		href=a.get("href")
-		#print text
+		print text
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put((href,text))
@@ -105,8 +106,8 @@ def get_Qa(url,ques):
 	Qa={}
 	Qa["content"]=ques
 	Qa["review"]=""
-
-	get_relateQ(pre_url+url)
+	if Ques_queue.qsize()<ques_time/2:
+		get_relateQ(pre_url+url)
 	all_ans,next=get_answer(pre_url+url,ques)
 
 	for ans in all_ans:
@@ -243,6 +244,7 @@ if __name__ == '__main__':
 			print "-------sleep------"
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
+	 		sys.stdout.flush()
 
 
 	 		sleep(random.randint(vocation/4,vocation))
