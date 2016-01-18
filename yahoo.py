@@ -21,7 +21,7 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =sys.argv[1]	#vps:0.5  #ubuntu:0.8
+delay =0.5	#vps:0.5  #ubuntu:0.8
 error_delay=10
 pause=32
 vocation=40
@@ -29,7 +29,7 @@ ques_time=100
 start_p=2
 end_p=100
 urlcapacity=20000
-
+slience=False
 
 
 exp = re.compile(ur'.*?·.*')
@@ -42,9 +42,8 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 
 filename="../yahoo.txt"
-yahoo_log=open('../yahoo_log.txt','w')
-old=sys.stdout 
-sys.stdout=yahoo_log  #
+
+#
 
 
 
@@ -208,19 +207,8 @@ test_url2=["https://answers.yahoo.com/question/index?qid=20160110150611AAtKxgF"]
 pre_url="https://answers.yahoo.com"
 
 
-yh_of =open(filename,'w+')
-
-Ques_queue=Queue.Queue()
-urlqueue=Queue.LifoQueue()
-pool = threadpool.ThreadPool(thread_cnt) 
-start_time=time.time()
-ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
-sid_list=[]
-
-
-
 try:
-	options,args = getopt.getopt(sys.argv[1:],"hd:",["help","dalay="])
+	options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
 except getopt.GetoptError:
 	sys.exit()
 
@@ -233,6 +221,25 @@ for name,value in options:
 	if name in ("-c","--capacity"):
 		print 'capacity is----',value
 		urlcapacity=float(value)
+	if name in ("-s"):
+		slience=True
+
+if slience:
+	yahoo_log=open('../yahoo_log.txt','w')
+	old=sys.stdout 
+	sys.stdout=yahoo_log  
+
+yh_of =open(filename,'w+')
+
+Ques_queue=Queue.Queue()
+urlqueue=Queue.LifoQueue()
+pool = threadpool.ThreadPool(thread_cnt) 
+start_time=time.time()
+ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+sid_list=[]
+
+
+
 
 
 if __name__ == '__main__':
@@ -281,8 +288,8 @@ if __name__ == '__main__':
 
 
 
-
-
 yh_of.close()
-sys.stdout=old 
-yahoo_log.close() 
+
+if slience:
+	sys.stdout=old 	
+	yahoo_log.close() 
