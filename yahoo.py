@@ -229,10 +229,10 @@ for name,value in options:
 		print "usage:\n  --dalay\n  \--capacity"
 	if name in ("-d","--dalay"):
 		print 'delay is----',value
-		dalay=value
+		dalay=float(value)
 	if name in ("-c","--capacity"):
 		print 'capacity is----',value
-		urlcapacity=value
+		urlcapacity=float(value)
 
 
 if __name__ == '__main__':
