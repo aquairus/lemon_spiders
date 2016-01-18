@@ -44,12 +44,6 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 
-#
-
-
-
-
-
 
 
 def get_answer(url,ques):
@@ -80,6 +74,7 @@ def get_answer(url,ques):
 	else:
 		return all_ans,None
 
+
 def get_relateQ(url):
 
 	try:
@@ -105,7 +100,6 @@ def get_relateQ(url):
 		#	print "-----repeat"	
 
 
-
 def get_Qa(url,ques):
 	Qa={}
 	Qa["content"]=ques
@@ -124,8 +118,6 @@ def get_Qa(url,ques):
 			Qa["review"]=Qa["review"]+ans+"<p>"
 	yh_of.write(json.dumps(Qa)+"\n")
 	#print "--a Q&A"
-
-
 
 
 def get_next_q(cpos,bpos,sid=None):
@@ -163,8 +155,6 @@ def get_next_q(cpos,bpos,sid=None):
 		#	print "-----repeat"	
 	
 
-
-
 def get_question(url):
 	try:
 		r = requests.get(url,headers = fake_headers)
@@ -193,8 +183,6 @@ def get_question(url):
 		#print item.get("href")[15:]
 
 
-
-
 def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
@@ -216,7 +204,7 @@ try:
 	options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
 except getopt.GetoptError:
 	sys.exit()
-
+	
 for name,value in options:
 	if name in ("-h","--help"):	
 		print "usage:\n  --dalay\n  \--capacity"
@@ -246,7 +234,7 @@ Ques_queue=Queue.Queue()
 try:
 	blf_file=open('../quesFilter','r')
 	ques_filter=pickle.load(blf_file)
-
+	blf_file.close()
 except BaseException, e:
 	print e
 	ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
@@ -308,3 +296,7 @@ yh_of.close()
 if slience:
 	sys.stdout=old 	
 	yahoo_log.close() 
+
+blf_file=open('../quesFilter','w')
+pickle.dump(ques_filter,blf_file)
+blf_file.close()
