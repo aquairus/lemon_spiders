@@ -208,6 +208,7 @@ except getopt.GetoptError:
 for name,value in options:
 	if name in ("-h","--help"):	
 		print "usage:\n  --dalay\n  \--capacity"
+		sys.exit() 
 	if name in ("-d","--dalay"):
 		print 'delay is----',value
 		dalay=float(value)
@@ -252,7 +253,7 @@ if __name__ == '__main__':
 	cpos_list=range(start_p,end_p)
 
 	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
-	#print type(ques_works)
+
 	print "qa start "
 
 	while not Ques_queue.empty():
