@@ -181,7 +181,11 @@ def get_question(url):
 	
 	questionList=soup.find_all('a',class_="Fz-14 Fw-b Clr-b Wow-bw title")
 	for q in questionList:
-		Ques_queue.put((q.get("href"),q.text))
+		href=q.get("href")
+		if not href in ques_filter:
+			ques_filter.add(href)
+			Ques_queue.put((href,q.text))
+
 	sids=soup.find_all('a',class_=" Mstart-3 unselected D-ib")[1:]
 	for item in sids:
 		sid_list.append(item.get("href")[15:])
@@ -229,14 +233,15 @@ if slience:
 	old=sys.stdout 
 	sys.stdout=yahoo_log  
 
-yh_of =open(filename,'w+')
 
+yh_of =open(filename,'w+')
 Ques_queue=Queue.Queue()
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
-ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 sid_list=[]
+ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+
 
 
 
@@ -272,6 +277,7 @@ if __name__ == '__main__':
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		sys.stdout.flush()
+
 
 
 	 		sleep(random.randint(vocation/4,vocation))
