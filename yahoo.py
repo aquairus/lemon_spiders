@@ -42,8 +42,8 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 yahoo_log=open('../yahoo_log.txt','w')
-#old=sys.stdout 
-#sys.stdout=yahoo_log  #
+old=sys.stdout 
+sys.stdout=yahoo_log  #
 
 
 
@@ -93,7 +93,7 @@ def get_relateQ(url):
 		a=q.find("a")
 		text=a.text
 		href=a.get("href")
-		print text
+		##print text
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put((href,text))
