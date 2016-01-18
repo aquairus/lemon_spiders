@@ -14,7 +14,7 @@ import random
 import os
 from pybloom import BloomFilter
 import  getopt
-import pickle 
+import cPickle as pickle
 
 
 reload(sys)
