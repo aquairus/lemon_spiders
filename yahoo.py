@@ -216,6 +216,7 @@ for name,value in options:
 		print 'capacity is----',value
 		urlcapacity=float(value)
 	if name in ("-s"):
+		print "slience mode"
 		slience=True
 
 if slience:
