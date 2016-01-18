@@ -13,7 +13,7 @@ import json
 import random
 import os
 from pybloom import BloomFilter
-
+import  getopt
 
 
 reload(sys)
@@ -21,14 +21,15 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.5
+delay =sys.argv[1]	#vps:0.5  #ubuntu:0.8
 error_delay=10
 pause=32
 vocation=40
-ques_time=200
+ques_time=100
 start_p=2
 end_p=100
 urlcapacity=20000
+
 
 
 exp = re.compile(ur'.*?·.*')
@@ -44,6 +45,9 @@ filename="../yahoo.txt"
 yahoo_log=open('../yahoo_log.txt','w')
 old=sys.stdout 
 sys.stdout=yahoo_log  #
+
+
+
 
 
 
@@ -213,6 +217,22 @@ start_time=time.time()
 ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 sid_list=[]
 
+
+
+try:
+	options,args = getopt.getopt(sys.argv[1:],"hd:",["help","dalay="])
+except getopt.GetoptError:
+	sys.exit()
+
+for name,value in options:
+	if name in ("-h","--help"):	
+		print "usage:\n  --dalay\n  \--capacity"
+	if name in ("-d","--dalay"):
+		print 'delay is----',value
+		dalay=value
+	if name in ("-c","--capacity"):
+		print 'capacity is----',value
+		urlcapacity=value
 
 
 if __name__ == '__main__':
