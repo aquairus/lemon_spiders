@@ -14,6 +14,7 @@ import random
 import os
 from pybloom import BloomFilter
 import  getopt
+import pickle 
 
 
 reload(sys)
@@ -235,12 +236,20 @@ if slience:
 
 
 yh_of =open(filename,'w+')
-Ques_queue=Queue.Queue()
+
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
 sid_list=[]
-ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+Ques_queue=Queue.Queue()
+
+try:
+	blf_file=open('../quesFilter','r')
+	ques_filter=pickle.load(blf_file)
+
+except BaseException, e:
+	print e
+	ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 
 
 
