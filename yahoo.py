@@ -29,7 +29,7 @@ vocation=40
 ques_time=100
 start_p=2
 end_p=100
-urlcapacity=20000
+urlcapacity=800000
 slience=False
 
 
@@ -204,7 +204,7 @@ try:
 	options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
 except getopt.GetoptError:
 	sys.exit()
-	
+
 for name,value in options:
 	if name in ("-h","--help"):	
 		print "usage:\n  --dalay\n  \--capacity"
