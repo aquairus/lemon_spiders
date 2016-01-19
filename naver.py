@@ -188,7 +188,7 @@ pre_url="http://kin.naver.com"
 
 
 
-#get_arg()
+get_arg()
 
 yh_of =open(filename,'w+')
 
