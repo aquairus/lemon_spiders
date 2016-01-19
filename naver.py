@@ -33,7 +33,7 @@ ques_time=200
 start_p=2
 end_p=100
 
-urlcapacity=5000
+urlcapacity=500000
 slience=False
 
 
@@ -104,7 +104,7 @@ def get_relateQ(url):
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time:
+	if Ques_queue.qsize()<ques_time*2:
 		get_relateQ(pre_url+url)
 	ques,all_ans=get_answer(pre_url+url)
 
