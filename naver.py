@@ -141,30 +141,8 @@ def ques_factory(page):
 	print "new page " 
 
 
-def get_arg():
-	try:
-		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
-	except getopt.GetoptError:
-		sys.exit()
 
-	for name,value in options:
-		if name in ("-h","--help"):	
-			print "usage:\n  --dalay\n  \--capacity"
-			sys.exit() 
-		if name in ("-d","--dalay"):
-			print 'delay is----',value
-			dalay=float(value)
-		if name in ("-c","--capacity"):
-			print 'capacity is----',value
-			urlcapacity=float(value)
-		if name in ("-s"):
-			print "slience mode"
-			slience=True
 
-	if slience:
-		yahoo_log=open(logname,'w')
-		old=sys.stdout 
-		sys.stdout=yahoo_log  
 
 
 def init_filter(url_c):		
@@ -188,7 +166,29 @@ pre_url="http://kin.naver.com"
 
 
 
-get_arg()
+try:
+	options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
+except getopt.GetoptError:
+	sys.exit()
+
+for name,value in options:
+	if name in ("-h","--help"):	
+		print "usage:\n  --dalay\n  \--capacity"
+		sys.exit() 
+	if name in ("-d","--dalay"):
+		print 'delay is----',value
+		dalay=float(value)
+	if name in ("-c","--capacity"):
+		print 'capacity is----',value
+		urlcapacity=float(value)
+	if name in ("-s"):
+		print "slience mode"
+		slience=True
+
+if slience:
+	yahoo_log=open(logname,'w')
+	old=sys.stdout 
+	sys.stdout=yahoo_log  
 
 yh_of =open(filename,'w+')
 
@@ -199,6 +199,7 @@ sid_list=[]
 Ques_queue=Queue.Queue()
 
 ques_filter=init_filter(urlcapacity)
+
 
 if __name__ == '__main__':
 
