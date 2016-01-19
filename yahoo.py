@@ -276,7 +276,10 @@ if __name__ == '__main__':
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		sys.stdout.flush()
-
+	 		if int(t)%21==0:
+	 			blf_file=open('../quesFilter','w')
+				pickle.dump(ques_filter,blf_file)
+				blf_file.close()
 
 
 	 		sleep(random.randint(vocation/4,vocation))
