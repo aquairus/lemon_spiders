@@ -53,7 +53,8 @@ def get_answer(url,ques):
 		text=r.text
 
 	except BaseException, e:
-		Ques_queue.put((url,ques))
+		#get_Qa
+		#Ques_queue.put((url,ques))
 		print e
 		sleep(delay*error_delay)
 		text=""

@@ -26,7 +26,7 @@ delay =0.5	#vps:0.5  #ubuntu:0.8
 page_delay=10
 error_delay=10
 
-pause=80
+pause=50
 vocation=40
 ques_time=200
 
@@ -59,7 +59,7 @@ def get_answer(url):
 		text=r.text
 
 	except BaseException, e:
-		Ques_queue.put((url,ques))
+		#Ques_queue.put(url)
 		print e
 		sleep(delay*error_delay)
 		text=""
