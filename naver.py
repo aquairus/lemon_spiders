@@ -65,7 +65,10 @@ def get_answer(url):
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
-	title=soup.find('h3',class_="_endTitleText").text.lstrip().rstrip()
+	try:
+		title=soup.find('h3',class_="_endTitleText").text.lstrip().rstrip()
+	except BaseException, e:
+		title=""
 	ansList=soup.find_all('div',class_="_endContentsText")
 	all_ans=[]
 
@@ -85,10 +88,16 @@ def get_relateQ(url):
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
-	qList=soup.find('ul',class_="aside_list").find_all("a")
-	for q in qList:
-		if not href in ques_filter:
-			ques_filter.add(href)
+	try:
+		qList=soup.find('ul',class_="aside_list").find_all("a")
+		for q in qList:
+			href=q.get("href")
+			if not href in ques_filter:
+				if "/qna/" in href:
+					ques_filter.add(href)
+
+	except BaseException, e:
+		pass
 
 
 
@@ -150,11 +159,11 @@ def init_filter(url_c):
 		blf_file=open(filtername,'r')
 		q_filter=pickle.load(blf_file)
 		blf_file.close()
-		return q_filter
+		return q_filter,open(filename,'a')
 	except BaseException, e:
 		print "a new filter "
 		q_filter = BloomFilter(capacity=url_c,error_rate=0.001)
-		return q_filter
+		return q_filter,open(filename,'w+')
 
 
 start_url=["https://answers.yahoo.com"]
@@ -190,7 +199,7 @@ if slience:
 	old=sys.stdout 
 	sys.stdout=yahoo_log  
 
-yh_of =open(filename,'w+')
+
 
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
@@ -198,7 +207,7 @@ start_time=time.time()
 sid_list=[]
 Ques_queue=Queue.Queue()
 
-ques_filter=init_filter(urlcapacity)
+ques_filter,yh_of=init_filter(urlcapacity)
 
 
 if __name__ == '__main__':

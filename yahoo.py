@@ -237,10 +237,11 @@ try:
 	blf_file=open('../quesFilter','r')
 	ques_filter=pickle.load(blf_file)
 	blf_file.close()
+	yh_of =open(filename,'a')
 except BaseException, e:
-	print e
+	print "new fileter"
 	ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
-
+	yh_of =open(filename,'w+')
 
 
 
