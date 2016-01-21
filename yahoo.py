@@ -239,7 +239,7 @@ try:
 	blf_file=open(filtername,'r')
 	ques_filter=pickle.load(blf_file)
 	blf_file.close()
-	yh_of =open(filename,'a')
+	yh_of =open(filename,'a+')
 except BaseException, e:
 	print "new fileter"
 	ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
@@ -294,19 +294,21 @@ if __name__ == '__main__':
 
 
 	pool.wait()
-	
+	t=time.time()-start_time
 	final_msg="\n\n "+ "finish "\
 	+ "total question:"+str(len(ques_filter))\
 	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
 	print final_msg
 	mail.send_msg(sys.argv[0],final_msg)
+	if slience:
+		old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
+		sys.stdout=old 	
+		yahoo_log.close() 
+
 
 yh_of.close()
 
-if slience:
-	old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
-	sys.stdout=old 	
-	yahoo_log.close() 
+
 
 blf_file=open(filtername,'w')
 pickle.dump(ques_filter,blf_file)
