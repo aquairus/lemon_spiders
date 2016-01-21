@@ -32,6 +32,7 @@ end_p=100
 urlcapacity=800000
 slience=False
 t=0
+relay_time=10
 
 exp = re.compile(ur'.*?·.*')
 en_exp = re.compile(ur'.*?·.*')
@@ -106,7 +107,7 @@ def get_Qa(url,ques):
 	Qa={}
 	Qa["content"]=ques
 	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time/2:
+	if Ques_queue.qsize()<ques_time*2:
 		get_relateQ(pre_url+url)
 	all_ans,next=get_answer(pre_url+url,ques)
 
@@ -199,18 +200,19 @@ def init_filter():
 		q_filter=pickle.load(blf_file)
 		blf_file.close()
 		print "continue my work"
-		return q_filter,open(filename,'a+')
+		return q_filter,open(filename,'a+'),1
 
 	except BaseException, e:
 		print "new fileter"
 		q_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
-		return q_filter,open(filename,'w+')
+		return q_filter,open(filename,'w+'),0
 
 start_url=["https://answers.yahoo.com"]
 
 test_url=["https://answers.yahoo.com/question/index?qid=20160111033016AA5vIfQ"]
 test_url2=["https://answers.yahoo.com/question/index?qid=20160110150611AAtKxgF"]
 pre_url="https://answers.yahoo.com"
+
 
 
 try:
@@ -246,17 +248,26 @@ Ques_queue=Queue.Queue()
 
 
 
-ques_filter,yh_of=init_filter()
+ques_filter,yh_of,relay=init_filter()
 
 
 if __name__ == '__main__':
 
 
 	get_question(start_url[0])
+	if relay:
+		print "relay"
+		cpos_list=range(end_p,end_p)
+		random.shuffle(cpos_list) 
+		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+		for i in range(relay_time):
+			pool.putRequest(ques_works.pop())
+	else:
+		cpos_list=range(start_p,end_p)
+		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 
-	cpos_list=range(start_p,end_p)
 
-	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+
 
 	print "qa start "
 
@@ -284,7 +295,7 @@ if __name__ == '__main__':
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
 				if slience:
-					if os.path.getsize(log_name)>log_max:
+					if int(os.path.getsize(log_name)>log_max:
 						error_msg="total question:"+str(len(ques_filter))+\
 						"time:"+str(t)
 						mail.send_msg(sys.argv[0],"error:"+error_msg)
