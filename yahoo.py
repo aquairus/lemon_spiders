@@ -238,6 +238,7 @@ Ques_queue=Queue.Queue()
 try:
 	blf_file=open(filtername,'r')
 	ques_filter=pickle.load(blf_file)
+	print "continue my work"
 	blf_file.close()
 	yh_of =open(filename,'a+')
 except BaseException, e:
