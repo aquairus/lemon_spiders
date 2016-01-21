@@ -257,9 +257,9 @@ if __name__ == '__main__':
 	get_question(start_url[0])
 	if relay:
 		print "relay"
-		cpos_list=range(end_p,end_p)
+		cpos_list=range(start_p,end_p)
 		random.shuffle(cpos_list) 
-		print cpos_list
+
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
