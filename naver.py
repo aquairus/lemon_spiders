@@ -15,7 +15,7 @@ import os
 from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
-
+import mail
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -52,7 +52,7 @@ filtername="../naver_quesFilter"
 
 
 
-def get_answer(url):
+def get_answer(url): 
 	try:
 		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
@@ -100,7 +100,6 @@ def get_relateQ(url):
 		pass
 
 
-
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
@@ -112,7 +111,6 @@ def get_Qa(url):
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	Qa["content"]=ques
 	yh_of.write(json.dumps(Qa, ensure_ascii=False)+"\n")
-
 
 	
 
@@ -252,13 +250,11 @@ if __name__ == '__main__':
 
 	pool.wait()
 
-	print "\n\n\n\n\n "
-	print "finish "
-	print "total question:"+str(len(ques_filter))
-	print "data size:"+str(os.path.getsize(filename))
-	print "time:"+str(t)
-
-
+	final_msg="\n\n "+ "finish "\
+	+ "total question:"+str(len(ques_filter))\
+	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
+	print final_msg
+	mail.send_msg(sys.argv[0],final_msg)
 
 yh_of.close()
 

@@ -15,14 +15,14 @@ import os
 from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
-
+import mail
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.5	#vps:0.8  #ubuntu:0.8
+delay =0.8	#vps:0.8  #ubuntu:12
 error_delay=10
 pause=32
 vocation=40
@@ -284,6 +284,7 @@ if __name__ == '__main__':
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
 				if os.path.getsize(log_name)>log_max:
+					mail.send_msg(sys.argv[0],"too much log")
 					sys.exit()
 
 	 		sleep(random.randint(vocation/4,vocation))
@@ -291,14 +292,12 @@ if __name__ == '__main__':
 
 
 	pool.wait()
-
-	print "\n\n\n\n\n "
-	print "finish "
-	print "total question:"+str(len(ques_filter))
-	print "data size:"+str(os.path.getsize(filename))
-	print "time:"+str(t)
-
-
+	
+	final_msg="\n\n "+ "finish "\
+	+ "total question:"+str(len(ques_filter))\
+	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
+	print final_msg
+	mail.send_msg(sys.argv[0],final_msg)
 
 yh_of.close()
 
