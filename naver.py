@@ -104,7 +104,7 @@ def get_relateQ(url):
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time*2:
+	if Ques_queue.qsize()<ques_time*5:
 		get_relateQ(pre_url+url)
 	ques,all_ans=get_answer(pre_url+url)
 
