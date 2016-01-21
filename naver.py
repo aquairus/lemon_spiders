@@ -22,7 +22,7 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.5	#vps:0.5  #ubuntu:0.8
+delay =0.3	#vps:0.3  #ubuntu:0.8
 page_delay=10
 error_delay=10
 
@@ -33,7 +33,7 @@ ques_time=200
 start_p=2
 end_p=100
 
-urlcapacity=500000
+urlcapacity=80000
 slience=False
 
 
