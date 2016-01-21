@@ -31,7 +31,7 @@ start_p=2
 end_p=100
 urlcapacity=800000
 slience=False
-
+t=0
 
 exp = re.compile(ur'.*?·.*')
 en_exp = re.compile(ur'.*?·.*')
