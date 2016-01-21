@@ -259,7 +259,7 @@ if __name__ == '__main__':
 		print "relay"
 		cpos_list=range(end_p,end_p)
 		random.shuffle(cpos_list) 
-		print cpos_lists
+		print cpos_list
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
