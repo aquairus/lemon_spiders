@@ -284,7 +284,9 @@ if __name__ == '__main__':
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
 				if os.path.getsize(log_name)>log_max:
-					mail.send_msg(sys.argv[0],"too much log")
+					error_msg="total question:"+str(len(ques_filter))+\
+					"time:"+str(t)
+					mail.send_msg(sys.argv[0],"error:"+error_msg)
 					sys.exit()
 
 	 		sleep(random.randint(vocation/4,vocation))

@@ -20,14 +20,13 @@ def send_msg(sender,content):
 	password = os.environ['pass']
 	smtp_server = "smtp.163.com"
 	to_addr ="443586791@qq.com"
-
-	msg = MIMEText(sender+":\n"+content, 'plain', 'utf-8')
+ 	hostname=socket.gethostname()
+	msg = MIMEText(hostname+"("+sender+"):\n"+content, 'plain', 'utf-8')
 	msg['From'] = _format_addr(sender+u'<%s>' % from_addr)
 	msg['To'] = _format_addr(u'spider manager <%s>' % to_addr)
 	msg['Subject'] = Header(u'spider info update', 'utf-8').encode()
 
 	server = smtplib.SMTP(smtp_server, 25) 
-	#server.set_debuglevel(3)
 	server.login(from_addr, password)
 	server.sendmail(from_addr, [to_addr], msg.as_string())
 	server.quit()
