@@ -193,7 +193,18 @@ def ques_factory(cpos):
 
 	print "lots of new pages"
 
+def init_filter():
+	try:
+		blf_file=open(filtername,'r')
+		q_filter=pickle.load(blf_file)
+		blf_file.close()
+		print "continue my work"
+		return q_filter,open(filename,'a+')
 
+	except BaseException, e:
+		print "new fileter"
+		q_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
+		return q_filter,open(filename,'w+')
 
 start_url=["https://answers.yahoo.com"]
 
@@ -227,27 +238,15 @@ if slience:
 	sys.stdout=yahoo_log  
 
 
-yh_of =open(filename,'w+')
-
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
 sid_list=[]
 Ques_queue=Queue.Queue()
 
-try:
-	blf_file=open(filtername,'r')
-	ques_filter=pickle.load(blf_file)
-	print "continue my work"
-	blf_file.close()
-	yh_of =open(filename,'a+')
-except BaseException, e:
-	print "new fileter"
-	ques_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
-	yh_of =open(filename,'w+')
 
 
-
+ques_filter,yh_of=init_filter()
 
 
 if __name__ == '__main__':
