@@ -22,7 +22,7 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.5	#vps:0.5  #ubuntu:0.8
+delay =0.5	#vps:0.8  #ubuntu:0.8
 error_delay=10
 pause=32
 vocation=40
@@ -43,8 +43,9 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 
 filename="../yahoo.txt"
-
-
+log_name='../yahoo_log.txt'
+log_max=20000000
+filtername='../quesFilter'
 
 def get_answer(url,ques):
 	try:
@@ -221,7 +222,7 @@ for name,value in options:
 		slience=True
 
 if slience:
-	yahoo_log=open('../yahoo_log.txt','w')
+	yahoo_log=open(log_name,'w')
 	old=sys.stdout 
 	sys.stdout=yahoo_log  
 
@@ -235,7 +236,7 @@ sid_list=[]
 Ques_queue=Queue.Queue()
 
 try:
-	blf_file=open('../quesFilter','r')
+	blf_file=open(filtername,'r')
 	ques_filter=pickle.load(blf_file)
 	blf_file.close()
 	yh_of =open(filename,'a')
@@ -279,10 +280,11 @@ if __name__ == '__main__':
 	 		print len(ques_filter)
 	 		sys.stdout.flush()
 	 		if int(t)%21==0:
-	 			blf_file=open('../quesFilter','w')
+	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
-
+				if os.path.getsize(log_name)>log_max:
+					sys.exit()
 
 	 		sleep(random.randint(vocation/4,vocation))
 
@@ -301,9 +303,10 @@ if __name__ == '__main__':
 yh_of.close()
 
 if slience:
+	old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
 	sys.stdout=old 	
 	yahoo_log.close() 
 
-blf_file=open('../quesFilter','w')
+blf_file=open(filtername,'w')
 pickle.dump(ques_filter,blf_file)
 blf_file.close()

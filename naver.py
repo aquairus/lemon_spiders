@@ -22,7 +22,7 @@ sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
 
-delay =0.3	#vps:0.3  #ubuntu:0.8
+delay =0.4	#vps:0.4  #ubuntu:0.8
 page_delay=10
 error_delay=10
 
