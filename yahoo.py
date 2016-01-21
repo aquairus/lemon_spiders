@@ -283,7 +283,7 @@ if __name__ == '__main__':
 	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
-				if not slience:
+				if slience:
 					if os.path.getsize(log_name)>log_max:
 						error_msg="total question:"+str(len(ques_filter))+\
 						"time:"+str(t)
