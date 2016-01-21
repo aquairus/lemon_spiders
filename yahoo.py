@@ -107,7 +107,7 @@ def get_Qa(url,ques):
 	Qa={}
 	Qa["content"]=ques
 	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time*2:
+	if Ques_queue.qsize()<ques_time:
 		get_relateQ(pre_url+url)
 	all_ans,next=get_answer(pre_url+url,ques)
 
@@ -189,7 +189,7 @@ def get_question(url):
 def ques_factory(cpos):
 	get_next_q(cpos,cpos*19-17)
 	for sid in sid_list:
-		#print sid
+
 		get_next_q(cpos,0,sid)
 
 	print "lots of new pages"
@@ -259,9 +259,11 @@ if __name__ == '__main__':
 		print "relay"
 		cpos_list=range(end_p,end_p)
 		random.shuffle(cpos_list) 
+		print cpos_lists
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
+			pool.wait()
 	else:
 		cpos_list=range(start_p,end_p)
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
