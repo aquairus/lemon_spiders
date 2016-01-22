@@ -115,7 +115,6 @@ def get_Qa(url):
 	yh_of.write(json.dumps(Qa, ensure_ascii=False)+"\n")
 
 	
-
 def get_question(url):
 
 	try:
@@ -194,11 +193,6 @@ def ques_factory(page):
 		
 
 
-
-
-
-
-
 def init_filter(url_c):		
 	try:
 		blf_file=open(filtername,'r')
@@ -256,7 +250,7 @@ ques_filter,yh_of,relay=init_filter(urlcapacity)
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
 start_time=time.time()
-sid_list=[]
+
 Ques_queue=Queue.Queue()
 
 
@@ -268,11 +262,8 @@ else:
 	bar = Bar(max_value=total_p)
 	bar.cursor.clear_lines(7) 
 	bar.cursor.save() 
-	cursor=0
-	bar.cursor.restore()  # Return cursor to start
+	cursor=1  
 	bar.draw(value=cursor) 
-
-cpos_list=range(start_p,end_p)
 
 
 
@@ -286,7 +277,8 @@ if __name__ == '__main__':
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 	else:
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
-	
+
+
 	pool.putRequest(ques_works.pop())
 	pool.wait()
 
@@ -299,16 +291,16 @@ if __name__ == '__main__':
 		
 		t=time.time()-start_time
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-
+			print Ques_queue.qsize()
+			print len(ques_works)
 	 		pool.putRequest(ques_works.pop())
 	 		cursor+=1
 	 		show_stat(cursor,slience)
-	 		pool.wait()
+
 
 	 	sleep(delay)
 	 	
 	 	if int(t)%pause==0:
-
 	 		if int(t)%3==0:
 	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)

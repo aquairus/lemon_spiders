@@ -282,7 +282,6 @@ if __name__ == '__main__':
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		pool.putRequest(ques_works.pop())
-	 		pool.wait()
 
 	 	sleep(delay)
 	 	
