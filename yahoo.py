@@ -291,7 +291,7 @@ if __name__ == '__main__':
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		sys.stdout.flush()
-	 		if int(t)%21==0:
+	 		if int(t)%3==0:
 	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
