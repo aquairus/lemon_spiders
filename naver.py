@@ -16,6 +16,8 @@ from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
 import mail
+from progressive.bar import Bar
+
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -30,8 +32,9 @@ pause=50
 vocation=40
 ques_time=200
 
-start_p=2
+start_p=1
 end_p=100
+total_p=end_p-start_p+1
 
 urlcapacity=80000
 slience=False
@@ -145,7 +148,7 @@ def ques_factory(page):
 		"&queryTime=2016-01-19+15%3A39%3A54&page="+str(page)
 		sleep(delay)
 		get_question(url)
-	print "new page " 
+
 
 
 
@@ -157,11 +160,11 @@ def init_filter(url_c):
 		blf_file=open(filtername,'r')
 		q_filter=pickle.load(blf_file)
 		blf_file.close()
-		return q_filter,open(filename,'a')
+		return q_filter,open(filename,'a'),1
 	except BaseException, e:
 		print "a new filter "
 		q_filter = BloomFilter(capacity=url_c,error_rate=0.001)
-		return q_filter,open(filename,'w+')
+		return q_filter,open(filename,'w+'),0
 
 
 
@@ -191,12 +194,7 @@ for name,value in options:
 		print "slience mode"
 		slience=True
 
-if slience:
-	yahoo_log=open(logname,'w')
-	old=sys.stdout 
-	sys.stdout=yahoo_log  
-
-
+ques_filter,yh_of,relay=init_filter(urlcapacity)
 
 urlqueue=Queue.LifoQueue()
 pool = threadpool.ThreadPool(thread_cnt) 
@@ -204,39 +202,67 @@ start_time=time.time()
 sid_list=[]
 Ques_queue=Queue.Queue()
 
-ques_filter,yh_of=init_filter(urlcapacity)
+
+if slience:
+	yahoo_log=open(logname,'w')
+	old=sys.stdout 
+	sys.stdout=yahoo_log  
+else:
+	bar = Bar(max_value=total_p)
+	bar.cursor.clear_lines(5) 
+	bar.cursor.save() 
+	cursor=0
+	bar.cursor.restore()  # Return cursor to start
+	bar.draw(value=cursor) 
+
+cpos_list=range(start_p,end_p)
+
 
 
 if __name__ == '__main__':
-
-	ques_factory(1)
-
+	
 	cpos_list=range(start_p,end_p)
 
-	ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+	if relay:
+		random.shuffle(cpos_list) 
+		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+	else:
+		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+	
+	pool.putRequest(ques_works.pop())
+	pool.wait()
 
-	print "start scrawing "
 
 	while not Ques_queue.empty():
 		data=Ques_queue.get()
 
 		work = threadpool.WorkRequest(get_Qa, (data,))
 		pool.putRequest(work) 
-
+		t=time.time()-start_time
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		print "-------adding------"
-	 		print os.path.getsize(filename)
-	 		print len(ques_filter)
+	 		#print "-------adding------"
+	 		#print os.path.getsize(filename)
+	 		#print len(ques_filter)
 	 		pool.putRequest(ques_works.pop())
+ 
+	 		if not slience:
+	 			bar.cursor.restore()  # Return cursor to start
+	   			cursor+=1
+				bar.draw(value=cursor) 
+				bar.cursor.restore()
+   			print "size:"+str(os.path.getsize(filename))
+	 		print "filter:"+str(len(ques_filter))
+	 		print "spending:"+str(t)+"seconds"
+	 		print "rest time :"+str(t/cursor*(total_p-cursor))+"seconds"
+
+	 		sys.stdout.flush()
 	 		pool.wait()
 
 	 	sleep(delay)
-	 	t=time.time()-start_time
+	 	
 	 	if int(t)%pause==0:
-			print "-------sleep------"
-	 		print os.path.getsize(filename)
-	 		print len(ques_filter)
-	 		sys.stdout.flush()
+			#print "-------sleep------"
+
 	 		if int(t)%21==0:
 	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)
