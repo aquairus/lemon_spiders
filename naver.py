@@ -92,19 +92,19 @@ def get_relateQ(url):
 		qList=soup.find('ul',class_="aside_list").find_all("a")
 		for q in qList:
 			href=q.get("href")
+
 			if not href in ques_filter:
 				if "/qna/" in href:
 					ques_filter.add(href)
 
 	except BaseException, e:
-		pass
+			pass
 
 
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time*5:
-		get_relateQ(pre_url+url)
+	get_relateQ(pre_url+url)
 	ques,all_ans=get_answer(pre_url+url)
 
 	for ans in all_ans:
@@ -164,7 +164,6 @@ def init_filter(url_c):
 		return q_filter,open(filename,'w+')
 
 
-start_url=["https://answers.yahoo.com"]
 
 test_url="http://kin.naver.com/qna/detail.nhn?d1id=11&dirId=110408&docId=243351741"
 test_url2="http://kin.naver.com/qna/list.nhn?m=kinup&dirId=5"
