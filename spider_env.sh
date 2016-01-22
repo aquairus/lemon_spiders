@@ -2,7 +2,9 @@
 echo "mail?"
 read mail
 export mail
+
 echo "pass?"
+read pass
 export pass
 
 apt-get install python-dev libxml2 libxml2-dev python-lxml -y #python-devel
