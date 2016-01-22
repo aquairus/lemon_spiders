@@ -209,7 +209,7 @@ if slience:
 	sys.stdout=yahoo_log  
 else:
 	bar = Bar(max_value=total_p)
-	bar.cursor.clear_lines(5) 
+	bar.cursor.clear_lines(7) 
 	bar.cursor.save() 
 	cursor=0
 	bar.cursor.restore()  # Return cursor to start
@@ -252,8 +252,8 @@ if __name__ == '__main__':
 				bar.cursor.restore()
    			print "size:"+str(os.path.getsize(filename))
 	 		print "filter:"+str(len(ques_filter))
-	 		print "spending:"+str(t)+"seconds"
-	 		print "rest time :"+str(t/cursor*(total_p-cursor))+"seconds"
+	 		print "spent: "+str(t/60)+" mins"
+	 		print "rest: "+str(t/cursor*(total_p-cursor)/60)+" mins"
 
 	 		sys.stdout.flush()
 	 		pool.wait()
