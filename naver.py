@@ -62,7 +62,6 @@ def get_answer(url):
 		text=r.text
 
 	except BaseException, e:
-		#Ques_queue.put(url)
 		print e
 		sleep(delay*error_delay)
 		text=""
@@ -167,6 +166,19 @@ def init_filter(url_c):
 		return q_filter,open(filename,'w+'),0
 
 
+def show_stat(cursor,s_mode):
+	if not s_mode:
+ 		bar.cursor.restore()  # Return cursor to start
+		bar.draw(value=cursor) 
+
+	print "size:"+str(os.path.getsize(filename))
+	print "filter:"+str(len(ques_filter))
+	print "spent: "+str(t/60)+" mins"
+	print "rest: "+str(t/cursor*(total_p-cursor)/60)+" mins"
+	sys.stdout.flush()
+		
+
+
 
 test_url="http://kin.naver.com/qna/detail.nhn?d1id=11&dirId=110408&docId=243351741"
 test_url2="http://kin.naver.com/qna/list.nhn?m=kinup&dirId=5"
@@ -234,40 +246,27 @@ if __name__ == '__main__':
 
 
 	while not Ques_queue.empty():
+		
 		data=Ques_queue.get()
-
 		work = threadpool.WorkRequest(get_Qa, (data,))
 		pool.putRequest(work) 
+		
 		t=time.time()-start_time
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		#print "-------adding------"
-	 		#print os.path.getsize(filename)
-	 		#print len(ques_filter)
+
 	 		pool.putRequest(ques_works.pop())
- 
-	 		if not slience:
-	 			bar.cursor.restore()  # Return cursor to start
-	   			cursor+=1
-				bar.draw(value=cursor) 
-
-   			print "size:"+str(os.path.getsize(filename))
-	 		print "filter:"+str(len(ques_filter))
-	 		print "spent: "+str(t/60)+" mins"
-	 		print "rest: "+str(t/cursor*(total_p-cursor)/60)+" mins"
-
-	 		sys.stdout.flush()
+	 		cursor+=1
+	 		show_stat(cursor,slience)
 	 		pool.wait()
 
 	 	sleep(delay)
 	 	
 	 	if int(t)%pause==0:
-			#print "-------sleep------"
 
 	 		if int(t)%3==0:
 	 			blf_file=open(filtername,'w')
 				pickle.dump(ques_filter,blf_file)
 				blf_file.close()
-
 
 	 		sleep(random.randint(vocation/4,vocation))
 

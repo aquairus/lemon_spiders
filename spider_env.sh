@@ -1,4 +1,9 @@
 #!/usr/bin/bash
+echo "mail?"
+read mail
+export mail
+echo "pass?"
+export pass
 
 apt-get install python-dev libxml2 libxml2-dev python-lxml -y #python-devel
 #apt-get install redis-server -y	
