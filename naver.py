@@ -136,7 +136,7 @@ def get_question(url):
 
 	for q in questionList:
 		href=q.a.get("href")
-		print href
+
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put(href)
