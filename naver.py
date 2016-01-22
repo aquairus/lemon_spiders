@@ -117,6 +117,7 @@ def get_Qa(url):
 	
 
 def get_question(url):
+
 	try:
 		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8" 
@@ -135,18 +136,62 @@ def get_question(url):
 
 	for q in questionList:
 		href=q.a.get("href")
+		print href
 		if not href in ques_filter:
 			ques_filter.add(href)
 			Ques_queue.put(href)
 
+def get_expert_q(url):
+
+	try:
+		r = requests.get(url,headers = fake_headers)
+		r.encoding="utf-8" 
+		text=r.text
+
+
+	except BaseException, e:
+		urlqueue.put(url)
+		print e
+		sleep(delay*error_delay)
+		text=""
+
+	soup = BeautifulSoup(text,"lxml")
+	
+	ulList=soup.find_all('ul',class_="list_qna")
+
+	for ul in ulList:
+		alist=ul.find_all("a")
+		for a in alist:
+			href=a.get("href")
+			if not href in ques_filter:
+				ques_filter.add(href)
+				Ques_queue.put(href)
 
 def ques_factory(page):
 
 	for dirId in range(1,13):
-		url="http://kin.naver.com/qna/list.nhn?m=kinup&dirId="+str(dirId)+\
+
+		kind="ing"
+		url="http://kin.naver.com/qna/list.nhn?m="+kind+"&dirId="+str(dirId)+\
 		"&queryTime=2016-01-19+15%3A39%3A54&page="+str(page)
-		sleep(delay)
 		get_question(url)
+
+
+
+		kind="directoryExpert"
+		url="http://kin.naver.com/qna/list.nhn?m="+kind+"&dirId="+str(dirId)+\
+		"&queryTime=2016-01-19+15%3A39%3A54&page="+str(page)
+
+		get_expert_q(url)
+
+
+		kind="kinup"
+		url="http://kin.naver.com/qna/list.nhn?m="+kind+"&dirId="+str(dirId)+\
+		"&queryTime=2016-01-19+15%3A39%3A54&page="+str(page)
+		get_question(url)
+
+		sleep(delay)
+		
 
 
 
@@ -228,6 +273,7 @@ else:
 	bar.draw(value=cursor) 
 
 cpos_list=range(start_p,end_p)
+
 
 
 
