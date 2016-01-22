@@ -250,7 +250,8 @@ if __name__ == '__main__':
 	   			cursor+=1
 				bar.draw(value=cursor) 
 				bar.cursor.restore()
-   			print "size:"+str(os.path.getsize(filename))
+
+   			print "\nsize:"+str(os.path.getsize(filename))
 	 		print "filter:"+str(len(ques_filter))
 	 		print "spent: "+str(t/60)+" mins"
 	 		print "rest: "+str(t/cursor*(total_p-cursor)/60)+" mins"
