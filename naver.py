@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-*- coding:UTF-8 -*-
-import requests 
+import requests
 from requests import ConnectionError
 import sys
 from bs4 import BeautifulSoup
@@ -55,10 +55,10 @@ filtername="../naver_quesFilter"
 
 
 
-def get_answer(url): 
+def get_answer(url):
 	try:
 		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8" 
+		r.encoding="utf-8"
 		text=r.text
 
 	except BaseException, e:
@@ -82,7 +82,7 @@ def get_answer(url):
 def get_relateQ(url):
 	try:
 		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8" 
+		r.encoding="utf-8"
 		text=r.text
 
 	except BaseException, e:
@@ -114,12 +114,12 @@ def get_Qa(url):
 	Qa["content"]=ques
 	yh_of.write(json.dumps(Qa, ensure_ascii=False)+"\n")
 
-	
+
 def get_question(url):
 
 	try:
 		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8" 
+		r.encoding="utf-8"
 		text=r.text
 
 
@@ -130,7 +130,7 @@ def get_question(url):
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
-	
+
 	questionList=soup.find_all('td',class_="title")
 
 	for q in questionList:
@@ -144,7 +144,7 @@ def get_expert_q(url):
 
 	try:
 		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8" 
+		r.encoding="utf-8"
 		text=r.text
 
 
@@ -155,7 +155,7 @@ def get_expert_q(url):
 		text=""
 
 	soup = BeautifulSoup(text,"lxml")
-	
+
 	ulList=soup.find_all('ul',class_="list_qna")
 
 	for ul in ulList:
@@ -190,10 +190,10 @@ def ques_factory(page):
 		get_question(url)
 
 		sleep(delay)
-		
 
 
-def init_filter(url_c):		
+
+def init_filter(url_c):
 	try:
 		blf_file=open(filtername,'r')
 		q_filter=pickle.load(blf_file)
@@ -208,14 +208,14 @@ def init_filter(url_c):
 def show_stat(cursor,s_mode):
 	if not s_mode:
  		bar.cursor.restore()  # Return cursor to start
-		bar.draw(value=cursor) 
+		bar.draw(value=cursor)
 
 	print "size:"+str(os.path.getsize(filename))
 	print "filter:"+str(len(ques_filter))
 	print "spent: "+str(t/60)+" mins"
 	print "rest: "+str(t/cursor*(total_p-cursor)/60)+" mins"
 	sys.stdout.flush()
-		
+
 
 
 
@@ -232,9 +232,9 @@ except getopt.GetoptError:
 	sys.exit()
 
 for name,value in options:
-	if name in ("-h","--help"):	
+	if name in ("-h","--help"):
 		print "usage:\n  --dalay\n  \--capacity"
-		sys.exit() 
+		sys.exit()
 	if name in ("-d","--dalay"):
 		print 'delay is----',value
 		dalay=float(value)
@@ -248,7 +248,7 @@ for name,value in options:
 ques_filter,yh_of,relay=init_filter(urlcapacity)
 
 urlqueue=Queue.LifoQueue()
-pool = threadpool.ThreadPool(thread_cnt) 
+pool = threadpool.ThreadPool(thread_cnt)
 start_time=time.time()
 
 Ques_queue=Queue.Queue()
@@ -256,24 +256,24 @@ Ques_queue=Queue.Queue()
 
 if slience:
 	yahoo_log=open(logname,'w')
-	old=sys.stdout 
-	sys.stdout=yahoo_log  
+	old=sys.stdout
+	sys.stdout=yahoo_log
 else:
 	bar = Bar(max_value=total_p)
-	bar.cursor.clear_lines(7) 
-	bar.cursor.save() 
-	cursor=1  
-	bar.draw(value=cursor) 
+	bar.cursor.clear_lines(7)
+	bar.cursor.save()
+	cursor=1
+	bar.draw(value=cursor)
 
 
 
 
 if __name__ == '__main__':
-	
+
 	cpos_list=range(start_p,end_p)
 
 	if relay:
-		random.shuffle(cpos_list) 
+		random.shuffle(cpos_list)
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
 	else:
 		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
@@ -284,11 +284,11 @@ if __name__ == '__main__':
 
 
 	while not Ques_queue.empty():
-		
+
 		data=Ques_queue.get()
 		work = threadpool.WorkRequest(get_Qa, (data,))
-		pool.putRequest(work) 
-		
+		pool.putRequest(work)
+
 		t=time.time()-start_time
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
 			print Ques_queue.qsize()
@@ -299,7 +299,7 @@ if __name__ == '__main__':
 
 
 	 	sleep(delay)
-	 	
+
 	 	if int(t)%pause==0:
 	 		if int(t)%3==0:
 	 			blf_file=open(filtername,'w')
@@ -316,13 +316,15 @@ if __name__ == '__main__':
 	+ "total question:"+str(len(ques_filter))\
 	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
 	print final_msg
-	mail.send_msg(sys.argv[0],final_msg)
+
+	mailbox=mail.mailbox(os.env["mail"],os.env["pass"])
+	mailbox.send_msg(sys.argv[0],final_msg)
 
 yh_of.close()
 
 if slience:
-	sys.stdout=old 	
-	yahoo_log.close() 
+	sys.stdout=old
+	yahoo_log.close()
 
 blf_file=open(filtername,'w')
 pickle.dump(ques_filter,blf_file)
