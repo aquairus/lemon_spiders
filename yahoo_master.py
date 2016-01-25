@@ -9,8 +9,6 @@ import time
 import threadpool
 import Queue
 from time import sleep
-import json
-import random
 import os
 from pybloom import BloomFilter
 import  getopt
@@ -23,7 +21,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 
-slave_num=2
+slave_num=1
 salve_job=200
 
 thread_cnt=16
@@ -32,6 +30,7 @@ ques_time=250
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
+
 
 #vps:0.8  #ubuntu:12
 
@@ -65,7 +64,7 @@ filtername='../quesFilter'
 
 
 def get_arg():
-	delay =1
+	delay =5
 	urlcapacity=2000000
 	slience=False
 	try:
@@ -213,6 +212,7 @@ class scheduler():
 		self.step=step
 		self.slave=slave_num
 		self.size=size
+
 	def dist(self,key,q):
 		if self.length(key)<self.size:
 			pipe=self.r.pipeline()

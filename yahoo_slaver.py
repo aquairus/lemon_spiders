@@ -8,6 +8,7 @@ import requests
 from time import sleep
 import sys
 import Queue
+import  getopt
 reload(sys)
 
 slave_num=2
@@ -16,7 +17,7 @@ sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
 delay=1
-
+thread_cnt=16
 
 
 
@@ -47,7 +48,7 @@ def get_arg():
 			slave_NO=value
 	filename="../yahoo_"+str(slave_NO)+".txt"
 	task_url="task_url"+str(slave_NO)
-
+	return filename,task_url
 
 def get_soup(url):
     try:
@@ -114,7 +115,6 @@ def find_Qa(soup):
 def slave_work(url):
 	soup=get_soup(url)
 	relateQ=find_relateQ(soup)
-	for Q in relateQ:
 	fresh_Q.put(relateQ)
 	Qa=find_Qa(soup)
 	yh_of.write(json.dumps(Qa)+"\n")
@@ -125,24 +125,25 @@ def commit_answer(Qa):
 
 
 class worker():
-	def __init__(task_url,r,size=100*slave_num):
+	def __init__(self,task_url,r,size=100*slave_num):
 		self.task_k=task_url
 		self.commit_k="fresh_url"
 		self.r=r
 		self.size=size
 
-	def fetch_link(self,key=self.task_k,count=5):
-		url_Queue=self.r.lrange(key,0,count-1)
-		self.r.ltrim(key,count,-1)
+	def fetch_link(self,count=5):
+		url_Queue=self.r.lrange(self.commit_k,0,count-1)
+		self.r.ltrim(self.commit_k,count,-1)
 		for Q in url_Queue:
 			task_Q.put(Q)
 
-	def commit_link(self,key=self.commit_k,new_Qlist):
+	def commit_link(self,new_Qlist):
 		if self.length(key)<self.size:
 			pipe=self.r.pipeline()
 			for Q in new_Qlist:
-				pipe.rpush(key,Q)
+				pipe.rpush(self.commit_k,Q)
 			pipe.execute()
+			print "commit"
 		else:
 			task_Q.put(new_Qlist)
 
@@ -151,12 +152,12 @@ class worker():
 		return self.r.llen(key)
 
 
-get_arg()
-yh_of=open(filename)
-if __name__ == '__main__':
 
+if __name__ == '__main__':
+	filename,task_url=get_arg()
+	yh_of=open(filename,'w+')
 	r = redis.StrictRedis(host=master, port=r_port,db=0)
-	slaver=work(task_url,r)
+	slaver=worker(task_url,r)
 	task_Q=Queue.Queue()
 	fresh_Q=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
