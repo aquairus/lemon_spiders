@@ -16,26 +16,41 @@ from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
 import mail
+import redis
+import prog_bar
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-thread_cnt=16
 
-delay =0.8	#vps:0.8  #ubuntu:12
-error_delay=10
-pause=32
-vocation=40
-ques_time=100
+slave_num=2
+salve_job=200
+
+thread_cnt=16
+ques_time=250
+
 start_p=2
 end_p=100
-urlcapacity=800000
-slience=False
+total_p=end_p-start_p+2
+
+#vps:0.8  #ubuntu:12
+
+pause=32
+vocation=40
+
+
+# start_p=2
+# end_p=100
+# total_p=end_p-start_p+2
+
+sids=[]
+
+
 t=0
 relay_time=10
 
-exp = re.compile(ur'.*?·.*')
-en_exp = re.compile(ur'.*?·.*')
+start_url="https://answers.yahoo.com"
+pre_url="https://answers.yahoo.com"
 
 fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',
 				'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8',
@@ -49,83 +64,40 @@ log_max=20000000
 filtername='../quesFilter'
 
 
+def get_arg():
+	delay =1
+	urlcapacity=2000000
+	slience=False
+	try:
+		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
+	except getopt.GetoptError:
+		sys.exit()
+
+	for name,value in options:
+		if name in ("-h","--help"):
+			print "usage:\n  --dalay\n  \--capacity"
+			sys.exit()
+		if name in ("-d","--dalay"):
+			print 'delay is----',value
+			dalay=float(value)
+		if name in ("-c","--capacity"):
+			print 'capacity is----',value
+			urlcapacity=int(value)
+		if name in ("-s"):
+			print "slience mode"
+			slience=True
+	return delay,urlcapacity,slience
 
 def get_soup(url):
-    pass
-
-def get_answer(url,ques):
-	try:
+    try:
 		r = requests.get(url,headers = fake_headers)
 		r.encoding="utf-8"
 		text=r.text
-
-	except BaseException, e:
-		#get_Qa
-		#Ques_queue.put((url,ques))
+    except BaseException, e:
 		print e
-		sleep(delay*error_delay)
-		text=""
-
-	soup = BeautifulSoup(text,"lxml")
-	ansList=soup.find_all('span',class_="ya-q-full-text")
-	all_ans=[]
-	for ans in ansList:
-		all_ans.append(ans.text)
-	try:
-		next=soup.find_all(id="ya-qn-pagination")[0]\
-		.find_all('a',class_="Clr-bl")[-1]
-	except BaseException, e:
-		return	all_ans,None
-
-	if next.text==" next":
-		return all_ans,next.get('href')
-	else:
-		return all_ans,None
-
-
-def get_relateQ(url):
-
-	try:
-		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8"
-		text=r.text
-
-	except BaseException, e:
-		print e
-		text=""
-
-	soup = BeautifulSoup(text,"lxml")
-	qList=soup.find_all('div',class_="qTile Px-14 Py-8 Bgc-w")
-	for q in qList[:4]:
-		a=q.find("a")
-		text=a.text
-		href=a.get("href")
-		##print text
-		if not href in ques_filter:
-			ques_filter.add(href)
-			Ques_queue.put((href,text))
-		#else:
-		#	print "-----repeat"
-
-
-def get_Qa(url,ques):
-	Qa={}
-	Qa["content"]=ques
-	Qa["review"]=""
-	if Ques_queue.qsize()<ques_time:
-		get_relateQ(pre_url+url)
-	all_ans,next=get_answer(pre_url+url,ques)
-
-	for ans in all_ans:
-		Qa["review"]=Qa["review"]+ans+"<p>"
-	while next:
 		sleep(delay)
-		#print "next"
-		all_ans,next=get_answer(pre_url+next,ques)
-		for ans in all_ans:
-			Qa["review"]=Qa["review"]+ans+"<p>"
-	yh_of.write(json.dumps(Qa)+"\n")
-	#print "--a Q&A"
+		text=""
+    return BeautifulSoup(text,"lxml")
 
 
 def get_next_q(cpos,bpos,sid=None):
@@ -142,194 +114,206 @@ def get_next_q(cpos,bpos,sid=None):
 		text=r.text
 
 	except BaseException, e:
-		urlqueue.put(url)
+
 		print e
-		sleep(delay*error_delay)
+		sleep(delay)
 		text=""
 
 	text_html=json.loads(text)["YANewDiscoverTabModule"]["html"]
 
 	soup = BeautifulSoup(text_html,"lxml")
+	Qlist=[]
 	for h3 in soup.find_all("h3"):
-
 		href=h3.a.get("href")
-		Ques_queue.put((href,h3.a.text))
-		#print href
-		#print h3.a.text
-		if not href in ques_filter:
-			ques_filter.add(href)
-			Ques_queue.put((href,h3.a.text))
-		#else:
-		#	print "-----repeat"
+		Qlist.append(href)
+	return Qlist
+
 
 
 def get_question(url):
-	try:
-		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8"
-		text=r.text
-
-
-	except BaseException, e:
-		urlqueue.put(url)
-		print e
-		sleep(delay*error_delay)
-		text=""
-
-	soup = BeautifulSoup(text,"lxml")
-
+	soup = get_soup(url)
 	questionList=soup.find_all('a',class_="Fz-14 Fw-b Clr-b Wow-bw title")
+	first_list=[]
 	for q in questionList:
 		href=q.get("href")
-		if not href in ques_filter:
-			ques_filter.add(href)
-			Ques_queue.put((href,q.text))
+		first_list.append(href)
 
+	sid_list=[]
 	sids=soup.find_all('a',class_=" Mstart-3 unselected D-ib")[1:]
 	for item in sids:
 		sid_list.append(item.get("href")[15:])
-		#print item.get("href")[15:]
+
+	return first_list,sid_list
 
 
 def ques_factory(cpos):
-	get_next_q(cpos,cpos*19-17)
-	for sid in sid_list:
+	q_list=get_next_q(cpos,cpos*19-17)
+	for sid in sids:
+		q_list=q_list+get_next_q(cpos,0,sid)
+	return q_list
 
-		get_next_q(cpos,0,sid)
-
-	print "lots of new pages"
-
-def init_filter():
+def init_filter(urlcap):
 	try:
 		blf_file=open(filtername,'r')
 		q_filter=pickle.load(blf_file)
 		blf_file.close()
 		print "continue my work"
-		return q_filter,open(filename,'a+'),1
+		return q_filter,1
 
 	except BaseException, e:
 		print "new fileter"
-		q_filter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
-		return q_filter,open(filename,'w+'),0
-
-start_url=["https://answers.yahoo.com"]
-
-test_url=["https://answers.yahoo.com/question/index?qid=20160111033016AA5vIfQ"]
-test_url2=["https://answers.yahoo.com/question/index?qid=20160110150611AAtKxgF"]
-pre_url="https://answers.yahoo.com"
+		q_filter = BloomFilter(capacity=urlcap,error_rate=0.001)
+		return q_filter,0
 
 
-
-try:
-	options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
-except getopt.GetoptError:
-	sys.exit()
-
-for name,value in options:
-	if name in ("-h","--help"):
-		print "usage:\n  --dalay\n  \--capacity"
-		sys.exit()
-	if name in ("-d","--dalay"):
-		print 'delay is----',value
-		dalay=float(value)
-	if name in ("-c","--capacity"):
-		print 'capacity is----',value
-		urlcapacity=float(value)
-	if name in ("-s"):
-		print "slience mode"
-		slience=True
-
-if slience:
-	yahoo_log=open(log_name,'w')
-	old=sys.stdout
-	sys.stdout=yahoo_log
-
-
-urlqueue=Queue.LifoQueue()
-pool = threadpool.ThreadPool(thread_cnt)
-start_time=time.time()
-sid_list=[]
-Ques_queue=Queue.Queue()
-
-
-
-ques_filter,yh_of,relay=init_filter()
-
-
-if __name__ == '__main__':
-
-
-	get_question(start_url[0])
-	cpos_list=range(start_p,end_p)
-
+def start_working(start_p,end_p,relay):
+	print "start working "
+	cpos_l=range(start_p,end_p)
 	if relay:
 		print "relay"
-		random.shuffle(cpos_list)
-		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+		random.shuffle(cpos_l)
+		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
 			pool.wait()
 	else:
-		ques_works=threadpool.makeRequests(ques_factory,cpos_list)
+		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
+		pool.putRequest(ques_works.pop())
+		pool.wait()
+	print "start answering  "
+	return ques_works
+
+
+class url_Queue():
+
+	def __init__(self,Q_filter):
+		self.filter=Q_filter
+		self.Q=Queue.Queue()
+
+	def add(self,href):
+		if not href in self.filter:
+			self.filter.add(href)
+			self.Q.put(href)
+
+	def length(self):
+		return len(self.filter)
+
+	def r_pour(self,req,links):
+		for link in links:
+			self.add(link)
+
+	def pour(self,links):
+		for link in links:
+			self.add(link)
+
+
+class scheduler():
+	def __init__(self,r,step,slave_num,size=100):
+		self.r=r
+		self.step=step
+		self.slave=slave_num
+		self.size=size
+	def dist(self,key,q):
+		if self.length(key)<self.size:
+			pipe=self.r.pipeline()
+			for s in xrange(self.step):
+				if not q.Q.empty():
+					task=q.Q.get()
+					pipe.rpush(key,task)
+			pipe.execute()
+
+	def dist_all(self,key,q):
+		for i in xrange(self.slave):
+			self.dist(key+str(i),q)
+
+	def retirve(self,key,q):
+		fresh_url=r.lrange(key,0,self.step-1)
+		q.pour(fresh_url)
+		r.ltrim(key,self.step,-1)
+
+
+	def length(self,key):
+		return self.r.llen(key)
 
 
 
 
-	print "qa start "
 
-	while not Ques_queue.empty():
-		data=Ques_queue.get()
-		work = threadpool.WorkRequest(get_Qa, data)
-		pool.putRequest(work)
+if __name__ == '__main__':
 
-		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		print "-------adding------"
-	 		print os.path.getsize(filename)
-	 		print len(ques_filter)
+	pool = threadpool.ThreadPool(thread_cnt)
+	start_t=time.time()
+
+	delay,urlcapacity,slience=get_arg()
+	Ques_f,relay=init_filter(urlcapacity)
+	url_Q=url_Queue(Ques_f)
+
+	r = redis.StrictRedis(host='spider01', port=6369, db=0)
+	master=scheduler(r,5,slave_num,size=salve_job)
+	bar=prog_bar.prog_bar(total_p)
+
+
+	questions,sids=get_question(start_url)
+	url_Q.pour(questions)
+	ques_works=start_working(start_p,end_p,relay)
+
+
+	while not url_Q.Q.empty():
+
+		t=time.time()-start_t
+
+		master.dist_all("task_url",url_Q)
+
+		if url_Q.Q.qsize()<ques_time*slave_num:
+			master.retirve("fresh_url",url_Q)
+
+		sleep(delay)
+
+		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
+	 		bar.new_page(t,url_Q.length())
 	 		pool.putRequest(ques_works.pop())
-
-	 	sleep(delay)
-
-	 	t=time.time()-start_time
-	 	if int(t)%pause==0:
-			print "-------sleep------"
-	 		print os.path.getsize(filename)
-	 		print len(ques_filter)
-	 		sys.stdout.flush()
-	 		if int(t)%3==0:
-	 			blf_file=open(filtername,'w')
-				pickle.dump(ques_filter,blf_file)
-				blf_file.close()
-				if slience:
-					if int(os.path.getsize(log_name))>log_max:
-						error_msg="total question:"+str(len(ques_filter))+\
-						"time:"+str(t)
-						mail.send_msg(sys.argv[0],"error:"+error_msg)
-						sys.exit()
-
-	 		sleep(random.randint(vocation/4,vocation))
+			pool.wait()
 
 
 
-	pool.wait()
-	t=time.time()-start_time
-	final_msg="\n\n "+ "finish "\
-	+ "total question:"+str(len(ques_filter))\
-	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
-	print final_msg
-	mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
-	mailbox.send_msg(sys.argv[0],final_msg)
-
-	if slience:
-		old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
-		sys.stdout=old
-		yahoo_log.close()
-
-
-yh_of.close()
 
 
 
-blf_file=open(filtername,'w')
-pickle.dump(ques_filter,blf_file)
-blf_file.close()
+
+
+
+		# 	if int(t)%pause==0:
+		# 	print "-------sleep------"
+	 # 		print os.path.getsize(filename)
+	 # 		print len(ques_filter)
+		#
+	 # 		sys.stdout.flush()
+	 # 		if int(t)%3==0:
+	 # 			blf_file=open(filtername,'w')
+		# 		pickle.dump(ques_filter,blf_file)
+		# 		blf_file.close()
+		# 		if slience:
+		# 			if int(os.path.getsize(log_name))>log_max:
+		# 				error_msg="total question:"+str(len(ques_filter))+\
+		# 				"time:"+str(t)
+		# 				mail.send_msg(sys.argv[0],"error:"+error_msg)
+		# 				sys.exit()
+		#
+	 # 		sleep(random.randint(vocation/4,vocation))
+
+
+
+
+
+	# t=time.time()-start_t
+	# final_msg="\n\n "+ "finish "\
+	# + "total question:"+str(len(ques_filter))\
+	# +"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
+	# print final_msg
+	# mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
+	# mailbox.send_msg(sys.argv[0],final_msg)
+	#
+	# if slience:
+	# 	old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
+	# 	sys.stdout=old
+	# 	yahoo_log.close()
