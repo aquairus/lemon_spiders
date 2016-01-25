@@ -16,6 +16,7 @@ import cPickle as pickle
 import mail
 import redis
 import prog_bar
+import json
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
