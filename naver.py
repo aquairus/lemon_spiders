@@ -317,7 +317,7 @@ if __name__ == '__main__':
 	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
 	print final_msg
 
-	mailbox=mail.mailbox(os.env["mail"],os.env["pass"])
+	mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
 	mailbox.send_msg(sys.argv[0],final_msg)
 
 yh_of.close()

@@ -48,6 +48,11 @@ log_name='../yahoo_log.txt'
 log_max=20000000
 filtername='../quesFilter'
 
+
+
+def get_soup(url):
+    pass
+
 def get_answer(url,ques):
 	try:
 		r = requests.get(url,headers = fake_headers)
