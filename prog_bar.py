@@ -14,6 +14,9 @@ class prog_bar(object):
 
     def new_page(self,time,size):
         self.cursor+=1
+        self.reflash(time,size)
+
+    def reflash(self,time,size):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
     	print "filter:"+str(size)

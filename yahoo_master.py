@@ -22,7 +22,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 
-slave_num=1
+slave_num=2
 salve_job=200
 
 thread_cnt=16
@@ -65,7 +65,7 @@ filtername='../quesFilter'
 
 
 def get_arg():
-	delay =5
+	delay =1
 	urlcapacity=2000000
 	slience=False
 	try:
@@ -213,7 +213,7 @@ class scheduler():
 		self.step=step
 		self.slave=slave_num
 		self.size=size
-
+		self.task_k="fresh_url"
 	def dist(self,key,q):
 		if self.length(key)<self.size:
 			pipe=self.r.pipeline()
@@ -227,11 +227,10 @@ class scheduler():
 		for i in xrange(self.slave):
 			self.dist(key+str(i),q)
 
-	def retirve(self,key,q):
-		fresh_url=r.lrange(key,0,self.step-1)
-		print fresh_url
+	def retirve(self,q):
+		fresh_url=r.lrange(self.task_k,0,self.step-1)
 		q.pour(fresh_url)
-		r.ltrim(key,self.step,-1)
+		r.ltrim(self.task_k,self.step,-1)
 
 
 	def length(self,key):
@@ -265,9 +264,9 @@ if __name__ == '__main__':
 		t=time.time()-start_t
 
 		master.dist_all("task_url",url_Q)
-
+		bar.reflash(t,url_Q.length())
 		if url_Q.Q.qsize()<ques_time*slave_num:
-			master.retirve("fresh_url",url_Q)
+			master.retirve(url_Q)
 
 		sleep(delay)
 

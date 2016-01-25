@@ -9,10 +9,11 @@ from time import sleep
 import sys
 import Queue
 import  getopt
+import json
 reload(sys)
 
-slave_num=2
-ques_time=100
+slave_num=1
+ques_time=40
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
@@ -29,7 +30,7 @@ pre_url="https://answers.yahoo.com"
 
 
 def get_arg():
-	delay=1
+	delay=5
 	slave_NO=0
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:n:",["help","dalay=","num="])
@@ -113,12 +114,13 @@ def find_Qa(soup):
 
 
 def slave_work(url):
-	soup=get_soup(url)
+
+	soup=get_soup(pre_url+url)
 	relateQ=find_relateQ(soup)
 	fresh_Q.put(relateQ)
 	Qa=find_Qa(soup)
 	yh_of.write(json.dumps(Qa)+"\n")
-
+	sleep(delay)
 
 def commit_answer(Qa):
     pass
@@ -132,13 +134,14 @@ class worker():
 		self.size=size
 
 	def fetch_link(self,count=5):
-		url_Queue=self.r.lrange(self.commit_k,0,count-1)
-		self.r.ltrim(self.commit_k,count,-1)
+		url_Queue=self.r.lrange(self.task_k,0,count-1)
+		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
 			task_Q.put(Q)
+		print "fetch"
 
 	def commit_link(self,new_Qlist):
-		if self.length(key)<self.size:
+		if self.length(self.commit_k)<self.size:
 			pipe=self.r.pipeline()
 			for Q in new_Qlist:
 				pipe.rpush(self.commit_k,Q)
@@ -161,12 +164,18 @@ if __name__ == '__main__':
 	task_Q=Queue.Queue()
 	fresh_Q=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
-	pool.wait()
+	slaver.fetch_link()
+	slave_work(task_Q.get())
+	print "polling "
 
 	while not task_Q.empty():
-		work = threadpool.WorkRequest(slave_work, task_Q.get())
-		pool.putRequest(work)
-		if tasl_Q.qsize()<ques_time:
+		task=task_Q.get()
+		job = threadpool.WorkRequest(slave_work,(task,))
+		pool.putRequest(job)
+		if task_Q.qsize()<ques_time:
 			slaver.fetch_link()
-		slaver.commit_link()
+
+		if not fresh_Q.empty():
+			slaver.commit_link(fresh_Q.get())
+
 		sleep(delay)
