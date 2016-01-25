@@ -228,6 +228,7 @@ class scheduler():
 
 	def retirve(self,key,q):
 		fresh_url=r.lrange(key,0,self.step-1)
+		print fresh_url
 		q.pour(fresh_url)
 		r.ltrim(key,self.step,-1)
 
