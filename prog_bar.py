@@ -9,20 +9,20 @@ class prog_bar(object):
         self.cursor=1
         self.total=total_p
         self.bar = Bar(max_value=total_p)
-        self.bar.cursor.clear_lines(7)
+        self.bar.cursor.clear_lines(10)
         self.bar.cursor.save()
         self.bar.draw(value=self.cursor)
 
     def new_page(self,cnt):
         self.cursor+=cnt
 
-    def reflash(self,time,size):
+    def reflash(self,time,size,wait_q,in_q):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
-    	print "filter:"+str(size)
-        print "total "+str(size/self.cursor*self.total)
-    	print "spent: "+str(time/60)+" min"
-    	print "rest: "+str(time/self.cursor*(self.total-self.cursor)/60)+" min"
+    	print "filter:"+str(size)+"   total "+str(size/self.cursor*self.total)
+    	print "spent: "+str(int(time/60))+" min"
+    	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
+        print " wait_q:"+str(wait_q)+ "in_q:"+str(in_q)
 
     def reflash_r(self,f_cnt,q_size,c_cnt,curren_f,filename,e_cnt):
         self.bar.cursor.restore()

@@ -22,26 +22,18 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 
-slave_num=2
+sla_cnt=2
 salve_job=200
 
 thread_cnt=16
-ques_time=250
+ques_time=400
 
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
 
 
-#vps:0.8  #ubuntu:12
 
-pause=32
-vocation=40
-
-
-# start_p=2
-# end_p=100
-# total_p=end_p-start_p+2
 
 sids=[]
 
@@ -152,6 +144,7 @@ def ques_factory(cpos):
 		q_list=q_list+get_next_q(cpos,0,sid)
 	return q_list
 
+
 def init_filter(urlcap):
 	try:
 		blf_file=open(filtername,'r')
@@ -208,12 +201,14 @@ class url_Queue():
 
 
 class scheduler():
-	def __init__(self,r,step,slave_num,size=100):
+	def __init__(self,r,step,sla_cnt,size=100):
 		self.r=r
 		self.step=step
-		self.slave=slave_num
+		self.slave=sla_cnt
 		self.size=size
 		self.task_k="fresh_url"
+		self.in_q=0
+
 	def dist(self,key,q):
 		if self.length(key)<self.size:
 			pipe=self.r.pipeline()
@@ -228,6 +223,7 @@ class scheduler():
 			self.dist(key+str(i),q)
 
 	def retirve(self,q):
+		self.in_q=self.length(self.task_k)
 		fresh_url=r.lrange(self.task_k,0,self.step-1)
 		q.pour(fresh_url)
 		r.ltrim(self.task_k,self.step,-1)
@@ -250,7 +246,7 @@ if __name__ == '__main__':
 	url_Q=url_Queue(Ques_f)
 
 	r = redis.StrictRedis(host='spider01', port=6369, db=0)
-	master=scheduler(r,5,slave_num,size=salve_job)
+	master=scheduler(r,5,sla_cnt,size=salve_job)
 	bar=prog_bar.prog_bar(total_p)
 
 
@@ -264,8 +260,9 @@ if __name__ == '__main__':
 		t=time.time()-start_t
 
 		master.dist_all("task_url",url_Q)
-		bar.reflash(t,url_Q.length())
-		if url_Q.Q.qsize()<ques_time*slave_num:
+		wait_q=url_Q.Q.qsize()
+		bar.reflash(t,url_Q.length(),wait_q,master.in_q)
+		if wait_q<ques_time*sla_cnt:
 			master.retirve(url_Q)
 
 		sleep(delay)

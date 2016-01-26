@@ -15,8 +15,8 @@ import os
 import mail
 reload(sys)
 
-slave_num=1
-ques_time=40
+sla_cnt=1
+ques_time=100
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
@@ -141,11 +141,11 @@ def slave_work(url):
 
 
 class worker():
-	def __init__(self,task_url,r,size=100*slave_num):
+	def __init__(self,task_url,r,sla_cnt):
 		self.task_k=task_url
 		self.commit_k="fresh_url"
 		self.r=r
-		self.size=size
+		self.size=sla_cnt*100
 		self.c_cnt=0
 		self.f_cnt=0
 
@@ -157,18 +157,11 @@ class worker():
 		self.f_cnt+=1
 
 	def commit_link(self,new_Qlist):
-		if self.length(self.commit_k)<self.size:
-			pipe=self.r.pipeline()
-			for Q in new_Qlist:
-				pipe.rpush(self.commit_k,Q)
-			pipe.execute()
-			self.c_cnt+=1
-		else:
-			task_Q.put(new_Qlist)
-
-
-	def length(self,key):
-		return self.r.llen(key)
+		pipe=self.r.pipeline()
+		for Q in new_Qlist:
+			pipe.rpush(self.commit_k,Q)
+		pipe.execute()
+		self.c_cnt+=1
 
 
 
@@ -181,7 +174,7 @@ if __name__ == '__main__':
 	yh_of=open(filename,'a+')
 
 	r = redis.StrictRedis(host=master, port=r_port,db=0)
-	slaver=worker(task_url,r)
+	slaver=worker(task_url,r,sla_cnt)
 	task_Q=Queue.Queue()
 	fresh_Q=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
