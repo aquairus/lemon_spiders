@@ -26,19 +26,14 @@ sla_cnt=2
 salve_job=200
 
 thread_cnt=16
-ques_time=400
+ques_time=200
 
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
+roll_time=0.1
 
 
-
-
-sids=[]
-
-
-t=0
 relay_time=10
 
 start_url="https://answers.yahoo.com"
@@ -160,7 +155,7 @@ def init_filter(urlcap):
 
 
 def start_working(start_p,end_p,relay):
-	print "start working "
+
 	cpos_l=range(start_p,end_p)
 	if relay:
 		print "relay"
@@ -173,7 +168,7 @@ def start_working(start_p,end_p,relay):
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		pool.putRequest(ques_works.pop())
 		pool.wait()
-	print "start answering  "
+
 	return ques_works
 
 
@@ -201,16 +196,18 @@ class url_Queue():
 
 
 class scheduler():
-	def __init__(self,r,step,sla_cnt,size=100):
+	def __init__(self,r,sla_cnt,size=100):
 		self.r=r
-		self.step=step
+		self.step=sla_cnt*10
 		self.slave=sla_cnt
 		self.size=size
 		self.task_k="fresh_url"
+		self.out_q=0
 		self.in_q=0
 
 	def dist(self,key,q):
-		if self.length(key)<self.size:
+		self.out_q=self.length(key)
+		if self.out_q<self.size:
 			pipe=self.r.pipeline()
 			for s in xrange(self.step):
 				if not q.Q.empty():
@@ -246,7 +243,7 @@ if __name__ == '__main__':
 	url_Q=url_Queue(Ques_f)
 
 	r = redis.StrictRedis(host='spider01', port=6369, db=0)
-	master=scheduler(r,5,sla_cnt,size=salve_job)
+	master=scheduler(r,sla_cnt,size=salve_job)
 	bar=prog_bar.prog_bar(total_p)
 
 
@@ -261,13 +258,16 @@ if __name__ == '__main__':
 
 		master.dist_all("task_url",url_Q)
 		wait_q=url_Q.Q.qsize()
-		bar.reflash(t,url_Q.length(),wait_q,master.in_q)
+		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q)
 		if wait_q<ques_time*sla_cnt:
 			master.retirve(url_Q)
 
-		sleep(delay)
+		sleep(roll_time)
 
-		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
+		if url_Q.Q.qsize()<2:#ques_time&len(ques_works)>0:
+			blf_file=open(filtername,'w')
+			pickle.dump(url_Q.filter,blf_file)
+			blf_file.close()
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
@@ -287,9 +287,7 @@ if __name__ == '__main__':
 		#
 	 # 		sys.stdout.flush()
 	 # 		if int(t)%3==0:
-	 # 			blf_file=open(filtername,'w')
-		# 		pickle.dump(ques_filter,blf_file)
-		# 		blf_file.close()
+
 		# 		if slience:
 		# 			if int(os.path.getsize(log_name))>log_max:
 		# 				error_msg="total question:"+str(len(ques_filter))+\

@@ -149,6 +149,12 @@ class worker():
 		self.c_cnt=0
 		self.f_cnt=0
 
+	def init_work(self):
+		while self.r.llen(self.task_k)<20:
+			sleep(2)
+		self.fetch_link()
+		slave_work(task_Q.get())
+
 	def fetch_link(self,count=5):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
@@ -178,14 +184,14 @@ if __name__ == '__main__':
 	task_Q=Queue.Queue()
 	fresh_Q=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
-	slaver.fetch_link()
-	slave_work(task_Q.get())
-	print "polling "
+	slaver.init_work()
+
 
 	while not task_Q.empty():
 		task=task_Q.get()
 		job = threadpool.WorkRequest(slave_work,(task,))
 		pool.putRequest(job)
+
 		if task_Q.qsize()<ques_time:
 			slaver.fetch_link()
 
