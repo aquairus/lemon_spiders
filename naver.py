@@ -206,10 +206,11 @@ def start_working(start_p,end_p,pool):
 	return q_works
 
 if __name__ == '__main__':
-
+	check()
 	delay,urlc=get_arg()
+	check()
 	q_filter,nv_of=init_filter(urlc)
-
+	check()
 	urlqueue=Queue.LifoQueue()
 	Ques_queue=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
