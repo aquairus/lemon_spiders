@@ -99,6 +99,7 @@ def get_relateQ(url):
 		qList=soup.find('ul',class_="aside_list").find_all("a")
 	except BaseException, e:
 		return
+
 	for q in qList:
 		href=q.get("href")
 		if not href in q_filter:
