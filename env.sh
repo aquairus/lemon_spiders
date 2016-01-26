@@ -19,7 +19,7 @@ apt-get install python-dev libxml2 libxml2-dev python-lxml -y #python-devel
 apt-get install redis-server python-pip -y
 #if master
 
-pip install redis progressive hiredis
-pip install requests beautifulsoup4 threadpool pybloom  bitarray lxml
+pip2.7 install redis progressive hiredis
+pip2.7 install requests beautifulsoup4 threadpool pybloom  bitarray lxml
 
 cat spider_list >>/etc/hosts
