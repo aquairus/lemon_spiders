@@ -2,12 +2,11 @@
 #source env.sh please
 
 # apt-get install git -y
-# hostname spider0 
+# hostname spider0
 # adduser cxy
 # cd /home/cxy
 # git clone https://github.com/aquairus/lemon_spiders.git
 # source env.sh
-
 echo "mail?"
 read mail
 export mailuser="$mail"
