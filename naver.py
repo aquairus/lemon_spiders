@@ -57,7 +57,7 @@ def get_arg():
 		if name in ("-d","--dalay"):
 			print 'delay is----',value
 			dalay=float(value)
-			
+
 		if name in ("-c","--capacity"):
 			print 'capacity is----',value
 			urlcapacity=int(value)
