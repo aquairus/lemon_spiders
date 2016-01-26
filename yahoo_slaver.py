@@ -23,7 +23,7 @@ r_port=6369
 delay=1
 
 thread_cnt=16
-roll_time=0.4
+roll_time=0.5
 
 error_cnt=0
 error_delay=10
@@ -155,7 +155,7 @@ class worker():
 		self.fetch_link()
 		slave_work(task_Q.get())
 
-	def fetch_link(self,count=10):
+	def fetch_link(self,count=20):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:

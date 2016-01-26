@@ -221,9 +221,9 @@ class scheduler():
 
 	def retirve(self,q):
 		self.in_q=self.length(self.task_k)
-		fresh_url=r.lrange(self.task_k,0,self.step-1)
+		fresh_url=r.lrange(self.task_k,0,self.step*self.slave-1)
 		q.pour(fresh_url)
-		r.ltrim(self.task_k,self.step,-1)
+		r.ltrim(self.task_k,self.step*self.slave,-1)
 
 
 	def length(self,key):
