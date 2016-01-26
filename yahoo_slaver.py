@@ -10,6 +10,9 @@ import sys
 import Queue
 import  getopt
 import json
+import prog_bar
+import os
+import mail
 reload(sys)
 
 slave_num=1
@@ -18,8 +21,12 @@ sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
 delay=1
-thread_cnt=16
 
+thread_cnt=16
+roll_time=0.4
+
+error_cnt=0
+error_delay=10
 
 
 fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',
@@ -30,8 +37,9 @@ pre_url="https://answers.yahoo.com"
 
 
 def get_arg():
-	delay=5
+	delay=1
 	slave_NO=0
+	curren_f=0
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:n:",["help","dalay=","num="])
 	except getopt.GetoptError:
@@ -47,9 +55,10 @@ def get_arg():
 		if name in ("-n","--num"):
 			print 'number is----',value
 			slave_NO=value
-	filename="../yahoo_"+str(slave_NO)+".txt"
+
 	task_url="task_url"+str(slave_NO)
-	return filename,task_url
+	return slave_NO,curren_f,task_url,delay
+
 
 def get_soup(url):
     try:
@@ -57,11 +66,17 @@ def get_soup(url):
 		r.encoding="utf-8"
 		text=r.text
     except BaseException, e:
-		print e
-		sleep(delay)
+		onerror(e)
 		text=""
     return BeautifulSoup(text,"lxml")
 
+def onerror(e):
+	error_cnt+=1
+	if error_cnt>40:
+		mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
+		mailbox.send_msg(sys.argv[0],str(e))
+
+	sleep(error_delay)
 
 def find_answer(soup):
     ansList=soup.find_all('span',class_="ya-q-full-text")
@@ -122,8 +137,7 @@ def slave_work(url):
 	yh_of.write(json.dumps(Qa)+"\n")
 	sleep(delay)
 
-def commit_answer(Qa):
-    pass
+
 
 
 class worker():
@@ -132,13 +146,15 @@ class worker():
 		self.commit_k="fresh_url"
 		self.r=r
 		self.size=size
+		self.c_cnt=0
+		self.f_cnt=0
 
 	def fetch_link(self,count=5):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
 			task_Q.put(Q)
-		print "fetch"
+		self.f_cnt+=1
 
 	def commit_link(self,new_Qlist):
 		if self.length(self.commit_k)<self.size:
@@ -146,7 +162,7 @@ class worker():
 			for Q in new_Qlist:
 				pipe.rpush(self.commit_k,Q)
 			pipe.execute()
-			print "commit"
+			self.c_cnt+=1
 		else:
 			task_Q.put(new_Qlist)
 
@@ -157,8 +173,13 @@ class worker():
 
 
 if __name__ == '__main__':
-	filename,task_url=get_arg()
-	yh_of=open(filename,'w+')
+	bar=prog_bar.prog_bar(100)
+
+	slave_NO,curren_f,task_url,delay=get_arg()
+
+	filename="../yahoo_"+str(slave_NO)+str(curren_f)+".txt"
+	yh_of=open(filename,'a+')
+
 	r = redis.StrictRedis(host=master, port=r_port,db=0)
 	slaver=worker(task_url,r)
 	task_Q=Queue.Queue()
@@ -178,4 +199,11 @@ if __name__ == '__main__':
 		if not fresh_Q.empty():
 			slaver.commit_link(fresh_Q.get())
 
-		sleep(delay)
+		if os.path.getsize(filename)>200000000:
+			curren_f+=1
+			filename="../yahoo_"+str(slave_NO)+str(curren_f)+".txt"
+			yh_of=open(filename,'a+')
+			bar.new_page()
+
+		bar.reflash_r(slaver.f_cnt,task_Q.qsize(),slaver.c_cnt,curren_f,filename,error_cnt)
+		sleep(roll_time)
