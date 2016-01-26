@@ -271,7 +271,7 @@ if __name__ == '__main__':
 		sleep(delay)
 
 		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
-	 		bar.new_page(t,url_Q.length())
+	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
 

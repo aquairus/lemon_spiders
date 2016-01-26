@@ -13,8 +13,8 @@ class prog_bar(object):
         self.bar.cursor.save()
         self.bar.draw(value=self.cursor)
 
-    def new_page(self):
-        self.cursor+=1
+    def new_page(self,cnt):
+        self.cursor+=cnt
 
     def reflash(self,time,size):
         self.bar.cursor.restore()
