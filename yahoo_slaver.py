@@ -155,7 +155,7 @@ class worker():
 		self.fetch_link()
 		slave_work(task_Q.get())
 
-	def fetch_link(self,count=5):
+	def fetch_link(self,count=10):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
