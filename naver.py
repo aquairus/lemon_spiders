@@ -42,11 +42,7 @@ filename="../naver.txt"
 ft_name="../naver_quesFilter"
 pre_url="http://kin.naver.com"
 
-cnt=0
-def check():
-	cnt+=1
-	print cnt
-	sleep(3)
+
 
 def get_arg():
 	urlcapacity=80000
@@ -206,28 +202,26 @@ def start_working(start_p,end_p,pool):
 	return q_works
 
 if __name__ == '__main__':
-	check()
+
 	delay,urlc=get_arg()
-	check()
 	q_filter,nv_of=init_filter(urlc)
-	check()
+
 	urlqueue=Queue.LifoQueue()
 	Ques_queue=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
 	start_time=time.time()
-	bar = prog_bar.prog_bar(total_p)
 
-	check()
+	bar = prog_bar.prog_bar(total_p)
 	q_works=start_working(start_p,end_p,pool)
 
-	check()
+
 
 	while not Ques_queue.empty():
-		check()
+
 		data=Ques_queue.get()
 		work = threadpool.WorkRequest(get_Qa, (data,))
 		pool.putRequest(work)
-		check()
+
 		t=time.time()-start_time
 
 		if Ques_queue.qsize()<ques_time&len(q_works)>0:
