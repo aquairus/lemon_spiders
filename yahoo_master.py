@@ -22,7 +22,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 
-sla_cnt=2
+sla_cnt=5
 salve_job=200
 
 thread_cnt=16
@@ -198,7 +198,7 @@ class url_Queue():
 class scheduler():
 	def __init__(self,r,sla_cnt,size=100):
 		self.r=r
-		self.step=sla_cnt*10
+		self.step=10
 		self.slave=sla_cnt
 		self.size=size
 		self.task_k="fresh_url"
@@ -264,7 +264,7 @@ if __name__ == '__main__':
 
 		sleep(roll_time)
 
-		if url_Q.Q.qsize()<2:#ques_time&len(ques_works)>0:
+		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()

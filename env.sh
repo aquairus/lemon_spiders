@@ -14,3 +14,5 @@ apt-get install redis-server -y
 
 pip install redis progressive hiredis
 pip install requests beautifulsoup4 threadpool pybloom  bitarray lxml
+
+cat spider_list >>/etc/hosts

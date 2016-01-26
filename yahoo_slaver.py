@@ -15,7 +15,7 @@ import os
 import mail
 reload(sys)
 
-sla_cnt=1
+sla_cnt=5
 ques_time=100
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
