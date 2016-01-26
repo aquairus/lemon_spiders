@@ -47,6 +47,11 @@ filename="../yahoo.txt"
 log_name='../yahoo_log.txt'
 log_max=20000000
 filtername='../quesFilter'
+cnt=0
+def check():
+	cnt+=1
+	print cnt
+	sleep(3)
 
 def get_answer(url,ques):
 	try:
