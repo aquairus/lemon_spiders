@@ -54,9 +54,8 @@ filtername='../quesFilter'
 def get_arg():
 	delay =1
 	urlcapacity=2000000
-	slience=False
 	try:
-		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity=","slience"])
+		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity="])
 	except getopt.GetoptError:
 		sys.exit()
 
@@ -70,10 +69,8 @@ def get_arg():
 		if name in ("-c","--capacity"):
 			print 'capacity is----',value
 			urlcapacity=int(value)
-		if name in ("-s"):
-			print "slience mode"
-			slience=True
-	return delay,urlcapacity,slience
+
+	return delay,urlcapacity
 
 def get_soup(url):
     try:
@@ -238,7 +235,8 @@ if __name__ == '__main__':
 	pool = threadpool.ThreadPool(thread_cnt)
 	start_t=time.time()
 
-	delay,urlcapacity,slience=get_arg()
+	delay,urlcapacity=get_arg()
+
 	Ques_f,relay=init_filter(urlcapacity)
 	url_Q=url_Queue(Ques_f)
 
@@ -271,45 +269,3 @@ if __name__ == '__main__':
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
-
-
-
-
-
-
-
-
-
-		# 	if int(t)%pause==0:
-		# 	print "-------sleep------"
-	 # 		print os.path.getsize(filename)
-	 # 		print len(ques_filter)
-		#
-	 # 		sys.stdout.flush()
-	 # 		if int(t)%3==0:
-
-		# 		if slience:
-		# 			if int(os.path.getsize(log_name))>log_max:
-		# 				error_msg="total question:"+str(len(ques_filter))+\
-		# 				"time:"+str(t)
-		# 				mail.send_msg(sys.argv[0],"error:"+error_msg)
-		# 				sys.exit()
-		#
-	 # 		sleep(random.randint(vocation/4,vocation))
-
-
-
-
-
-	# t=time.time()-start_t
-	# final_msg="\n\n "+ "finish "\
-	# + "total question:"+str(len(ques_filter))\
-	# +"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
-	# print final_msg
-	# mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
-	# mailbox.send_msg(sys.argv[0],final_msg)
-	#
-	# if slience:
-	# 	old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
-	# 	sys.stdout=old
-	# 	yahoo_log.close()
