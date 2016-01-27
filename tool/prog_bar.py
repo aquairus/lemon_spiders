@@ -15,6 +15,8 @@ class prog_bar(object):
 
     def new_page(self,cnt):
         self.cursor+=cnt
+        self.bar.cursor.restore()
+        self.bar.draw(value=self.cursor)
 
     def reflash(self,time,size,in_q,wait_q,out_q):
         self.bar.cursor.restore()
