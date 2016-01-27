@@ -8,10 +8,13 @@ slaver_list=['spider02','spider03',\
 
 
 try:
-	env.password=os.environ['pass']
+	env.password=os.environ['spider_pass']
+	ftp_passwd=os.environ['ftp_pass']
 except BaseException, e:
-	print "enter your password,honey?"
+	print "enter spider_pass,honey"
 	env.password=raw_input()
+	print "enter ftp_password,honey"
+	ftp_passwd=raw_input()
 
 env.user="root"
 
@@ -69,15 +72,17 @@ def save():
 	local("git push")
 
 def download(name,r_dir="/home/cxy"):
+	
 	usr="cxy"
-	print "passwd?"
-	passwd=raw_input()
+
 	l_dir='/Users/apple/Desktop/'+name
+
 	with settings(warn_only=True):
 		local("mkdir "+l_dir)
-	for slver in slaver_list:
+
+	for slaver in slaver_list:
 		with pysftp.Connection(slaver,\
-		 username=usr, password=passwd) as sftp:
+		 username=usr, password=ftp_passwd) as sftp:
 			try:
 				sftp.get_d(r_dir,l_dir)
 			except BaseException, e:
