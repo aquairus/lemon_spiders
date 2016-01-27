@@ -22,7 +22,8 @@ class prog_bar(object):
         print "-------------"
     	print "done:"+str(size)
         print "in_q:"+str(in_q)
-        print "wait_q:"+str(wait_q)+"     out_q:"+str(out_q)
+        print "wait_q:"+str(wait_q)
+        print "out_q:"+str(out_q)
     	print "spent: "+str(int(time/60))+" min"
     	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
 
