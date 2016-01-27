@@ -44,7 +44,7 @@ class prog_bar(object):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
         print "done: "+str(done)+"     file_size: "+str(int(f_size))
-        print "total_size: "+str(int(f_size/self.cursor*(self.total-self.cursor)/60))
+        print "total_size: "+str(int(f_size/self.cursor*(self.total-self.cursor)))
     	print "spent: "+str(int(time/60))+" min"
     	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
         print "error_count: "+str(e_cnt)
