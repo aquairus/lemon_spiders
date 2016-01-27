@@ -47,7 +47,6 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 filename="../yahoo.txt"
 log_name='../yahoo_log.txt'
-log_max=20000000
 filtername='../quesFilter'
 
 

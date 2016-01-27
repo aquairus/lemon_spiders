@@ -72,9 +72,11 @@ def get_soup(url):
 def onerror(e):
 	error_cnt+=1
 	if error_cnt>40:
-		mailbox=mail.mailbox(os.env["mailuser"],os.env["passwd"])
-		mailbox.send_msg(sys.argv[0],str(e))
-
+		try:
+			mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
+			mailbox.send_msg(sys.argv[0],str(e))
+		except BaseException, e:
+			sleep(error_delay*10)
 	sleep(error_delay)
 
 def find_answer(soup):
