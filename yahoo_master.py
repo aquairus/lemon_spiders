@@ -17,6 +17,7 @@ import mail
 import redis
 import prog_bar
 import json
+import random
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
