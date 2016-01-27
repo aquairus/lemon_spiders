@@ -20,11 +20,11 @@ class prog_bar(object):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
         print "-------------"
-    	print "done:"+str(size)
-        print "in_q:"+str(in_q)
-        print "wait_q:"+str(wait_q)
-        print "out_q:"+str(out_q)
-    	print "spent: "+str(int(time/60))+" min"
+    	print "done:"+str(size)+"  "
+        print "in_q:"+str(in_q)+"  "
+        print "wait_q:"+str(wait_q)+"  "
+        print "out_q:"+str(out_q)+"  "
+    	print "spent: "+str(int(time/60))+" min"+"  "
     	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
 
 
@@ -32,12 +32,12 @@ class prog_bar(object):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
         print "-------------"
-    	print "fetch:"+str(f_cnt)
-        print "q_size:"+str(q_size)
-        print "commit: "+str(c_cnt)
-    	print "curren_f: "+str(curren_f)
-    	print "file_size: "+str(os.path.getsize(filename))
-        print "error_count: "+str(e_cnt)
+    	print "fetch:"+str(f_cnt)+"  "
+        print "q_size:"+str(q_size)+"  "
+        print "commit: "+str(c_cnt)+"  "
+    	print "curren_f: "+str(curren_f)+"  "
+    	print "file_size: "+str(os.path.getsize(filename))+"  "
+        print "error_count: "+str(e_cnt)+"  "
 
     def get_stat(self,done,time,filename,e_cnt):
         f_size=os.path.getsize(filename)
