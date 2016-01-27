@@ -4,7 +4,6 @@ import requests
 from requests import ConnectionError
 import sys
 from bs4 import BeautifulSoup
-import re
 import time
 import threadpool
 import Queue
@@ -13,9 +12,8 @@ import os
 from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
-import mail
+from tool import prog_bar,mail
 import redis
-import prog_bar
 import json
 import random
 
@@ -199,7 +197,6 @@ class scheduler():
 		self.step=10
 		self.slave=sla_cnt
 		self.size=size
-
 		self.out_q=0
 		self.in_q=0
 

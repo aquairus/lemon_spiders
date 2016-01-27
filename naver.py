@@ -13,8 +13,7 @@ import os
 from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
-import mail
-import prog_bar
+from tool import  prog_bar,mail
 
 
 reload(sys)

@@ -10,9 +10,8 @@ import sys
 import Queue
 import  getopt
 import json
-import prog_bar
+from tool import prog_bar,mail
 import os
-import mail
 reload(sys)
 
 sla_cnt=5
