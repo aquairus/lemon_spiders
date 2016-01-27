@@ -20,8 +20,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 thread_cnt=16
-vocation=20
-ques_time=200
+ques_time=500
 
 start_p=1
 end_p=100
@@ -232,7 +231,7 @@ if __name__ == '__main__':
 		bar.get_stat(len(q_filter),t,filename,error_cnt)
 	 	sleep(delay)
 
-	 	if int(t)%3==0:
+	 	if int(t)%23==0:
  			blf_file=open(ft_name,'w')
 			pickle.dump(q_filter,blf_file)
 			blf_file.close()
