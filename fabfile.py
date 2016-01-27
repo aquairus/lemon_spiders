@@ -1,6 +1,5 @@
 
 from fabric.api import cd,run,env,hosts,roles,execute,settings,local
-import pysftp
 import os
 
 slaver_list=['spider02','spider03',\
@@ -70,20 +69,3 @@ def save():
 	local("git add -A")
 	local("git commit -m 'save' ")
 	local("git push")
-
-def download(name,r_dir="/home/cxy"):
-	
-	usr="cxy"
-
-	l_dir='/Users/apple/Desktop/'+name
-
-	with settings(warn_only=True):
-		local("mkdir "+l_dir)
-
-	for slaver in slaver_list:
-		with pysftp.Connection(slaver,\
-		 username=usr, password=ftp_passwd) as sftp:
-			try:
-				sftp.get_d(r_dir,l_dir)
-			except BaseException, e:
-				pass
