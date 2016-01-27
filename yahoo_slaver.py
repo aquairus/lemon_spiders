@@ -149,6 +149,10 @@ class worker():
 		self.c_cnt=0
 		self.f_cnt=0
 
+	def unfinished(self):
+		unfinished=self.r.llen(self.task_k)+self.r.llen(self.commit_k)
+		return 	unfinished>0
+
 	def init_work(self):
 		while self.r.llen(self.task_k)<20:
 			sleep(2)
@@ -187,7 +191,7 @@ if __name__ == '__main__':
 	slaver.init_work()
 
 
-	while not task_Q.empty():
+	while slaver.unfinished:
 		task=task_Q.get()
 		job = threadpool.WorkRequest(slave_work,(task,))
 		pool.putRequest(job)
