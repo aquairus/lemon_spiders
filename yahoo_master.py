@@ -199,12 +199,13 @@ class scheduler():
 		self.step=10
 		self.slave=sla_cnt
 		self.size=size
-		self.task_k="fresh_url"
+
 		self.out_q=0
 		self.in_q=0
 
 	def dist(self,key,q):
 		self.out_q=self.length(key)
+
 		if self.out_q<self.size:
 			pipe=self.r.pipeline()
 			for s in xrange(self.step):
@@ -217,11 +218,12 @@ class scheduler():
 		for i in xrange(self.slave):
 			self.dist(key+str(i),q)
 
-	def retirve(self,q):
-		self.in_q=self.length(self.task_k)
-		fresh_url=r.lrange(self.task_k,0,self.step*self.slave-1)
+	def retirve(self,key,q):
+		self.in_q=self.length(key)
+
+		fresh_url=r.lrange(key,0,self.step*self.slave-1)
 		q.pour(fresh_url)
-		r.ltrim(self.task_k,self.step*self.slave,-1)
+		r.ltrim(key,self.step*self.slave,-1)
 
 
 	def length(self,key):
@@ -260,7 +262,7 @@ if __name__ == '__main__':
 		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q)
 
 		if wait_q<ques_time*sla_cnt:
-			master.retirve(url_Q)
+			master.retirve("fresh_url",url_Q)
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()
