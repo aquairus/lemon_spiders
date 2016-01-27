@@ -1,25 +1,26 @@
 
 from fabric.api import cd,run,env,hosts,roles,execute,settings,local
-
+import pysftp
 import os
 
+slaver_list=['spider02','spider03',\
+'spider04','spider05','spider06']
 
-if os.environ['pass']:
+
+try:
 	env.password=os.environ['pass']
-else:
+except BaseException, e:
 	print "enter your password,honey?"
 	env.password=raw_input()
 
-
+env.user="root"
 
 env.roledefs = {
-'master': ['root@spider01'],
+'master': ['spider01'],
 
-'slaver': ['root@spider02','root@spider03',\
-'root@spider04','root@spider05','root@spider06'],
+'slaver': slaver_list,
 
-'all':['root@spider01','root@spider02','root@spider03',\
-'root@spider04','root@spider05','root@spider06']
+'all':['spider01']+slaver_list
 
 }
 
@@ -52,7 +53,6 @@ def get_all():
 	execute(get_slaver)
 
 def new_node(host):
-	env.user="root"
 	with settings(warn_only=True):
 		run('apt-get install git -y')
 		run('hostname '+host)
@@ -67,4 +67,17 @@ def save():
 	local("git commit -m 'save' ")
 	local("git push")
 
-
+def download(dir,r_dir="/home/cxy"):
+	usr="cxy"
+	print "passwd?"
+	passwd=raw_input()
+	local_dir='~/desktop/'+dir
+	local("mkdir "+local_dir)
+	with local("cd "+local_dir):
+		for slver in slaver_list:
+			with pysftp.Connection(slaver,\
+			 username=usr, password=passwd) as sftp:
+				try:
+					sftp.get_d(r_dir,local_dir)
+				except BaseException, e:
+					pass
