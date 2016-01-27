@@ -19,6 +19,7 @@ class prog_bar(object):
     def reflash(self,time,size,in_q,wait_q,out_q):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
+        print "-------------"
     	print "done:"+str(size)
         print "in_q:"+str(in_q)
         print "wait_q:"+str(wait_q)+"     out_q:"+str(out_q)
@@ -29,7 +30,7 @@ class prog_bar(object):
     def reflash_r(self,f_cnt,q_size,c_cnt,curren_f,filename,e_cnt):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
-        print "\n"
+        print "-------------"
     	print "fetch:"+str(f_cnt)
         print "q_size:"+str(q_size)
         print "commit: "+str(c_cnt)
