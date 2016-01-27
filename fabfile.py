@@ -34,6 +34,7 @@ def get_master():
 def get_slaver():
 	run("hostname")
 
+
 @roles('all')
 def ls():
 	with cd('/home/cxy/lemon_spiders'):
@@ -67,17 +68,17 @@ def save():
 	local("git commit -m 'save' ")
 	local("git push")
 
-def download(dir,r_dir="/home/cxy"):
+def download(name,r_dir="/home/cxy"):
 	usr="cxy"
 	print "passwd?"
 	passwd=raw_input()
-	local_dir='~/desktop/'+dir
-	local("mkdir "+local_dir)
-	with local("cd "+local_dir):
-		for slver in slaver_list:
-			with pysftp.Connection(slaver,\
-			 username=usr, password=passwd) as sftp:
-				try:
-					sftp.get_d(r_dir,local_dir)
-				except BaseException, e:
-					pass
+	l_dir='/Users/apple/Desktop/'+name
+	with settings(warn_only=True):
+		local("mkdir "+l_dir)
+	for slver in slaver_list:
+		with pysftp.Connection(slaver,\
+		 username=usr, password=passwd) as sftp:
+			try:
+				sftp.get_d(r_dir,l_dir)
+			except BaseException, e:
+				pass
