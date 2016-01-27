@@ -258,15 +258,16 @@ if __name__ == '__main__':
 		master.dist_all("task_url",url_Q)
 		wait_q=url_Q.Q.qsize()
 		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q)
+
 		if wait_q<ques_time*sla_cnt:
 			master.retirve(url_Q)
+			blf_file=open(filtername,'w')
+			pickle.dump(url_Q.filter,blf_file)
+			blf_file.close()
 
 		sleep(roll_time)
 
 		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
-			blf_file=open(filtername,'w')
-			pickle.dump(url_Q.filter,blf_file)
-			blf_file.close()
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
