@@ -34,7 +34,7 @@ total_p=end_p-start_p+2
 roll_time=0.4
 
 
-relay_time=30
+relay_time=50
 
 start_url="https://answers.yahoo.com"
 pre_url="https://answers.yahoo.com"
