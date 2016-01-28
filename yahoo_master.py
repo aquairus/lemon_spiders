@@ -159,7 +159,7 @@ def start_working(start_p,end_p,relay):
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
-			pool.wait()
+		pool.wait()
 	else:
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		pool.putRequest(ques_works.pop())
