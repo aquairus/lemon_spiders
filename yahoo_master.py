@@ -23,7 +23,7 @@ sys.setdefaultencoding( "utf-8" )
 
 
 sla_cnt=5
-salve_job=800
+salve_job=2000
 
 thread_cnt=16
 ques_time=200
@@ -31,10 +31,10 @@ ques_time=200
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.8
+roll_time=0.4
 
 
-relay_time=10
+relay_time=30
 
 start_url="https://answers.yahoo.com"
 pre_url="https://answers.yahoo.com"
@@ -271,7 +271,7 @@ if __name__ == '__main__':
 
 		sleep(roll_time)
 
-		if url_Q.Q.qsize()<ques_time&len(ques_works)>0:
+		if wait_q<ques_time&len(ques_works)>0:
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
