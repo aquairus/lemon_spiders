@@ -44,7 +44,7 @@ pre_url="http://kin.naver.com"
 
 
 def get_arg():
-	urlcapacity=80000
+	urlcapacity=2000000
 	delay =0.2 #vps:0.5  #ubuntu:0.8
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity="])
