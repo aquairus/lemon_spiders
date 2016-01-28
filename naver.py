@@ -16,6 +16,7 @@ import cPickle as pickle
 from tool import  prog_bar,mail
 
 
+
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
@@ -44,7 +45,7 @@ pre_url="http://kin.naver.com"
 
 def get_arg():
 	urlcapacity=80000
-	delay =0.5 #vps:0.5  #ubuntu:0.8
+	delay =0.1 #vps:0.5  #ubuntu:0.8
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity="])
 	except getopt.GetoptError:
@@ -82,11 +83,11 @@ def onerror(e):
 		# 	mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
 		# 	mailbox.send_msg(sys.argv[0],str(e))
 		# except BaseException, e:
-			
+
 	sleep(error_delay)
 
-def get_answer(url):
-	soup = get_soup(url)
+def get_answer(soup):
+
 	try:
 		title=soup.find('h3',class_="_endTitleText").text.lstrip().rstrip()
 	except BaseException, e:
@@ -98,31 +99,38 @@ def get_answer(url):
 		all_ans.append(ans.text)
 	return title,all_ans
 
-def get_relateQ(url):
-	soup = get_soup(url)
-	try:
-		qList=soup.find('ul',class_="aside_list").find_all("a")
-	except BaseException, e:
-		return
-
+def get_relateQ(soup):
+	qList=soup.find_all("a")
+	Links=[]
 	for q in qList:
 		href=q.get("href")
-		if not href in q_filter:
-			if "/qna/" in href:
-				q_filter.add(href)
-				Ques_queue.put(href)
+		if href:
+			if "qna/detail" in href:
+				Links.append(href)
+	return Links
+
+
 
 
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
-	get_relateQ(pre_url+url)
-	ques,all_ans=get_answer(pre_url+url)
 
+	soup = get_soup(pre_url+url)
+	Links=get_relateQ(soup)
+	for link in Links:
+		if not link in q_filter:
+			q_filter.add(href)
+			Ques_queue.put(href)
+
+
+	ques,all_ans=get_answer(soup)
 	for ans in all_ans:
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	Qa["content"]=ques
 	nv_of.write(json.dumps(Qa, ensure_ascii=False)+"\n")
+
+
 
 def get_question(url):
 	soup = get_soup(url)
@@ -147,7 +155,6 @@ def get_expert_q(url):
 			if not href in q_filter:
 				q_filter.add(href)
 				Ques_queue.put(href)
-
 
 def ques_factory(page):
 
@@ -240,8 +247,6 @@ if __name__ == '__main__':
 
 
 	pool.wait()
-
+	nv_of.close()
 	# mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
 	# mailbox.send_msg(sys.argv[0],"finished")
-
-nv_of.close()

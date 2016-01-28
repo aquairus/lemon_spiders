@@ -22,7 +22,7 @@ r_port=6369
 delay=1
 
 thread_cnt=16
-roll_time=0.5
+roll_time=0.2
 
 error_cnt=0
 error_delay=10
