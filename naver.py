@@ -45,7 +45,7 @@ pre_url="http://kin.naver.com"
 
 def get_arg():
 	urlcapacity=2000000
-	delay =0.2 #vps:0.5  #ubuntu:0.8
+	delay =0.4 #vps:0.5  #ubuntu:0.8
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity="])
 	except getopt.GetoptError:
@@ -110,8 +110,6 @@ def get_relateQ(soup):
 	return Links
 
 
-
-
 def get_Qa(url):
 	Qa={}
 	Qa["review"]=""
@@ -120,16 +118,14 @@ def get_Qa(url):
 	Links=get_relateQ(soup)
 	for link in Links:
 		if not link in q_filter:
-			q_filter.add(href)
-			Ques_queue.put(href)
-
+			q_filter.add(link)
+			Ques_queue.put(link)
 
 	ques,all_ans=get_answer(soup)
 	for ans in all_ans:
 		Qa["review"]=Qa["review"]+ans+"<p>"
 	Qa["content"]=ques
 	nv_of.write(json.dumps(Qa, ensure_ascii=False)+"\n")
-
 
 
 def get_question(url):
