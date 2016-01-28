@@ -195,11 +195,6 @@ def init_filter(url_c):
 
 
 
-#
-# test_url="http://kin.naver.com/qna/detail.nhn?d1id=11&dirId=110408&docId=243351741"
-# test_url2="http://kin.naver.com/qna/list.nhn?m=kinup&dirId=5"
-# pre_url="http://kin.naver.com"
-
 
 
 def start_working(start_p,end_p,pool):
@@ -232,12 +227,12 @@ if __name__ == '__main__':
 		pool.putRequest(work)
 
 		t=time.time()-start_time
-
-		if Ques_queue.qsize()<ques_time&len(q_works)>0:
+		wait_q=Ques_queue.qsize()
+		if wait_q<ques_time&len(q_works)>0:
 	 		pool.putRequest(q_works.pop())
 			bar.new_page(1)
 
-		bar.get_stat(len(q_filter),t,filename,error_cnt)
+		bar.get_stat(len(q_filter),t,filename,wait_q,error_cnt)
 	 	sleep(delay)
 
 	 	if int(t)%23==0:

@@ -41,7 +41,7 @@ class prog_bar(object):
     	print "file_size: "+str(os.path.getsize(filename))+"  "
         print "error_count: "+str(e_cnt)+"  "
 
-    def get_stat(self,done,time,filename,e_cnt):
+    def get_stat(self,done,time,filename,wait_q,e_cnt):
         f_size=os.path.getsize(filename)
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
@@ -49,4 +49,5 @@ class prog_bar(object):
         print "total_size: "+str(int(f_size/self.cursor*(self.total-self.cursor)))
     	print "spent: "+str(int(time/60))+" min"
     	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
+        print "wait_url: "+str(wait_q)
         print "error_count: "+str(e_cnt)
