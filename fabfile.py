@@ -44,7 +44,6 @@ def ls():
 
 
 
-
 @roles('all')
 def update():
 	with cd('/home/cxy/lemon_spiders'):
