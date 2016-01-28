@@ -67,5 +67,6 @@ def new_node(host):
 
 def save():
 	local("git add -A")
-	local("git commit -m 'save' ")
-	local("git push")
+	with settings(warn_only=True):
+		local("git commit -m 'save' ")
+		local("git push")
