@@ -68,3 +68,13 @@ def save():
 	with settings(warn_only=True):
 		local("git commit -m 'save' ")
 		local("git push")
+		
+@roles('slaver')
+def work():
+	with cd('/home/cxy/lemon_spiders'):
+ 		run("screen -S work")
+
+@roles('slaver')
+def check():
+	with cd('/home/cxy/lemon_spiders'):
+ 		run("screen -r work")
