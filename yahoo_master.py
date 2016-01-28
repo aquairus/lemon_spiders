@@ -23,7 +23,7 @@ sys.setdefaultencoding( "utf-8" )
 
 
 sla_cnt=5
-salve_job=2000
+salve_job=4000
 
 thread_cnt=16
 ques_time=200
@@ -32,9 +32,7 @@ start_p=2
 end_p=100
 total_p=end_p-start_p+2
 roll_time=0.4
-
-
-relay_time=50
+relay_time=5
 
 start_url="https://answers.yahoo.com"
 pre_url="https://answers.yahoo.com"
@@ -52,7 +50,7 @@ filtername='../quesFilter'
 
 def get_arg():
 	delay =1
-	urlcapacity=2000000
+	urlcapacity=5000000
 	try:
 		options,args = getopt.getopt(sys.argv[1:],"hd:c:s:",["help","dalay=","capacity="])
 	except getopt.GetoptError:
@@ -159,6 +157,7 @@ def start_working(start_p,end_p,relay):
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
+		bar(relay_time)
 		pool.wait()
 	else:
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
@@ -235,6 +234,7 @@ class scheduler():
 
 
 
+
 if __name__ == '__main__':
 
 	pool = threadpool.ThreadPool(thread_cnt)
@@ -255,16 +255,19 @@ if __name__ == '__main__':
 	ques_works=start_working(start_p,end_p,relay)
 
 
-	while master.unfinished_cnt(url_Q.Q.qsize())>0:
+	while master.unfinished_cnt(wait_q)>0:
 
 		t=time.time()-start_t
 
 		master.dist_all("task_url",url_Q)
+
 		wait_q=url_Q.Q.qsize()
 		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q)
 
 		if wait_q<ques_time*sla_cnt:
 			master.retirve("fresh_url",url_Q)
+
+		if int(t)%120==0:
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()

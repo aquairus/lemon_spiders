@@ -231,7 +231,7 @@ if __name__ == '__main__':
 		bar.get_stat(len(q_filter),t,filename,wait_q,error_cnt)
 	 	sleep(delay)
 
-	 	if int(t)%23==0:
+	 	if int(t)%11==0:
  			blf_file=open(ft_name,'w')
 			pickle.dump(q_filter,blf_file)
 			blf_file.close()

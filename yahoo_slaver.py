@@ -12,10 +12,11 @@ import  getopt
 import json
 from tool import prog_bar,mail
 import os
+import socket
 reload(sys)
 
 sla_cnt=5
-ques_time=100
+ques_time=200
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
@@ -36,11 +37,11 @@ pre_url="https://answers.yahoo.com"
 
 
 def get_arg():
-	delay=1
-	slave_NO=0
+	delay=0.3
+	slave_NO=socket.gethostname()
 	curren_f=0
 	try:
-		options,args = getopt.getopt(sys.argv[1:],"hd:n:",["help","dalay=","num="])
+		options,args = getopt.getopt(sys.argv[1:],"hd:",["help","dalay="])
 	except getopt.GetoptError:
 		sys.exit()
 
@@ -51,9 +52,7 @@ def get_arg():
 		if name in ("-d","--dalay"):
 			print 'delay is----',value
 			dalay=float(value)
-		if name in ("-n","--num"):
-			print 'number is----',value
-			slave_NO=value
+
 
 
 	return slave_NO,curren_f,delay
@@ -197,7 +196,10 @@ if __name__ == '__main__':
 
 
 	while slaver.unfinished:
-		task=task_Q.get()
+
+		if not task_Q.empty():
+			task=task_Q.get()
+
 		job = threadpool.WorkRequest(slave_work,(task,))
 		pool.putRequest(job)
 
