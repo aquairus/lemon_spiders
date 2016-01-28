@@ -97,13 +97,17 @@ def find_answer(soup):
 
 
 def find_relateQ(soup):
-    qList=soup.find_all('div',class_="qTile Px-14 Py-8 Bgc-w")
-    relateQ=[]
-    for q in qList[:-1]:
-        a=q.find("a")
-        href=a.get("href")
-        relateQ.append(href)
-    return relateQ
+	relateQ=[]
+	qList=soup.find_all("a")
+	for q in qList:
+		href=q.get("href")
+		if href:
+			if ("question/index?qid=" in href)\
+			and (not "page" in href)\
+			and (not "sort" in href):
+				relateQ.append(href)
+
+	return relateQ
 
 
 def find_title(soup):

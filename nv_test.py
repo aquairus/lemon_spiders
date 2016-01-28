@@ -13,8 +13,6 @@ class Test_slaver(unittest.TestCase):
 
         soup=naver.get_soup(ans_url)
         Links=naver.get_relateQ(soup)
-
-        print len(Links)
         self.assertIsInstance(Links[0],str)
 
         # title=yahoo_slaver.find_title(soup)

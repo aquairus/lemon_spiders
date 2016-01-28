@@ -12,22 +12,23 @@ class Test_slaver(unittest.TestCase):
         soup=yahoo_slaver.get_soup(ans_url)
 
         relateQ=yahoo_slaver.find_relateQ(soup)
+        print len(relateQ)
         self.assertIsInstance(relateQ[0],str)
 
-        title=yahoo_slaver.find_title(soup)
-        self.assertIsInstance(title,unicode)
+        # title=yahoo_slaver.find_title(soup)
+        # self.assertIsInstance(title,unicode)
+        #
+        # Qa=yahoo_slaver.find_Qa(soup)
+        # self.assertIsInstance(Qa,dict)
 
-        Qa=yahoo_slaver.find_Qa(soup)
-        self.assertIsInstance(Qa,dict)
 
-
-class Test_master(unittest.TestCase):
-    def test_que(self):
-
-        start_url="https://answers.yahoo.com"
-        questions,sids=yahoo_master.get_question(start_url)
-
-        self.assertIsInstance(questions,list)
+# class Test_master(unittest.TestCase):
+#     def test_que(self):
+#
+#         start_url="https://answers.yahoo.com"
+#         questions,sids=yahoo_master.get_question(start_url)
+#
+#         self.assertIsInstance(questions,list)
 
 
 
