@@ -26,12 +26,12 @@ sla_cnt=5
 salve_job=4000
 
 thread_cnt=16
-ques_time=200
+ques_time=500
 
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.4
+roll_time=0.5
 relay_time=5
 
 start_url="https://answers.yahoo.com"
@@ -43,8 +43,7 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 				 }
 
 
-filename="../yahoo.txt"
-log_name='../yahoo_log.txt'
+
 filtername='../quesFilter'
 
 
