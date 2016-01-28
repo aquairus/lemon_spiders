@@ -38,7 +38,7 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 
 
 filename="../naver.txt"
-ft_name="../naver_quesFilter"
+ft_name="../nv_ft"
 pre_url="http://kin.naver.com"
 
 
