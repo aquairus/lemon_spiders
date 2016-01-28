@@ -31,7 +31,7 @@ ques_time=200
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.1
+roll_time=0.8
 
 
 relay_time=10
@@ -275,4 +275,3 @@ if __name__ == '__main__':
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
-
