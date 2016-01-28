@@ -39,8 +39,8 @@ def get_slaver():
 
 @roles('all')
 def ls():
-	with cd('/home/cxy/lemon_spiders'):
- 		run("ls")
+	with cd('/home/cxy'):
+ 		run("ls -l")
 
 
 

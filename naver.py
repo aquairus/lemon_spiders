@@ -76,11 +76,13 @@ def get_soup(url):
 def onerror(e):
 	error_cnt+=1
 	if error_cnt>40:
-		try:
-			mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
-			mailbox.send_msg(sys.argv[0],str(e))
-		except BaseException, e:
-			sleep(error_delay*10)
+		sleep(error_delay*10)
+	sleep(error_delay)
+		# try:
+		# 	mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
+		# 	mailbox.send_msg(sys.argv[0],str(e))
+		# except BaseException, e:
+			
 	sleep(error_delay)
 
 def get_answer(url):
@@ -239,7 +241,7 @@ if __name__ == '__main__':
 
 	pool.wait()
 
-	mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
-	mailbox.send_msg(sys.argv[0],"finished")
+	# mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
+	# mailbox.send_msg(sys.argv[0],"finished")
 
 nv_of.close()
