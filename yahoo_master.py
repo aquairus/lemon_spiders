@@ -194,16 +194,19 @@ class url_Queue():
 class scheduler():
 	def __init__(self,r,sla_cnt,size=100):
 		self.r=r
-		self.step=10
+		self.step=10*sla_cnt
 		self.slave=sla_cnt
 		self.size=size
 		self.out_q=0
 		self.in_q=0
 
+	def unfinished_cnt(self,q_size):
+		return 	self.out_q+self.in_q+q_size
+
 	def dist(self,key,q):
 		self.out_q=self.length(key)
 
-		if self.out_q<self.size:
+		if self.out_q<self.size*self.slave:
 			pipe=self.r.pipeline()
 			for s in xrange(self.step):
 				if not q.Q.empty():
@@ -213,7 +216,7 @@ class scheduler():
 
 	def dist_all(self,key,q):
 		for i in xrange(self.slave):
-			self.dist(key+str(i),q)
+			self.dist(key,q)
 
 	def retirve(self,key,q):
 		self.in_q=self.length(key)
@@ -222,6 +225,8 @@ class scheduler():
 		q.pour(fresh_url)
 		r.ltrim(key,self.step*self.slave,-1)
 
+	def function():
+		pass
 
 	def length(self,key):
 		return self.r.llen(key)
@@ -250,7 +255,7 @@ if __name__ == '__main__':
 	ques_works=start_working(start_p,end_p,relay)
 
 
-	while not url_Q.Q.empty():
+	while master.unfinished_cnt(url_Q.Q.qsize())>0:
 
 		t=time.time()-start_t
 
@@ -270,3 +275,4 @@ if __name__ == '__main__':
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			pool.wait()
+

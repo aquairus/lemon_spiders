@@ -63,7 +63,6 @@ def new_node(host):
 		run('git clone https://github.com/aquairus/lemon_spiders.git \
 			/home/cxy/lemon_spiders')
 		run('source /home/cxy/lemon_spiders/conf/env.sh')
-#fab new_node:spider -H spider
 
 def save():
 	local("git add -A")

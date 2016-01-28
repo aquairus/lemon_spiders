@@ -55,8 +55,8 @@ def get_arg():
 			print 'number is----',value
 			slave_NO=value
 
-	task_url="task_url"+str(slave_NO)
-	return slave_NO,curren_f,task_url,delay
+
+	return slave_NO,curren_f,delay
 
 
 def get_soup(url):
@@ -142,8 +142,8 @@ def slave_work(url):
 
 
 class worker():
-	def __init__(self,task_url,r,sla_cnt):
-		self.task_k=task_url
+	def __init__(self,r,sla_cnt):
+		self.task_k="task_url"
 		self.commit_k="fresh_url"
 		self.r=r
 		self.size=sla_cnt*100
@@ -179,13 +179,13 @@ class worker():
 if __name__ == '__main__':
 	bar=prog_bar.prog_bar(100)
 
-	slave_NO,curren_f,task_url,delay=get_arg()
+	slave_NO,curren_f,delay=get_arg()
 
 	filename="../yahoo_"+str(slave_NO)+str(curren_f)+".txt"
 	yh_of=open(filename,'a+')
 
 	r = redis.StrictRedis(host=master, port=r_port,db=0)
-	slaver=worker(task_url,r,sla_cnt)
+	slaver=worker(r,sla_cnt)
 	task_Q=Queue.Queue()
 	fresh_Q=Queue.Queue()
 	pool = threadpool.ThreadPool(thread_cnt)
