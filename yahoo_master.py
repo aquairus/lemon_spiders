@@ -274,4 +274,3 @@ if __name__ == '__main__':
 		if wait_q<ques_time&len(ques_works)>0:
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
-			pool.wait()
