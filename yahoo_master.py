@@ -23,7 +23,7 @@ sys.setdefaultencoding( "utf-8" )
 
 
 sla_cnt=5
-salve_job=200
+salve_job=800
 
 thread_cnt=16
 ques_time=200
