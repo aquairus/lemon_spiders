@@ -27,14 +27,8 @@ env.roledefs = {
 }
 
 
-@roles('master')
-def get_master():
-	run("hostname")
 
 
-@roles('slaver')
-def get_slaver():
-	run("hostname")
 
 
 @roles('all')
@@ -68,7 +62,10 @@ def save():
 	with settings(warn_only=True):
 		local("git commit -m 'save' ")
 		local("git push")
-		
+
+
+
+
 @roles('slaver')
 def work():
 	with cd('/home/cxy/lemon_spiders'):
@@ -78,3 +75,17 @@ def work():
 def check():
 	with cd('/home/cxy/lemon_spiders'):
  		run("screen -r work")
+
+@roles('slaver')
+def clean():
+	with cd('/home/cxy'):
+ 		run("rm yahoo*")
+
+@roles('master')
+def direct():
+	with cd('/home/cxy/lemon_spiders'):
+ 		run("screen -S direct")
+
+def start():
+	execute(direct)
+	execute(work)

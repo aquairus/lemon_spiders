@@ -253,8 +253,8 @@ if __name__ == '__main__':
 	url_Q.pour(questions)
 	ques_works=start_working(start_p,end_p,relay)
 
-	wait_q=url_Q.Q.qsize()
-	while master.unfinished_cnt(wait_q)>0:
+
+	while len(url_Q.fileter)<urlcapacity:
 
 		t=time.time()-start_t
 
