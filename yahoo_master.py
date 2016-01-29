@@ -254,7 +254,7 @@ if __name__ == '__main__':
 	ques_works=start_working(start_p,end_p,relay)
 
 
-	while len(url_Q.fileter)<urlcapacity:
+	while len(url_Q.filter)<urlcapacity:
 
 		t=time.time()-start_t
 
