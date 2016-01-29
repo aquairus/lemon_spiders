@@ -31,7 +31,7 @@ ques_time=500
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.5
+roll_time=0.2
 relay_time=5
 
 start_url="https://answers.yahoo.com"
@@ -156,7 +156,7 @@ def start_working(start_p,end_p,relay):
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
 		for i in range(relay_time):
 			pool.putRequest(ques_works.pop())
-		bar(relay_time)
+		bar.new_page(relay_time)
 		pool.wait()
 	else:
 		ques_works=threadpool.makeRequests(ques_factory,cpos_l,url_Q.r_pour)
@@ -192,7 +192,7 @@ class url_Queue():
 class scheduler():
 	def __init__(self,r,sla_cnt,size=100):
 		self.r=r
-		self.step=10*sla_cnt
+		self.step=60*sla_cnt
 		self.slave=sla_cnt
 		self.size=size
 		self.out_q=0
