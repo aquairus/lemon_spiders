@@ -26,12 +26,12 @@ sla_cnt=5
 salve_job=4000
 
 thread_cnt=16
-ques_time=500
+ques_time=1000
 
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.2
+roll_time=0.5
 relay_time=5
 
 start_url="https://answers.yahoo.com"
@@ -259,20 +259,18 @@ if __name__ == '__main__':
 		t=time.time()-start_t
 
 		master.dist_all("task_url",url_Q)
-
 		wait_q=url_Q.Q.qsize()
-		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q)
+
+		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q,urlcapacity)
 
 		if wait_q<ques_time*sla_cnt:
 			master.retirve("fresh_url",url_Q)
 
 		if int(t)%120==0:
+	 		bar.new_page(1)
+	 		pool.putRequest(ques_works.pop())
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()
 
 		sleep(roll_time)
-
-		if wait_q<ques_time&len(ques_works)>0:
-	 		bar.new_page(1)
-	 		pool.putRequest(ques_works.pop())

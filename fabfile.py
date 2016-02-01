@@ -32,9 +32,9 @@ env.roledefs = {
 
 
 @roles('all')
-def ls():
-	with cd('/home/cxy'):
- 		run("ls -l")
+def do():
+	cmd=raw_input()
+	run(cmd)
 
 
 

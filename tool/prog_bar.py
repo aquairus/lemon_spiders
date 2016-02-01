@@ -18,7 +18,7 @@ class prog_bar(object):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
 
-    def reflash(self,time,size,in_q,wait_q,out_q):
+    def reflash(self,time,size,in_q,wait_q,out_q,urlc):
         self.bar.cursor.restore()
         self.bar.draw(value=self.cursor)
         print "-------------"
@@ -27,7 +27,7 @@ class prog_bar(object):
         print "wait_q:"+str(wait_q)+"  "
         print "out_q:"+str(out_q)+"  "
     	print "spent: "+str(int(time/60))+" min"+"  "
-    	print "rest: "+str(int(time/self.cursor*(self.total-self.cursor)/60))+" min"
+    	print "rest: "+str(int(time/size*urlc/60))+" min"
 
 
     def reflash_r(self,f_cnt,q_size,c_cnt,curren_f,filename,e_cnt):

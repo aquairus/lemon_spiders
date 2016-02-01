@@ -16,14 +16,15 @@ import socket
 reload(sys)
 
 sla_cnt=5
-ques_time=200
+ques_time=400
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
-delay=1
+delay=0.1
 
 thread_cnt=16
 roll_time=0.2
+pageck_size=50
 
 error_cnt=0
 error_delay=10
@@ -37,7 +38,7 @@ pre_url="https://answers.yahoo.com"
 
 
 def get_arg():
-	delay=0.3
+	delay=0.1
 	slave_NO=socket.gethostname()
 	curren_f=0
 	try:
@@ -163,17 +164,19 @@ class worker():
 		self.fetch_link()
 		slave_work(task_Q.get())
 
-	def fetch_link(self,count=20):
+	def fetch_link(self,count=50):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
 			task_Q.put(Q)
 		self.f_cnt+=1
 
-	def commit_link(self,new_Qlist):
+	def commit_link(self,Qlist,p_size):
 		pipe=self.r.pipeline()
-		for Q in new_Qlist:
-			pipe.rpush(self.commit_k,Q)
+		for i in xrange(p_size):
+			new_Qs＝Qlist.get()
+			for Q in new_Qs:
+				pipe.rpush(self.commit_k,Q)
 		pipe.execute()
 		self.c_cnt+=1
 
@@ -206,8 +209,8 @@ if __name__ == '__main__':
 		if task_Q.qsize()<ques_time:
 			slaver.fetch_link()
 
-		if not fresh_Q.empty():
-			slaver.commit_link(fresh_Q.get())
+		if fresh_Q.qsize>pageck_size:
+			slaver.commit_link(fresh_Q,pageck_size)
 
 		if os.path.getsize(filename)>100000000:
 			curren_f+=1
