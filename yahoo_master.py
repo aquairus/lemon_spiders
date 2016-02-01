@@ -268,7 +268,8 @@ if __name__ == '__main__':
 
 		if int(t)%30==0:
 	 		bar.new_page(1)
-	 		pool.putRequest(ques_works.pop())
+			if len(ques_works)>0:
+	 			pool.putRequest(ques_works.pop())
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()
