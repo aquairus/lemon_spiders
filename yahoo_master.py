@@ -31,7 +31,7 @@ in_time=200*sla_cnt
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.5
+roll_time=0.1
 relay_time=5
 
 start_url="https://answers.yahoo.com"
