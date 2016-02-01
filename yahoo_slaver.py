@@ -24,7 +24,7 @@ delay=0.1
 
 thread_cnt=16
 roll_time=0.2
-pageck_size=50
+package_size=20
 
 error_cnt=0
 error_delay=10
@@ -164,7 +164,7 @@ class worker():
 		self.fetch_link()
 		slave_work(task_Q.get())
 
-	def fetch_link(self,count=50):
+	def fetch_link(self,count=20):
 		url_Queue=self.r.lrange(self.task_k,0,count-1)
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
@@ -209,8 +209,8 @@ if __name__ == '__main__':
 		if task_Q.qsize()<ques_time:
 			slaver.fetch_link()
 
-		if fresh_Q.qsize>pageck_size:
-			slaver.commit_link(fresh_Q,pageck_size)
+		if fresh_Q.qsize>package_size:
+			slaver.commit_link(fresh_Q,package_size)
 
 		if os.path.getsize(filename)>100000000:
 			curren_f+=1

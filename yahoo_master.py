@@ -266,7 +266,7 @@ if __name__ == '__main__':
 		if wait_q<ques_time*sla_cnt:
 			master.retirve("fresh_url",url_Q)
 
-		if int(t)%120==0:
+		if int(t)%30==0:
 	 		bar.new_page(1)
 	 		pool.putRequest(ques_works.pop())
 			blf_file=open(filtername,'w')
