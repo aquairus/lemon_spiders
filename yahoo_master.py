@@ -23,10 +23,10 @@ sys.setdefaultencoding( "utf-8" )
 
 
 sla_cnt=5
-salve_job=4000
+salve_job=1000
 
 thread_cnt=16
-ques_time=1000
+ques_time=800
 
 start_p=2
 end_p=100
@@ -190,9 +190,9 @@ class url_Queue():
 
 
 class scheduler():
-	def __init__(self,r,sla_cnt,size=100):
+	def __init__(self,r,sla_cnt,size):
 		self.r=r
-		self.step=60*sla_cnt
+		self.step=50*sla_cnt
 		self.slave=sla_cnt
 		self.size=size
 		self.out_q=0
@@ -258,10 +258,10 @@ if __name__ == '__main__':
 
 		t=time.time()-start_t
 
-		master.dist_all("task_url",url_Q)
-		wait_q=url_Q.Q.qsize()
 
+		wait_q=url_Q.Q.qsize()
 		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q,urlcapacity)
+		master.dist_all("task_url",url_Q)
 
 		if wait_q<ques_time*sla_cnt:
 			master.retirve("fresh_url",url_Q)

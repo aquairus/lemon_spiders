@@ -202,7 +202,6 @@ if __name__ == '__main__':
 
 		if not task_Q.empty():
 			task=task_Q.get()
-
 		job = threadpool.WorkRequest(slave_work,(task,))
 		pool.putRequest(job)
 
