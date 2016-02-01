@@ -16,7 +16,7 @@ import socket
 reload(sys)
 
 sla_cnt=5
-ques_time=400
+ques_time=800
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
@@ -203,13 +203,14 @@ if __name__ == '__main__':
 
 		if not task_Q.empty():
 			task=task_Q.get()
+
 		job = threadpool.WorkRequest(slave_work,(task,))
 		pool.putRequest(job)
 
 		if task_Q.qsize()<ques_time:
 			slaver.fetch_link()
 
-		if fresh_Q.qsize>package_size:
+		if fresh_Q.qsize()>package_size:
 			slaver.commit_link(fresh_Q,package_size)
 
 		if os.path.getsize(filename)>100000000:
