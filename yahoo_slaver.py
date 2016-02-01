@@ -24,7 +24,7 @@ delay=0.1
 
 thread_cnt=16
 roll_time=0.2
-package_size=20
+package_size=10
 
 error_cnt=0
 error_delay=10

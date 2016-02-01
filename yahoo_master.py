@@ -254,6 +254,7 @@ if __name__ == '__main__':
 	ques_works=start_working(start_p,end_p,relay)
 
 
+
 	while len(url_Q.filter)<urlcapacity:
 
 		t=time.time()-start_t
@@ -266,12 +267,13 @@ if __name__ == '__main__':
 		if wait_q<in_time:
 			master.retirve("fresh_url",url_Q)
 
-		if int(t)%30==0:
-	 		bar.new_page(1)
-			if len(ques_works)>0:
-	 			pool.putRequest(ques_works.pop())
+		if int(t)%15==0:
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()
+		if int(t)%7==0:
+			bar.new_page(1)
+			if len(ques_works)>0:
+	 			pool.putRequest(ques_works.pop())
 
 		sleep(roll_time)
