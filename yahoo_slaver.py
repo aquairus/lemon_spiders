@@ -174,7 +174,7 @@ class worker():
 	def commit_link(self,Qlist,p_size):
 		pipe=self.r.pipeline()
 		for i in xrange(p_size):
-			new_Qs＝Qlist.get()
+			new_Qs=Qlist.get()
 			for Q in new_Qs:
 				pipe.rpush(self.commit_k,Q)
 		pipe.execute()
@@ -183,6 +183,7 @@ class worker():
 
 
 if __name__ == '__main__':
+
 	bar=prog_bar.prog_bar(100)
 
 	slave_NO,curren_f,delay=get_arg()
