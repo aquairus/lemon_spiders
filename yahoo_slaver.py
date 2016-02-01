@@ -169,7 +169,7 @@ class worker():
 		self.r.ltrim(self.task_k,count,-1)
 		for Q in url_Queue:
 			task_Q.put(Q)
-		self.f_cnt+=1
+			self.f_cnt+=1
 
 	def commit_link(self,Qlist,p_size):
 		pipe=self.r.pipeline()

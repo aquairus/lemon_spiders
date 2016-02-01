@@ -23,10 +23,10 @@ sys.setdefaultencoding( "utf-8" )
 
 
 sla_cnt=5
-salve_job=1000
+salve_job=4000
 
 thread_cnt=16
-ques_time=800
+in_time=200*sla_cnt
 
 start_p=2
 end_p=100
@@ -263,7 +263,7 @@ if __name__ == '__main__':
 		bar.reflash(t,url_Q.length(),master.in_q,wait_q,master.out_q,urlcapacity)
 		master.dist_all("task_url",url_Q)
 
-		if wait_q<ques_time*sla_cnt:
+		if wait_q<in_time:
 			master.retirve("fresh_url",url_Q)
 
 		if int(t)%30==0:
