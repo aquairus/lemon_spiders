@@ -87,5 +87,7 @@ def direct():
  		run("screen -S direct")
 
 def start():
+	execute(save)
+	execute(update)
 	execute(direct)
 	execute(work)

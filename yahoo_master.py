@@ -31,7 +31,7 @@ in_time=200*sla_cnt
 start_p=2
 end_p=100
 total_p=end_p-start_p+2
-roll_time=0.1
+roll_time=0.5
 relay_time=5
 
 start_url="https://answers.yahoo.com"
@@ -267,13 +267,13 @@ if __name__ == '__main__':
 		if wait_q<in_time:
 			master.retirve("fresh_url",url_Q)
 
-		if int(t)%15==0:
+		if int(t)%21==0:
+			if len(ques_works)>0:
+				bar.new_page(1)
+	 			pool.putRequest(ques_works.pop())
 			blf_file=open(filtername,'w')
 			pickle.dump(url_Q.filter,blf_file)
 			blf_file.close()
-		if int(t)%7==0:
-			bar.new_page(1)
-			if len(ques_works)>0:
-	 			pool.putRequest(ques_works.pop())
+
 
 		sleep(roll_time)
