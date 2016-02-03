@@ -20,7 +20,7 @@ ques_time=800
 sys.setdefaultencoding( "utf-8" )
 master="spider01"
 r_port=6369
-delay=0.1
+delay=0.4
 
 
 thread_cnt=16
