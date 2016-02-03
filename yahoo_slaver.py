@@ -214,11 +214,6 @@ if __name__ == '__main__':
 		if fresh_Q.qsize()>package_size:
 			slaver.commit_link(fresh_Q,package_size)
 
-		if os.path.getsize(filename)>100000000:
-			curren_f+=1
-			filename="../yahoo_"+str(slave_NO)+str(curren_f)+".txt"
-			yh_of=open(filename,'a+')
-			bar.new_page(5)
 
 		bar.reflash_r(slaver.f_cnt,task_Q.qsize(),slaver.c_cnt,curren_f,filename,error_cnt)
 		sleep(roll_time)

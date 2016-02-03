@@ -41,7 +41,7 @@ def do():
 @roles('all')
 def update():
 	with cd('/home/cxy/lemon_spiders'):
- 		run ("git reset --hard")
+ 		run ("git reset --hard HEAD^")
  		run("git pull")
 
 def get_all():

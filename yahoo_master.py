@@ -26,7 +26,7 @@ sla_cnt=5
 salve_job=4000
 
 thread_cnt=16
-in_time=200*sla_cnt
+in_time=500*sla_cnt
 
 start_p=2
 end_p=100
@@ -267,7 +267,7 @@ if __name__ == '__main__':
 		if wait_q<in_time:
 			master.retirve("fresh_url",url_Q)
 
-		if int(t)%21==0:
+		if int(t)%55==0:
 			if len(ques_works)>0:
 				bar.new_page(1)
 	 			pool.putRequest(ques_works.pop())
