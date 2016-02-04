@@ -22,7 +22,7 @@ class emptyPipeline(object):
 class NvPipeline(object):
 
     def open_spider(self, spider):
-        self.of=open("../nv.txt",'w+')
+        self.of=open("../../nv.txt",'w+')
 
     def process_item(self, item, spider):
 

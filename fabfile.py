@@ -44,9 +44,14 @@ def update():
  		run ("git reset --hard HEAD^")
  		run("git pull")
 
-def get_all():
-	execute(get_master)
-	execute(get_slaver)
+# @roles('all')
+# def install ():
+# 	run("sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 627220E7")
+# 	run("echo 'deb http://archive.scrapy.org/ubuntu scrapy main' | sudo tee /etc/apt/sources.list.d/scrapy.list")
+# 	run("sudo apt-get update && sudo apt-get install scrapy -y")
+# 	run("pip install service-identity")
+# 	run("easy_install pyasn1-modules")
+
 
 def new_node(host):
 	with settings(warn_only=True):
