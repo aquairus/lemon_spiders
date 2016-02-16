@@ -62,7 +62,7 @@ class mergePipeline(object):
 class KrPipeline(object):
 
     def open_spider(self, spider):
-        self.of=open("../novel.txt",'w+')
+        self.of=open("../../novel.txt",'w+')
 
     def process_item(self, item, spider):
 
