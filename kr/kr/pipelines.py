@@ -37,25 +37,25 @@ class mergePipeline(object):
             self.review[nid]={}
 
 
-        if "volumeNo" in item:
-            vid=int(item["volumeNo"])
-            self.review[nid][vid]=item["review"]
 
-            keys=self.review[nid].keys()
+        vid=int(item["volumeNo"])
+        self.review[nid][vid]=item["review"]
+        keys=self.review[nid].keys()
+        print str(len(keys))+"/"+str(max(keys))
 
-    #        print str(len(keys))+"/"+str(max(keys))
-
-            if max(keys)==len(keys):
-                print "finish"
-                review=""
-                for (v,c) in self.review[nid].items():
-                    review=review+c
-                kr=krItem()
-                kr["content"]=self.title[nid]
-                kr["review"]=review
-                return kr
-            else:
-                raise DropItem("reivew")
+        if max(keys)==len(keys):
+            print "finish"
+            review=""
+            for (v,c) in self.review[nid].items():
+                review=review+c
+            kr=krItem()
+            kr["content"]=self.title[nid]
+            kr["review"]=review
+            self.review.pop(nid)
+            self.title.pop(nid)
+            return kr
+        else:
+            raise DropItem("reivew")
 
 
 
