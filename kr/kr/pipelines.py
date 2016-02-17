@@ -26,6 +26,7 @@ class mergePipeline(object):
     def __init__(self):
         self.title = dict()
         self.review=dict()
+        self.cnt=0
 
     def process_item(self, item, spider):
         nid=item["novelId"]
@@ -41,10 +42,11 @@ class mergePipeline(object):
         vid=int(item["volumeNo"])
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
-        print str(len(keys))+"/"+str(max(keys))
+#        print str(len(keys))+"/"+str(max(keys))
 
-        if max(keys)==len(keys):
-            print "finish"
+        if max(keys)==len(keys) and len(keys)>4 :
+            self.cnt+=1
+            print str(self.cnt)+":"str(len(keys))
             review=""
             for (v,c) in self.review[nid].items():
                 review=review+c

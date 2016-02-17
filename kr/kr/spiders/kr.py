@@ -12,16 +12,18 @@ tiele_re = re.compile(r"novelId=(\d*)")
 class krSpider(CrawlSpider):
     name = "kr"
     allowed_domains = ["novel.naver.com"]
-    start_urls = [
-        "http://novel.naver.com/webnovel/weekday.nhn",
-         "http://novel.naver.com/webnovel/weekdayList.nhn",
+    start_urls = [#"http://novel.naver.com/challenge/genre.nhn",
+    "http://novel.naver.com/best/genre.nhn",
+        # "http://novel.naver.com/webnovel/weekday.nhn",
+        #  "http://novel.naver.com/webnovel/weekdayList.nhn",
      ]
 
-    rules=(Rule(LinkExtractor(allow=('(.*?)webnovel(.*?)novelId=\d*$')),\
+    rules=(Rule(LinkExtractor(allow=('(.*?)novelId=\d*$')),\
     follow=True ),\
             Rule(LinkExtractor(allow=('(.*?)volumeNo=\d*$')), \
             callback='parse_chapter',follow=True ),\
             Rule(LinkExtractor(allow=('(.*?)page=\d*$')) ),
+            Rule(LinkExtractor(allow=('(.*?)genre=\d*$')) ),
 
      )
 
