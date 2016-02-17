@@ -42,7 +42,7 @@ class mergePipeline(object):
         vid=int(item["volumeNo"])
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
-        print str(len(keys))+"/"+str(max(keys))
+#        print str(len(keys))+"/"+str(max(keys))
 
         if max(keys)==len(keys) and len(keys)>4 :
             self.cnt+=1
