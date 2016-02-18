@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'douban.spiders'
 
 USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=5
+DOWNLOAD_DELAY=3
 
 ITEM_PIPELINES = {
     'douban.pipelines.mergePipeline': 100,
@@ -39,7 +39,7 @@ ITEM_PIPELINES = {
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED=False
+COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED=False

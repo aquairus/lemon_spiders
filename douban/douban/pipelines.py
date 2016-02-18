@@ -40,7 +40,7 @@ class mergePipeline(object):
 
         if "total" in item:
             if item["total"]=="1":
-#                print "short topic"
+                print "short topic"
                 return item
             else:
                 self.content[tid]=item.copy()
@@ -66,7 +66,7 @@ class mergePipeline(object):
             self.total.pop(tid)
             self.answers.pop(tid)
             self.content.pop(tid)
-    #        print "long!!"
+            print "long!!"
             return douban
         else:
             raise DropItem("answers")
