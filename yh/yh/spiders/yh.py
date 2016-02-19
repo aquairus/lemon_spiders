@@ -48,7 +48,7 @@ class yhSpider(CrawlSpider):
         item["qid"]=qid
         item["pid"]=pid
 
-        print len(review)
+    #    print len(review)
         return item
 
     def parse_ques(self, response):

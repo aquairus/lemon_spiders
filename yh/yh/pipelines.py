@@ -22,14 +22,16 @@ class YhPipeline(object):
         self.buff=[]
         self.cnt=0
     def process_item(self, item, spider):
+        qid=item["qid"]
+        yh=self.client.yh.yh
         dic=dict(item)
 
-        if len(self.buff)<2:
-            self.buff.append(dic)
-        else:
-            yh=self.client.yh.yh
-            yh.insert_many(self.buff)
-            self.buff=[]
+        review=yh.find_one_and_delete({"qid":qid})
+
+        if review:
+            dic["review"]=review["review"]+dic["review"]
+        yh.insert_one(dic)
+
 
 
 class mergePipeline(object):
@@ -42,15 +44,15 @@ class mergePipeline(object):
             qid=item["qid"]
             review=item["review"]
             yh=self.client.yh.yh
+
             dic=yh.find_one({"qid":qid})
+
             try:
                 new_review=dic["review"]+review
-                print len(new_review)
+                yh.update_one({'qid': qid}, {'$set': {'review': new_review}})
             except BaseException,e:
-                new_review=""
-                print 0
-
-            review=yh.update_one({'qid': qid}, {'$set': {'review': new_review}})
+                review=dict(item)
+                yh.insert_one(review)
             raise DropItem("review")
         else:
             return item
