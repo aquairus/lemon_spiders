@@ -48,6 +48,7 @@ class mergePipeline(object):
         if max(keys)==len(keys):
             self.cnt+=1
             print str(self.cnt)+":"+str(len(keys))
+            print nid
             review=""
             for (v,c) in self.review[nid].items():
                 review=review+c
