@@ -42,8 +42,10 @@ class mergePipeline(object):
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
 #        print str(len(keys))+"/"+str(max(keys))
-
-        if max(keys)==len(keys) and len(keys)>4 :
+        if max(keys)==1:
+            print "----------"
+            print nid
+        if max(keys)==len(keys):
             self.cnt+=1
             print str(self.cnt)+":"+str(len(keys))
             review=""
