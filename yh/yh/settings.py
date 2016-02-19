@@ -17,7 +17,7 @@ NEWSPIDER_MODULE = 'yh.spiders'
 
 USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=0.2
+DOWNLOAD_DELAY=0.5
 
 COOKIES_ENABLED=False
 ITEM_PIPELINES = {'yh.pipelines.mergePipeline': 200,
