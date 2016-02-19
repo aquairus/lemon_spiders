@@ -123,7 +123,7 @@ def get_Qa(url,ques):
 			Qa["review"]=Qa["review"]+ans+"<p>"
 
 	yh_of.write(json.dumps(Qa)+"\n")
-	print "--a Q&A"
+	#print "--a Q&A"
 
 
 def get_next_q(cpos,bpos,sid=None):
@@ -195,7 +195,7 @@ def ques_factory(cpos):
 
 		get_next_q(cpos,0,sid)
 
-	print "lots of new pages"
+#	print "lots of new pages"
 
 def init_filter():
 	try:
@@ -273,7 +273,7 @@ if __name__ == '__main__':
 
 
 
-	print "qa start "
+#	print "qa start "
 
 	while not Ques_queue.empty():
 		data=Ques_queue.get()
@@ -281,7 +281,7 @@ if __name__ == '__main__':
 		pool.putRequest(work)
 
 		if Ques_queue.qsize()<ques_time&len(ques_works)>0:
-	 		print "-------adding------"
+	 #		print "-------adding------"
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		pool.putRequest(ques_works.pop())
@@ -290,7 +290,7 @@ if __name__ == '__main__':
 
 	 	t=time.time()-start_time
 	 	if int(t)%pause==0:
-			print "-------sleep------"
+			#print "-------sleep------"
 	 		print os.path.getsize(filename)
 	 		print len(ques_filter)
 	 		sys.stdout.flush()
@@ -315,13 +315,6 @@ if __name__ == '__main__':
 	+ "total question:"+str(len(ques_filter))\
 	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
 	print final_msg
-	# mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
-	# mailbox.send_msg(sys.argv[0],final_msg)
-
-	if slience:
-		old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
-		sys.stdout=old
-		yahoo_log.close()
 
 
 yh_of.close()
