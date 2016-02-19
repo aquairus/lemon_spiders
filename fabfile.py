@@ -37,6 +37,11 @@ def do():
 	run(cmd)
 
 
+@roles('all')
+def ls():
+	with cd('/home/cxy'):
+ 		run ("ls -l")
+
 
 @roles('all')
 def update():
