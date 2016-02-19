@@ -41,6 +41,7 @@ def do():
 def ls():
 	with cd('/home/cxy'):
  		run ("ls -l")
+ 		run ("date")
 
 
 @roles('all')

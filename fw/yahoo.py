@@ -29,7 +29,7 @@ vocation=40
 ques_time=100
 start_p=2
 end_p=100
-urlcapacity=800000
+urlcapacity=800000000
 slience=False
 t=0
 relay_time=10
@@ -43,10 +43,10 @@ fake_headers = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:4
 				 }
 
 
-filename="../yahoo.txt"
-log_name='../yahoo_log.txt'
-log_max=20000000
-filtername='../quesFilter'
+filename="../../yahoo.txt"
+log_name='../../yahoo_log.txt'
+log_max=2000000
+filtername='../../quesFilter'
 cnt=0
 
 
@@ -121,8 +121,9 @@ def get_Qa(url,ques):
 		all_ans,next=get_answer(pre_url+next,ques)
 		for ans in all_ans:
 			Qa["review"]=Qa["review"]+ans+"<p>"
+
 	yh_of.write(json.dumps(Qa)+"\n")
-	#print "--a Q&A"
+	print "--a Q&A"
 
 
 def get_next_q(cpos,bpos,sid=None):
