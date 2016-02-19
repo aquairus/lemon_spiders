@@ -16,7 +16,7 @@ NEWSPIDER_MODULE = 'kr.spiders'
 USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
 DOWNLOAD_DELAY=0.05
-DEPTH_PRIORITY＝1
+DEPTH_PRIORITY=1
 # FEED_FORMAT= 'jsonlines'
 # FEED_URI='file:///Users/apple/Desktop/export.json'
 
