@@ -24,25 +24,24 @@ class emptyPipeline(object):
 class mergePipeline(object):
 
     def __init__(self):
-        self.title = dict()
+        # self.title = dict()
         self.review=dict()
         self.cnt=0
 
     def process_item(self, item, spider):
         nid=item["novelId"]
 
-        if not nid in self.title:
-            self.title[nid]=item["title"]
+        # if not nid in self.title:
+        #     self.title[nid]=item["title"]
 
         if not nid in self.review:
             self.review[nid]={}
 
 
-
         vid=int(item["volumeNo"])
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
-#        print str(len(keys))+"/"+str(max(keys))
+        print str(len(keys))+"/"+str(max(keys))
 
         if max(keys)==len(keys) and len(keys)>4 :
             self.cnt+=1
@@ -51,10 +50,9 @@ class mergePipeline(object):
             for (v,c) in self.review[nid].items():
                 review=review+c
             kr=krItem()
-            kr["content"]=self.title[nid]
+            kr["content"]=item["title"]
             kr["review"]=review
             self.review.pop(nid)
-            self.title.pop(nid)
             return kr
         else:
             raise DropItem("reivew")
