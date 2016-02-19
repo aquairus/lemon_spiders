@@ -15,7 +15,7 @@ import os
 from pybloom import BloomFilter
 import  getopt
 import cPickle as pickle
-import mail
+#import mail
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -302,7 +302,7 @@ if __name__ == '__main__':
 					if int(os.path.getsize(log_name))>log_max:
 						error_msg="total question:"+str(len(ques_filter))+\
 						"time:"+str(t)
-						mail.send_msg(sys.argv[0],"error:"+error_msg)
+						#mail.send_msg(sys.argv[0],"error:"+error_msg)
 						sys.exit()
 
 	 		sleep(random.randint(vocation/4,vocation))
@@ -315,8 +315,8 @@ if __name__ == '__main__':
 	+ "total question:"+str(len(ques_filter))\
 	+"data size:"+str(os.path.getsize(filename))+"time:"+str(t)
 	print final_msg
-	mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
-	mailbox.send_msg(sys.argv[0],final_msg)
+	# mailbox=mail.mailbox(os.environ["mailuser"],os.environ["passwd"])
+	# mailbox.send_msg(sys.argv[0],final_msg)
 
 	if slience:
 		old.write("total:"+str(len(ques_filter))+"\ntime:"+str(t))
