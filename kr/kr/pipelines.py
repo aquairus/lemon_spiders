@@ -45,7 +45,7 @@ class mergePipeline(object):
         if max(keys)==1:
             print "----------"
             print nid
-        if max(keys)==len(keys):
+        if max(keys)==len(keys) and max(keys)>1:
             self.cnt+=1
             print str(self.cnt)+":"+str(len(keys))
             print nid
