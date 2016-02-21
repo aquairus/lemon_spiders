@@ -56,8 +56,8 @@ class mergePipeline(object):
 
         keys=self.answers[tid].keys()
         print str(len(keys))+"/"+self.total[tid]
-        if len(keys)+5>int(self.total[tid]):
-            print keys
+        #if len(keys)+5>int(self.total[tid]):
+        print keys
 
         if len(keys)+1==int(self.total[tid]):
             for (v,c) in self.answers[tid].items():
