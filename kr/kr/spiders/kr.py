@@ -18,13 +18,14 @@ class krSpider(CrawlSpider):
                 "http://novel.naver.com/webnovel/weekdayList.nhn",\
      ]
 
-    rules=(Rule(LinkExtractor(allow=('(.*?)novelId=\d*$')),\
-                follow=True ),\
+    rules=(
             Rule(LinkExtractor(allow=('(.*?)volumeNo=1$')), \
                 callback='parse_chapter',follow=True ),\
             Rule(LinkExtractor(allow=('(.*?)volumeNo=\d*$')), \
                 callback='parse_chapter',follow=True ),\
-            #Rule(LinkExtractor(allow=('(.*?)page=\d*$')) ),\
+            Rule(LinkExtractor(allow=('(.*?)novelId=\d*$')),\
+                        follow=True ),\
+            Rule(LinkExtractor(allow=('(.*?)page=\d*$')) ),\
             Rule(LinkExtractor(allow=('(.*?)genre=\d*$')) ),\
 
      )
