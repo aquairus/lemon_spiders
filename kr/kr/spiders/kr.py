@@ -19,8 +19,6 @@ class krSpider(CrawlSpider):
      ]
 
     rules=(
-            Rule(LinkExtractor(allow=('(.*?)volumeNo=1$')), \
-                callback='parse_chapter',follow=True ),\
             Rule(LinkExtractor(allow=('(.*?)volumeNo=\d*$')), \
                 callback='parse_chapter',follow=True ),\
             Rule(LinkExtractor(allow=('(.*?)novelId=\d*$')),\
