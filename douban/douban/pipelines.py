@@ -51,7 +51,7 @@ class mergePipeline(object):
         if not tid in self.answers:
             self.answers[tid]={}
 
-        pid=int(item["pid"])/100
+        pid=int(item["pid"])
         self.answers[tid][pid]=item["answers"]
 
         keys=self.answers[tid].keys()
