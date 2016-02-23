@@ -30,10 +30,12 @@ class doubanSpider(CrawlSpider):
 
 
     def parse_url(self, response):
+        print response.url
         pass
 
 
     def parse_topic(self, response):
+        print response.url
         m=topic_re.search(response.url)
         tid=m.group(1)
 
@@ -68,7 +70,7 @@ class doubanSpider(CrawlSpider):
         return topic
 
     def parse_answers(self, response):
-
+        print response.url
         m=answers_re.search(response.url)
         tid=m.group(1)
         pid=m.group(2)
