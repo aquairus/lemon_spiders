@@ -50,16 +50,15 @@ class mergePipeline(object):
         keys=self.answers[tid].keys()
 
 
-        print tid
-        print pid
         if not tid in self.total:
             return
+
         if len(keys)+1==int(self.total[tid]):
             for (v,c) in self.answers[tid].items():
                 self.content[tid]["answers"]=\
                 self.content[tid]["answers"]+c
             douban=self.content[tid]
-            print type(douban)
+            
             self.total.pop(tid)
             self.answers.pop(tid)
             self.content.pop(tid)
@@ -78,8 +77,8 @@ def main():
         # process queue as FIFO, change `blpop` to `brpop` to process as LIFO
         source,data = r.blpop(["douban:items"])
         item = json.loads(data)
-        item=mergepp.process_item(item)
 
+        item=mergepp.process_item(item)
         if item:
             doubanpp.save(item)
 
