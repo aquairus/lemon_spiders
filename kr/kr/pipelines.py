@@ -10,6 +10,7 @@ sys.setdefaultencoding( "utf-8" )
 from scrapy.exceptions import DropItem
 import json
 from items import krItem
+import time
 
 class emptyPipeline(object):
     def process_item(self, item, spider):
@@ -24,45 +25,59 @@ class emptyPipeline(object):
 class mergePipeline(object):
 
     def __init__(self):
-        # self.title = dict()
+        self.title = dict()
         self.review=dict()
+        self.time=dict()
+        self.start=time.time()
         self.cnt=0
 
     def process_item(self, item, spider):
         nid=item["novelId"]
 
-        # if not nid in self.title:
-        #     self.title[nid]=item["title"]
 
-        if not nid in self.review:
+        if not nid in self.title:
             self.review[nid]={}
+            self.title[nid]=item["title"]
+            self.time[nid]=time.time()
+
 
 
         vid=int(item["volumeNo"])
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
-        # print str(len(keys))+"/"+str(max(keys))
-        # if max(keys)<len(keys)+5:
-        #     print keys
-        # if max(keys)==1:
-        #     print "----------"
-        #     print nid
+
+
+
         if max(keys)==len(keys) and max(keys)>1:
-            self.cnt+=1
-            print str(self.cnt)+":"+str(len(keys))
-            print nid
+
             review=""
             for (v,c) in self.review[nid].items():
                 review=review+c
             kr=krItem()
-            kr["content"]=item["title"]
             kr["review"]=review
+            kr["content"]=self.title.pop(nid)
+
             self.review.pop(nid)
+            self.time.pop(nid)
             return kr
-        else:
-            raise DropItem("reivew")
 
-
+        t=int(time.time()-self.start)
+        if t%60==0:
+            for i,volume in self.review.items():
+                life=int(time.time()-self.time[i])
+                if life>3600:
+                    review=""
+                    for (v,c) in volume.items():
+                        review=review+c
+                    kr=krItem()
+                    kr["review"]=review
+                    kr["content"]=self.title.pop(i)
+                    self.review.pop(i)
+                    self.time.pop(i)
+                    print str(max(volume.keys()))+":"+str(len(volume))
+                    if len(volume)/max(volume.keys())>0.8:
+                        return kr
+        raise DropItem("reivew")
 
 class KrPipeline(object):
 
