@@ -75,19 +75,20 @@ class mergePipeline(object):
                         self.review.pop(i)
                         self.time.pop(i)
                         return kr
-                if life>36000:
-                    review=""
-                    for (v,c) in volume.items():
-                        review=review+c
-                    kr=krItem()
-                    kr["review"]=review
-                    kr["content"]=self.title.pop(i)
-                    self.review.pop(i)
-                    self.time.pop(i)
-                    print str(max(volume.keys()))+":"+str(len(volume))
-                    if len(volume)/max(volume.keys())>0.8:
-                        return kr
         raise DropItem("reivew")
+                # if life>36000:
+                #     review=""
+                #     for (v,c) in volume.items():
+                #         review=review+c
+                #     kr=krItem()
+                #     kr["review"]=review
+                #     kr["content"]=self.title.pop(i)
+                #     self.review.pop(i)
+                #     self.time.pop(i)
+                #     print str(max(volume.keys()))+":"+str(len(volume))
+                #     if len(volume)/max(volume.keys())>0.8:
+                #         return kr
+    
 
 
 
