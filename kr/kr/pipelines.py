@@ -46,6 +46,8 @@ class mergePipeline(object):
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
 
+#        print str(len(keys))+"/"+str(max(keys))
+
 
 
         if max(keys)==len(keys) and max(keys)>1:
@@ -62,10 +64,18 @@ class mergePipeline(object):
             return kr
 
         t=int(time.time()-self.start)
-        if t%60==0:
+        if t%30==0:
             for i,volume in self.review.items():
                 life=int(time.time()-self.time[i])
-                if life>3600:
+                if life>600:
+                    if max(volume.keys())==1:
+                        kr=krItem()
+                        kr["review"]=self.review[i][1]
+                        kr["content"]=self.title.pop(i)
+                        self.review.pop(i)
+                        self.time.pop(i)
+                        return kr
+                if life>36000:
                     review=""
                     for (v,c) in volume.items():
                         review=review+c
@@ -79,10 +89,13 @@ class mergePipeline(object):
                         return kr
         raise DropItem("reivew")
 
+
+
+
 class KrPipeline(object):
 
     def open_spider(self, spider):
-        self.of=open("../../novel.txt",'w+')
+        self.of=open("../../"+spider.name+".txt",'w+')
 
     def process_item(self, item, spider):
 
