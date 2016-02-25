@@ -8,9 +8,9 @@ from bs4 import BeautifulSoup
 import re
 
 
-regex = re.compile(r"novelId=(\d*)&volumeNo=(\d*)")
-page_re = re.compile(r"\[(\d*)\]")
-tag_re = re.compile(r"<div.*?>|<font.*?>|<span.*?>|<strong>|</strong>|</span>|</font>|</div>")
+regex = re.compile(r"cont_sno=(\d*)")
+#page_re = re.compile(r"(\d*)")
+tag_re = re.compile(r"<dd.*?>|<font.*?>|<span.*?>|<strong>|</strong>|</span>|</font>|</dd>")
 p_re = re.compile(r"<p.*?>")
 
 
@@ -18,46 +18,45 @@ p_re = re.compile(r"<p.*?>")
 class kr3Spider(CrawlSpider):
     name = "kr3"
     allowed_domains = ["www.confactory.co.kr"]
-    start_urls = ["http://www.confactory.co.kr/",\
-                 "http://www.confactory.co.kr/cf/challenge/chal01001l.jsp",\
-                 "http://www.confactory.co.kr/cf/best/best01001l.jsp"
+    start_urls = ["http://www.confactory.co.kr/cf/home/main.jsp"
+                 "http://www.confactory.co.kr/cf/best/best01001l.jsp",
+                 "http://www.confactory.co.kr/cf/challenge/chal01001l.jsp"
      ]
 
-    rules=( Rule(LinkExtractor(allow=('page_count$')), \
+    rules=( Rule(LinkExtractor(allow=('bbs_sno'),deny=("bbs_man_cd")), \
                 callback='parse_chapter',follow=True ),
-            Rule(LinkExtractor(allow=('cont_sno(.*?)page_count=\d*$')), \
-                callback='parse_url' ),
-            Rule(LinkExtractor(allow=('(.*?)cont_sno=\d*$')),
-                callback='parse_url'),
-            Rule(LinkExtractor(allow=('(.*?)page_count=\d*$'),deny=("premium|ebook")), \
-                callback='parse_url')
+            Rule(LinkExtractor(allow=('(.*?)cont_sno=\d*$'),deny=("chal04001r")),
+                callback='parse_url',follow=True),
+            Rule(LinkExtractor(allow=('(.*?)page_count=\d*$'),deny=("premium|ebook|cont_sno")), \
+                callback='parse_url',follow=True)
      )
 
     def parse_url(self, response):
-        #pass
         print response.url
+        pass
 
     def parse_chapter(self, response):
-        print response.url
-        return
-        # title=response.xpath("//div[@class='tit_area']/h3/text()").extract()
-        # if title:
-        #     title=title[0].strip()
-        # else:
-        #     return
-        # page=response.xpath("//div[@class='title']/h3/text()").extract()
-        # m=page_re.search(page[0])
-        # volumeNo=m.group(1)
+        title=response.xpath("//div/h2/text()").extract()
+        if title:
+            title=title[0].strip()
+        else:
+            return
+        page=response.xpath("//fieldset/span/label/text()").extract()
+        volumeNo=page[0].split(":")[1][1:-1]
+
+        print title
+        print volumeNo
         #
-        # raw_content=response.xpath("//div[@class='content']").extract()
-        # first_content=tag_re.sub("<br>",raw_content[0])
-        # review=p_re.sub("<p>",first_content)
-        #
-        # novelId=hash(title)
-        #
-        # item=cptItem()
-        # item["volumeNo"]=volumeNo
-        # item["novelId"]=novelId
-        # item["review"]=review
-        # item["title"]=title
-        # return item
+        raw_content=response.xpath("//dd[@id='cvContents']").extract()
+        review=tag_re.sub("<br>",raw_content[0])
+
+        m=regex.search(response.url)
+        novelId=m.group(1)
+        print novelId
+
+        item=cptItem()
+        item["volumeNo"]=volumeNo
+        item["novelId"]=novelId
+        item["review"]=review
+        item["title"]=title
+        return item

@@ -68,7 +68,7 @@ class mergePipeline(object):
         if t%30==0:
             for i,volume in self.review.items():
                 life=int(time.time()-self.time[i])
-                if life>600:
+                if life>3000:
                     if max(volume.keys())==1:
                         kr=krItem()
                         kr["review"]=self.review[i][1]
