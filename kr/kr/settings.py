@@ -13,9 +13,23 @@ BOT_NAME = 'kr'
 
 SPIDER_MODULES = ['kr.spiders']
 NEWSPIDER_MODULE = 'kr.spiders'
-USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
+
+USER_AGENT_LIST=['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',\
+'Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13 (KHTML, like Gecko) Version/3.1 Safari/525.13',\
+'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident/6.0)',\
+"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
+"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
+  ]
+
+DOWNLOADER_MIDDLEWARES = {
+    'kr.random_user_agent.RandomUserAgentMiddleware': 400,
+      'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware':None,
+
+}
+
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=0.05
+DOWNLOAD_DELAY=1
 
 #DEPTH_PRIORITY=10
 # FEED_FORMAT= 'jsonlines'

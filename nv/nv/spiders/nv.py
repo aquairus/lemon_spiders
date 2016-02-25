@@ -27,7 +27,7 @@ class NvSpider(CrawlSpider):
 
         contents=response.css('h3[class=_endTitleText]::text').extract()
         try:
-            content=contents[0].lstrip().rstrip()
+            content=contents[0].strip()
         except BaseException, e:
 		    content=""
 
