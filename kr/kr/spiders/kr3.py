@@ -26,9 +26,9 @@ class kr3Spider(CrawlSpider):
     rules=( Rule(LinkExtractor(allow=('bbs_sno'),deny=("bbs_man_cd")), \
                 callback='parse_chapter',follow=True ),
             Rule(LinkExtractor(allow=('(.*?)cont_sno=\d*$'),deny=("chal04001r")),
-                callback='parse_url',follow=True),
+                follow=True),
             Rule(LinkExtractor(allow=('(.*?)page_count=\d*$'),deny=("premium|ebook|cont_sno")), \
-                callback='parse_url',follow=True)
+                follow=True)
      )
 
     def parse_url(self, response):
@@ -44,15 +44,12 @@ class kr3Spider(CrawlSpider):
         page=response.xpath("//fieldset/span/label/text()").extract()
         volumeNo=page[0].split(":")[1][1:-1]
 
-        print title
-        print volumeNo
         #
         raw_content=response.xpath("//dd[@id='cvContents']").extract()
         review=tag_re.sub("<br>",raw_content[0])
 
         m=regex.search(response.url)
         novelId=m.group(1)
-        print novelId
 
         item=cptItem()
         item["volumeNo"]=volumeNo
