@@ -51,7 +51,8 @@ class mergePipeline(object):
 
 
         if max(keys)==len(keys) and max(keys)>1:
-
+            self.cnt+=1
+            print self.cnt
             review=""
             for (v,c) in self.review[nid].items():
                 review=review+c
@@ -74,6 +75,8 @@ class mergePipeline(object):
                         kr["content"]=self.title.pop(i)
                         self.review.pop(i)
                         self.time.pop(i)
+                        self.cnt+=1
+                        print self.cnt
                         return kr
         raise DropItem("reivew")
                 # if life>36000:
