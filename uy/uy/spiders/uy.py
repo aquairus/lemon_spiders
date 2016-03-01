@@ -22,13 +22,11 @@ class uySpider(CrawlSpider):
     rules=(Rule(LinkExtractor(allow=('news(.*?)content_\d*')) ,\
                 callback='parse_news',follow=True),
              Rule(LinkExtractor(allow=('news')),\
-              callback='parse_url',follow=True)
+              follow=True)
 
      )
 
 
-    def parse_url(self, response):
-        pass
 
 
     def parse_news(self, response):
