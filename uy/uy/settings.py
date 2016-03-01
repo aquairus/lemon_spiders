@@ -23,7 +23,7 @@ USER_AGENT_LIST=['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/2
   ]
 #USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=1
+DOWNLOAD_DELAY=0.2
 
 ITEM_PIPELINES = {
     #'uy.pipelines.mergePipeline': 100,
