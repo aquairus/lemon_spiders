@@ -6,7 +6,7 @@ from scrapy.linkextractors import LinkExtractor
 from bs4 import BeautifulSoup
 import re
 
-p_re = re.compile(r"<br.*?>|<font.*?>|</font>|<span>|</span>|<strong>|</strong>|<div.*?>|</div>|<a.*?>|</a>|</br>")
+p_re = re.compile(r"<br.*?>|<font.*?>|</font>|<span>|</span>|<strong>|</strong>|<img.*?>|<center>.*?</center>|<div.*?>|</div>|<a.*?>|</a>|</br>")
 orz_re = re.compile(r"<p.*?>|</p>|<!--.*?-->")
 
 r_re = re.compile(r"\\r\\n|(\\n)+|\n+")
