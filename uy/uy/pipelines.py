@@ -15,12 +15,11 @@ sys.setdefaultencoding( "utf-8" )
 
 class uyPipeline(object):
     def open_spider(self, spider):
-        self.of=open("../../douban.txt",'w+')
+        self.of=open("../../"+spider.name+".txt",'w+')
 
     def process_item(self, item, spider):
         dic=dict(item)
-        dic.pop("tid")
-        dic.pop("total")
+        dic["type"]="news"
         self.of.write(json.dumps(dic, ensure_ascii=False)+"\n")
 
     def close_spider(self, spider):
