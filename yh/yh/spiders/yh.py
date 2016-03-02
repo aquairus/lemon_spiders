@@ -12,7 +12,7 @@ ques_re = re.compile(r"qid=(.{21})")
 ans_re = re.compile(r"page=(.)&qid=(.{21})")
 
 
-class yhSpider(RedisMixin,CrawlSpider):
+class yhSpider(RedisSpider,CrawlSpider):
     name = "yh"
     allowed_domains = ["answers.yahoo.com"]
     start_urls = ["https://answers.yahoo.com",
@@ -29,9 +29,10 @@ class yhSpider(RedisMixin,CrawlSpider):
 
      )
 
-    def _set_crawler(self, crawler):
-        CrawlSpider._set_crawler(self, crawler)
-        RedisMixin.setup_redis(self)
+    def __init__(self, *args, **kwargs):
+        domain = kwargs.pop('domain', '')
+        self.alowed_domains = filter(None, domain.split(','))
+        super(yhSpider, self).__init__(*args, **kwargs)
 
     def parse_url(self, response):
         pass
