@@ -26,7 +26,6 @@ class uySpider(CrawlSpider):
     def parse_news(self, response):
 
         url=response.url
-    #    print url
         try:
             title=response.xpath('//h2/text()').extract()[0].strip()
         except BaseException,e:

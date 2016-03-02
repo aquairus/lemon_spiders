@@ -59,7 +59,7 @@ class yhSpider(CrawlSpider):
             title=response.css('h1::text').extract()[0].lstrip().rstrip()
         except BaseException, e:
             title=""
-
+        print title
         ans=response.css("span[class=ya-q-full-text]::text").extract()
         review=""
         for a in ans:

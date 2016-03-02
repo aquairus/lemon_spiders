@@ -3,29 +3,33 @@ from scrapy.selector import Selector
 from ..items import uyItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from bs4 import BeautifulSoup
 
 
 class uy2Spider(CrawlSpider):
     name = "uy2"
     allowed_domains = ["uyghur.news.cn"]
-    start_urls = ["http://uyghur.news.cn"
+    start_urls = ["http://uyghur.news.cn",
+    "http://uyghur.news.cn/liebiao_ms.html",
+    "http://uyghur.news.cn/liebiao_dili.html"
+    "http://uyghur.news.cn/liebiao_pic.html"
+    "http://uyghur.news.cn/liebiao_gjxw.html"
+    "http://uyghur.news.cn/liebiao_gnxw.html"
+#    "http://uyghur.news.cn/liebiao_zzqtl.html"
      ]
 
+
     rules=(Rule(LinkExtractor(allow=('news(.*?)c_\d*')) ,\
-                callback='parse_news'),
-             Rule(LinkExtractor(allow=('news')),\
-              callback='parse_url')
+                callback='parse_news',follow=True),
+             Rule(LinkExtractor(allow=('.*'),deny=('wenhua|life|wenxue|video|cn.content')),
+             callback='parse_url',follow=True),
 
      )
-
 
     def parse_url(self, response):
         print response.url
 
 
     def parse_news(self, response):
-
         url=response.url
         print url
         # try:
