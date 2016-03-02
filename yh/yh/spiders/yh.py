@@ -4,7 +4,7 @@ from scrapy.selector import Selector
 from ..items import qItem,aItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from scrapy_redis.spiders import RedisMixin
+from scrapy_redis.spiders import RedisSpider
 import re
 
 
