@@ -4,13 +4,6 @@ from ..items import uyItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from bs4 import BeautifulSoup
-import re
-
-p_re = re.compile(r"<br.*?>|<font.*?>|</font>|<span>|</span>|<strong>|</strong>|<div.*?>|</div>|<a.*?>|</a>|</br>")
-orz_re = re.compile(r"<p.*?>|</p>|<!--.*?-->")
-
-r_re = re.compile(r"\\r\\n|(\\n)+|\n+")
-s_re = re.compile(r"\s+")
 
 
 class uy2Spider(CrawlSpider):

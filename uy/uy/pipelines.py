@@ -12,6 +12,18 @@ import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
+import re
+dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|<td.*?>|</td>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<stript.*?>|</stript>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>|</br>|</div>|<div.*?>")
+
+r_re = re.compile(r"(\\n)+|\n+")
+br__re = re.compile(r"(<br>)+")
+br_re = re.compile(r"<br.*?>")
+s_re = re.compile(r"\s+")
+p_re = re.compile(r"<p.*?>")
+t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
+
+
+
 
 class uyPipeline(object):
     def open_spider(self, spider):
@@ -22,8 +34,25 @@ class uyPipeline(object):
         dic["type"]="news"
         self.of.write(json.dumps(dic, ensure_ascii=False)+"\n")
 
+
     def close_spider(self, spider):
         self.of.close()
+
+
+class contentPipeline(object):
+
+    def process_item(self, item, spider):
+        newline=item["content"]
+        newline=p_re.sub("<p>",newline)
+        newline=br_re.sub("<br>",newline)
+        newline=br__re.sub("<br>",newline)
+        newline=dorp_re.sub("",newline)
+        newline=s_re.sub(r" ",newline)
+        newline=t_re.sub(r"\\t",newline)
+        newline=r_re.sub(r"\\n",newline)
+        newline=r_re.sub(r"\\n",newline)
+        item["content"]=newline
+        return item
 
 
 class mergePipeline(object):
