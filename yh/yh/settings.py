@@ -14,6 +14,12 @@ BOT_NAME = 'yh'
 SPIDER_MODULES = ['yh.spiders']
 NEWSPIDER_MODULE = 'yh.spiders'
 
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_PERSIST = True
+REDIS_HOST = 'spider01'
+REDIS_PORT = 6379
+
+
 
 USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
