@@ -4,7 +4,7 @@ from scrapy.selector import Selector
 from ..items import qItem,aItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-from scrapy_redis.spiders import RedisSpider
+from bs4 import BeautifulSoup
 import re
 
 
@@ -12,7 +12,7 @@ ques_re = re.compile(r"qid=(.{21})")
 ans_re = re.compile(r"page=(.)&qid=(.{21})")
 
 
-class yhSpider(RedisSpider,CrawlSpider):
+class yhSpider(CrawlSpider):
     name = "yh"
     allowed_domains = ["answers.yahoo.com"]
     start_urls = ["https://answers.yahoo.com",
@@ -29,10 +29,6 @@ class yhSpider(RedisSpider,CrawlSpider):
 
      )
 
-    def __init__(self, *args, **kwargs):
-        domain = kwargs.pop('domain', '')
-        self.alowed_domains = filter(None, domain.split(','))
-        super(yhSpider, self).__init__(*args, **kwargs)
 
     def parse_url(self, response):
         pass
