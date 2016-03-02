@@ -18,7 +18,7 @@ sys.setdefaultencoding( "utf-8" )
 class YhPipeline(object):
 
     def open_spider(self, spider):
-        #self.client = MongoClient('spider01', 27017)
+        self.client = MongoClient('spider01', 27017)
         self.buff=[]
         self.cnt=0
     def process_item(self, item, spider):
@@ -36,8 +36,8 @@ class YhPipeline(object):
 
 class mergePipeline(object):
     def open_spider(self, spider):
-        #self.client = MongoClient('spider01', 27017)
-        pass
+        self.client = MongoClient('spider01', 27017)
+
 
     def process_item(self, item, spider):
 
