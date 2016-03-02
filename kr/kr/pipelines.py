@@ -111,7 +111,12 @@ class mergePipeline(object):
 class KrPipeline(object):
 
     def open_spider(self, spider):
-        os.mkdir("../../"+spider.name)
+        try:
+            os.mkdir("../../"+spider.name)
+        except BaseException,e:
+            os.removedirs("../../"+spider.name)
+            os.mkdir("../../"+spider.name)
+
     def process_item(self, item, spider):
         name=itme["content"]
         of=open("../../"+spider.name+"/"+name+".txt",'w+')
