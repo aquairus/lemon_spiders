@@ -11,6 +11,7 @@ from scrapy.exceptions import DropItem
 import json
 from items import krItem
 import time
+import os
 
 class emptyPipeline(object):
     def process_item(self, item, spider):
@@ -46,23 +47,23 @@ class mergePipeline(object):
         self.review[nid][vid]=item["review"]
         keys=self.review[nid].keys()
 
-    #    print str(len(keys))+"/"+str(max(keys))
-
 
 
         if max(keys)==len(keys) and max(keys)>1:
             self.cnt+=1
             print self.cnt
-            review=""
-            for (v,c) in self.review[nid].items():
-                review=review+c
-            kr=krItem()
-            kr["review"]=review
-            kr["content"]=self.title.pop(nid)
 
+            name=self.title.pop(nid)
+            of=open("../../"+spider.name+"/"+name+".txt",'w+')
+
+            cpt=dict()
+            cpt["content"]=name
+            for (v,c) in self.review[nid].items():
+                cpt["review"]=c
+                of.write(json.dumps(cpt, ensure_ascii=False)+"\n")
             self.review.pop(nid)
             self.time.pop(nid)
-            return kr
+            raise DropItem("reivew")
 
         t=int(time.time()-self.start)
         if t%30==0:
@@ -79,18 +80,7 @@ class mergePipeline(object):
                         print self.cnt
                         return kr
         raise DropItem("reivew")
-                # if life>36000:
-                #     review=""
-                #     for (v,c) in volume.items():
-                #         review=review+c
-                #     kr=krItem()
-                #     kr["review"]=review
-                #     kr["content"]=self.title.pop(i)
-                #     self.review.pop(i)
-                #     self.time.pop(i)
-                #     print str(max(volume.keys()))+":"+str(len(volume))
-                #     if len(volume)/max(volume.keys())>0.8:
-                #         return kr
+
 
 
 
@@ -99,11 +89,8 @@ class mergePipeline(object):
 class KrPipeline(object):
 
     def open_spider(self, spider):
-        self.of=open("../../"+spider.name+".txt",'w+')
-
+        os.mkdir("../../"+spider.name)
     def process_item(self, item, spider):
-
-        self.of.write(json.dumps(dict(item), ensure_ascii=False)+"\n")
-
-    def close_spider(self, spider):
-        self.of.close()
+        name=itme["content"]
+        of=open("../../"+spider.name+"/"+name+".txt",'w+')
+        of.write(json.dumps(dict(item), ensure_ascii=False)+"\n")
