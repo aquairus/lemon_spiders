@@ -43,6 +43,7 @@ class contentPipeline(object):
 
     def process_item(self, item, spider):
         newline=item["content"]
+
         newline=p_re.sub("<p>",newline)
         newline=br_re.sub("<br>",newline)
         newline=br__re.sub("<br>",newline)
@@ -51,6 +52,7 @@ class contentPipeline(object):
         newline=t_re.sub(r"\\t",newline)
         newline=r_re.sub(r"\\n",newline)
         newline=r_re.sub(r"\\n",newline)
+        
         item["content"]=newline
         return item
 

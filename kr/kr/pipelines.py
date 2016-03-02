@@ -12,6 +12,27 @@ import json
 from items import krItem
 import time
 import os
+import re
+
+dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|<td.*?>|</td>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<stript.*?>|</stript>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>|</br>|<xml>.*?<xml>|<?xml.*?>")
+r_re = re.compile(r"(\\n)+|\n+")
+br__re = re.compile(r"(<br>)+")
+br_re = re.compile(r"<br.*?>")
+s_re = re.compile(r"\s+")
+p_re = re.compile(r"<p.*?>")
+t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
+
+
+def wash(line):
+    newline=p_re.sub("<p>",line)
+    newline=br_re.sub("<br>",newline)
+    newline=br__re.sub("<br>",newline)
+    newline=dorp_re.sub("",newline)
+    newline=s_re.sub(r" ",newline)
+    newline=t_re.sub(r"\\t",newline)
+    newline=r_re.sub(r"\\n",newline)
+    newline=r_re.sub(r"\\n",newline)
+    return newline
 
 class emptyPipeline(object):
     def process_item(self, item, spider):
@@ -59,7 +80,7 @@ class mergePipeline(object):
             cpt=dict()
             cpt["content"]=name
             for (v,c) in self.review[nid].items():
-                cpt["review"]=c
+                cpt["review"]=wash(c)
                 of.write(json.dumps(cpt, ensure_ascii=False)+"\n")
             self.review.pop(nid)
             self.time.pop(nid)
@@ -73,6 +94,7 @@ class mergePipeline(object):
                     if max(volume.keys())==1:
                         kr=krItem()
                         kr["review"]=self.review[i][1]
+                        kr["review"]=wash(kr["review"])
                         kr["content"]=self.title.pop(i)
                         self.review.pop(i)
                         self.time.pop(i)
