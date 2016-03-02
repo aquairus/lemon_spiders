@@ -20,11 +20,11 @@ class yhSpider(CrawlSpider):
 
 
     rules=(
-        Rule(LinkExtractor(allow=('page=[^1]'),deny=('sort')),
+        Rule(LinkExtractor(allow=('page=[^1]'),deny=('sort|rss')),
                 callback='parse_ans',follow=True ),
-        Rule(LinkExtractor(allow=('sid=\d*$')),\
+        Rule(LinkExtractor(allow=('sid=\d*$'),deny=("rss")),\
                 callback='parse_url',follow=True ),
-        Rule(LinkExtractor(allow=('qid=.{21}$')),\
+        Rule(LinkExtractor(allow=('qid=.{21}$'),deny=("rss")),\
                 callback='parse_ques',follow=True ),
 
      )
