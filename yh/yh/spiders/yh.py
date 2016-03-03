@@ -31,6 +31,7 @@ class yhSpider(CrawlSpider):
 
 
     def parse_url(self, response):
+        print "hi"
         pass
 
 
