@@ -13,7 +13,7 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 import re
-dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|<td.*?>|</td>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<stript.*?>|</stript>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>|</br>|</div>|<div.*?>")
+dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|<td.*?>|</td>|<center.*?>|<iframe.*?>|</iframe>|<span.*?>|</span>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<stript.*?>|</stript>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>")
 
 r_re = re.compile(r"(\\n)+|\n+")
 br__re = re.compile(r"(<br>)+")
@@ -52,7 +52,7 @@ class contentPipeline(object):
         newline=t_re.sub(r"\\t",newline)
         newline=r_re.sub(r"\\n",newline)
         newline=r_re.sub(r"\\n",newline)
-        
+
         item["content"]=newline
         return item
 
