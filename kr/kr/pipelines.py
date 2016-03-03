@@ -118,6 +118,6 @@ class KrPipeline(object):
             os.mkdir("../../"+spider.name)
 
     def process_item(self, item, spider):
-        name=itme["content"]
+        name=item["content"]
         of=open("../../"+spider.name+"/"+name+".txt",'w+')
         of.write(json.dumps(dict(item), ensure_ascii=False)+"\n")
