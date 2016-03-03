@@ -23,10 +23,6 @@ class uy4Spider(CrawlSpider):
 
      )
 
-    # def parse_url(self, response):
-    #     pass
-    #     print response.url
-    #
 
     def parse_news(self, response):
 
