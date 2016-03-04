@@ -17,9 +17,8 @@ class uy3Spider(CrawlSpider):
     rules=(Rule(LinkExtractor(allow=('catid=(13|88|6|11|195|17|31|38|44|12|15)&'),deny=('lists')) ,\
                 callback='parse_news',follow=True),
             Rule(LinkExtractor(allow=('catid=(13|88|6|11|195|17|31|38|44|12|15)'),deny=('catid=(114|115|61|139|136|138|121|125)')) ,\
-                callback='parse_url',follow=True),
-            Rule(LinkExtractor(allow=('.*'),deny=('search|Archiver|qq|bbs|catid|mahsustema')),
-                callback='parse_url'),
+                follow=True),
+
 
      )
 
