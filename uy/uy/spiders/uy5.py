@@ -9,8 +9,8 @@ time_re = re.compile(r".*?: ")
 
 class uy5Spider(CrawlSpider):
     name = "uy5"
-    allowed_domains = ["nur.cn"]
-    start_urls = ["http://www.nur.cn/index.shtml",
+    allowed_domains = ["news.okyan.com"]
+    start_urls = ["http://news.okyan.com/",
      ]
 
 
@@ -36,7 +36,7 @@ class uy5Spider(CrawlSpider):
             print e
             print url
             return
-
+        #print title
         time=response.xpath("//span[@class='content_time']/text()").extract()[0]
         time=str(time[15:40])
         time=time.replace(":","",1).strip()
