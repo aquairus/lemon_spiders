@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from scrapy.http import Request
@@ -25,34 +26,40 @@ class uy6Spider(CrawlSpider):
     rules=(Rule(LinkExtractor(allow=('news.*?/\d+/'),deny=('login|hash')) ,\
                 callback='parse_news'),
 
-             Rule(LinkExtractor(allow=('catid'),deny=('fuck|special')),
+             Rule(LinkExtractor(allow=('catid'),deny=('fuck|special|login')),
              callback='parse_cat',follow=True),
 
-             Rule(LinkExtractor(allow=('.*'),deny=('fuck|news|apk|login|register|zhongduan')),
-             callback='url',follow=True),
+             Rule(LinkExtractor(allow=('special'),deny=('fuck|news|hash|login|register|zhongduan')),
+             follow=True),
 
      )
 
 
+    def __init__(self, *args, **kwargs):
+
+        self.driver = webdriver.PhantomJS('phantomjs')
+        super(uy6Spider,self).__init__(*args, **kwargs)
+
+
     def parse_url(self, response):
-        pass
-        #print response.url
+        print response.url
+
+
 
 
     def parse_cat(self, response):
 
         urls=[]
         url=response.url
-        driver = webdriver.PhantomJS('phantomjs')
-        driver.get(url)
-        for i in xrange(24):
-            driver.find_element_by_class_name("more").click()
-        links=driver.find_elements_by_xpath("//div[@class='tur_news']//a")
+
+        self.driver.get(url)
+        for i in xrange(24):#24
+            self.driver.find_element_by_class_name("more").click()
+        links=self.driver.find_elements_by_xpath("//div[@class='tur_news']//a")
         for link in links:
         	urls.append(link.get_attribute("href"))
-        driver.close()
+
         for url in urls:
-            print url
             yield Request(url,self.parse_news)
 
 
@@ -61,24 +68,44 @@ class uy6Spider(CrawlSpider):
     def parse_news(self, response):
 
         url=response.url
-        print url
-        # try:
-        #     title=response.xpath('//h1/text()').extract()[0].strip()
-        # except BaseException,e:
-        #     print e
-        #     print url
-        #     return
-        #
-        # time=response.xpath("//p[@class='uquri']/span/text()").extract()[0]
-        # time=str(time[48:90])
-        # time=time_re.sub("",time).strip()
-        #
-        # content=response.xpath("//div[@class='content']").extract()[0]
-        #
-        # uy=uyItem()
-        # uy["title"]=title
-        # uy["content"]=content
-        # uy["review"]=""
-        # uy["time"]=time
-        # uy["url"]=url
-        # return uy
+
+        try:
+            title=response.xpath('//h2/text()').extract()[0].strip()
+        except BaseException,e:
+            print e
+            print url
+            return
+
+        time=response.xpath("//p[@class='uquri']/span/text()").extract()[3]
+        time=time_re.sub("",time).strip()
+
+        content=response.xpath("//div[@class='mazmun']").extract()[0]
+
+        self.driver.get(url)
+        review=""
+        try:
+            p=self.driver.find_element_by_xpath("//div[@id='loadMore']//p")
+            style=p.get_attribute("style")
+            next_page=style=="display: none;"
+        except BaseException,e:
+            next_page=None
+
+
+    	while next_page:
+            self.driver.find_element_by_id("loadMore").click()
+            p=self.driver.find_element_by_xpath("//div[@id='loadMore']//p")
+            style=p.get_attribute("style")
+            next_page=style=="display: none;"
+
+        comments=self.driver.find_elements_by_class_name("np-post-content")
+        if comments:
+            for cm in comments:
+    			review=review+"<p>"+cm.text+"</p>"
+
+        uy=uyItem()
+        uy["title"]=title
+        uy["content"]=content
+        uy["review"]=review
+        uy["time"]=time
+        uy["url"]=url
+        return uy

@@ -15,7 +15,7 @@ sys.setdefaultencoding( "utf-8" )
 import re
 dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|<td.*?>|</td>|<center.*?>|<iframe.*?>|</iframe>|<span.*?>|</span>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<stript.*?>|</stript>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>")
 
-r_re = re.compile(r"(\\n)+|\n+")
+r_re = re.compile(r"(\\n)+|\n+|(<p></p>)+")
 br__re = re.compile(r"(<br>)+")
 br_re = re.compile(r"<br.*?>")
 s_re = re.compile(r"\s+")
