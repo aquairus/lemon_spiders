@@ -28,11 +28,13 @@ t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
 class uyPipeline(object):
     def open_spider(self, spider):
         self.of=open("../../"+spider.name+".txt",'w+')
-
+        self.cnt=0
     def process_item(self, item, spider):
         dic=dict(item)
         dic["type"]="news"
         self.of.write(json.dumps(dic, ensure_ascii=False)+"\n")
+        self.cnt+=1
+        print self.cnt
 
 
     def close_spider(self, spider):
