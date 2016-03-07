@@ -75,7 +75,8 @@ start_urls=["http://www.xuebang.com.cn",
 
 
 
-driver = webdriver.PhantomJS('phantomjs')#webdriver.Firefox()
+#driver = webdriver.PhantomJS('phantomjs')
+driver=webdriver.Firefox()
 # driver.get("http://www.xuebang.com.cn/teacherId62745"+commends_text)
 # get_teacher_info()
 
