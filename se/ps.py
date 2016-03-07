@@ -91,11 +91,13 @@ dept_urls=get_url(dept_re)
 for d_url in dept_urls:
 	driver.get(d_url)
 	teacher_urls.append(get_url(teacher_re))
+	sleep(1)
 	print "dept"
 
 for t_url in teacher_urls:
 	driver.get(t_url+commends_text)
 	get_teacher_info()
+	sleep(0.5)
 
 
 driver.close()
