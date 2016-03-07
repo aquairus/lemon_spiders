@@ -13,7 +13,7 @@ sys.setdefaultencoding( "utf-8" )
 dept_re=re.compile(r"12/dept1")
 teacher_re=re.compile(r"teacherId")
 ps_of=open("../../ps.txt","w+")
-
+ps_cnt=0
 
 
 def get_url(regex):
@@ -61,6 +61,8 @@ def get_teacher_info():
 			comments_list.append(comment)
 	t_info["comments"]=comments_list
 	ps_of.write(json.dumps(t_info, ensure_ascii=False)+"\n")
+	ps_cnt+=1
+	print ps_cnt
 
 
 
