@@ -24,7 +24,7 @@ def get_url(regex):
 
 		if url and regex.search(url):
 			url_list.append(url)
-			print url
+			#print url
 	return url_list
 
 def get_teacher_info():
@@ -78,6 +78,8 @@ start_urls=["http://www.xuebang.com.cn",
 driver = webdriver.PhantomJS('phantomjs')#webdriver.Firefox()
 # driver.get("http://www.xuebang.com.cn/teacherId62745"+commends_text)
 # get_teacher_info()
+
+
 for s_url in start_urls:
 	driver.get(s_url)
 
@@ -85,9 +87,11 @@ for s_url in start_urls:
 teacher_urls=[]
 dept_urls=get_url(dept_re)
 
+
 for d_url in dept_urls:
 	driver.get(d_url)
 	teacher_urls.append(get_url(teacher_re))
+	print "dept"
 
 for t_url in teacher_urls:
 	driver.get(t_url+commends_text)
