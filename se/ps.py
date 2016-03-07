@@ -83,7 +83,8 @@ driver = webdriver.PhantomJS('phantomjs')
 
 for s_url in start_urls:
 	driver.get(s_url)
-
+	sleep(1)
+	print "init"
 
 teacher_urls=[]
 dept_urls=get_url(dept_re)
