@@ -33,8 +33,8 @@ env.roledefs = {
 
 @roles('all')
 def do():
-	cmd=raw_input()
-	run(cmd)
+	run("git config --global user.email 18650013469@163.com ")
+	run("git config --global user.name cxy")
 
 
 @roles('all')
@@ -49,7 +49,7 @@ def ls():
 @roles('all')
 def update():
 	with cd('/home/cxy/lemon_spiders'):
- 		run ("git reset --hard HEAD^")
+ 		run ("git reset --hard HEAD^^^")
  		run("git pull")
 
 # @roles('all')
