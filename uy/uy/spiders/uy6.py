@@ -24,7 +24,7 @@ class uy6Spider(CrawlSpider):
 
 
     rules=(Rule(LinkExtractor(allow=('news.*?/\d+/'),deny=('login|hash')) ,\
-                callback='parse_news'),
+                callback='parse_news',follow=True),
 
              Rule(LinkExtractor(allow=('catid'),deny=('fuck|special|login')),
              callback='parse_cat',follow=True),

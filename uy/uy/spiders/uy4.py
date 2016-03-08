@@ -17,7 +17,7 @@ class uy4Spider(CrawlSpider):
 
 
     rules=(Rule(LinkExtractor(allow=('mazmun.*?Love_id=\d*')) ,\
-                callback='parse_news'),
+                callback='parse_news',follow=True),
              Rule(LinkExtractor(allow=('news'),deny=('mazmun')),
              follow=True),
 

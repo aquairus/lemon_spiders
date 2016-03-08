@@ -15,7 +15,7 @@ class uy2Spider(CrawlSpider):
 
 
     rules=(Rule(LinkExtractor(allow=('mazmun_\d*')) ,\
-                callback='parse_news'),
+                callback='parse_news',follow=True),
              Rule(LinkExtractor(allow=('tur'),deny=('about|salon|elan|app|PageSpeed|mazmun|cn/view|mobile|radio|xjtv')),
              follow=True),
 
