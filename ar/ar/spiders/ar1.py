@@ -28,21 +28,20 @@ class ar1Spider(CrawlSpider):
     def parse_news(self, response):
 
         url=response.url
-        #print url
+
         try:
             title=response.xpath("//h1[@class='headline']/text()").extract()[0].strip()
             content=response.xpath("//div[@class='bd']").extract()[0]
         except BaseException,e:
-
             print e
             print url
             return
-        #print title
+        #print content
         time=response.xpath("//cite[@class='byline vcard']/abbr/text()").extract()[0].strip()
-    #    print time
+
         ar=arItem()
         ar["title"]=title
-        ar["content"]=""#content
+        ar["content"]=content
         ar["review"]=""
         ar["time"]=time
         ar["url"]=url
