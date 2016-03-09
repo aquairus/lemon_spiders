@@ -14,10 +14,10 @@ class ar1Spider(CrawlSpider):
     start_urls = ["https://maktoob.news.yahoo.com"
      ]
 
-    rules=(Rule(LinkExtractor(allow=('\d[9]|.html$|sector.html$'),deny=('video|archive|slideshow|rss')) ,\
+    rules=(Rule(LinkExtractor(allow=('\d[9]|.html$|sector.html$'),deny=('video|archive|slideshow|rss|photo')) ,\
                 callback='parse_news',follow=True),
             #  Rule(LinkExtractor(allow=('page|%'),deny=('entertain|privacy|terms'))),
-             Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login')),
+             Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login|photo')),
              follow=True),
 
      )
