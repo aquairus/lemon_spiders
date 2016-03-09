@@ -17,7 +17,7 @@ class ar2Spider(CrawlSpider):
      ]
 
     rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss')) ,\
-                callback='parse_news',follow=True)
+                callback='parse_news',follow=True),
 
              Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login')),
              follow=True),
