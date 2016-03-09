@@ -17,7 +17,7 @@ class uy5Spider(CrawlSpider):
     rules=(Rule(LinkExtractor(allow=('news.*?/\d+/')) ,\
                 callback='parse_news',follow=True),
              Rule(LinkExtractor(allow=('.*'),deny=('eser|show|content|/\d+/')),
-             follow=True),
+             callback='parse_url',follow=True),
 
      )
 

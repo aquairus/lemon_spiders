@@ -7,13 +7,13 @@ import re
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-
+delay=10
 
 
 dept_re=re.compile(r"12/dept1")
 teacher_re=re.compile(r"teacherId")
 ps_of=open("../../ps.txt","w+")
-ps_cnt=0
+
 
 
 def get_url(regex):
@@ -61,8 +61,8 @@ def get_teacher_info():
 			comments_list.append(comment)
 	t_info["comments"]=comments_list
 	ps_of.write(json.dumps(t_info, ensure_ascii=False)+"\n")
-	ps_cnt+=1
-	print ps_cnt
+
+	print "teacher"
 
 
 
@@ -83,7 +83,7 @@ driver = webdriver.PhantomJS('phantomjs')
 
 for s_url in start_urls:
 	driver.get(s_url)
-	sleep(1)
+	sleep(delay)
 	print "init"
 
 teacher_urls=[]
@@ -92,14 +92,16 @@ dept_urls=get_url(dept_re)
 
 for d_url in dept_urls:
 	driver.get(d_url)
-	teacher_urls.append(get_url(teacher_re))
-	sleep(1)
+	teacher_urls=teacher_urls+get_url(teacher_re)
+	sleep(delay)
 	print "dept"
 
-for t_url in teacher_urls:
+print len(teacher_urls)
+teacher_urls.reverse()
+for t_url in teacher_urls[:-1686]:
 	driver.get(t_url+commends_text)
 	get_teacher_info()
-	sleep(0.5)
+	sleep(delay)
 
 
 driver.close()
