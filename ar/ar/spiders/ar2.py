@@ -16,9 +16,9 @@ class ar2Spider(CrawlSpider):
     start_urls = ["http://www.aljazeera.net"
      ]
 
-    rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss')) ,\
+    rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss|programs')) ,\
                 callback='parse_news',follow=True),\
-             Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login')),\
+             Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login|programs')),\
              follow=True),
 
      )
