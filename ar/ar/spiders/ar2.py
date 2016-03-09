@@ -3,20 +3,22 @@ from scrapy.selector import Selector
 from ..items import arItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
-import sys
-reload(sys)
-sys.setdefaultencoding( "utf-8" )
+import re
+# import sys
+# reload(sys)
+# sys.setdefaultencoding( "utf-8" )
 
+time_re = re.compile(r"(\d+/)")
 
-class ar1Spider(CrawlSpider):
-    name = "ar1"
-    allowed_domains = ["maktoob.news.yahoo.com"]
-    start_urls = ["https://maktoob.news.yahoo.com"
+class ar2Spider(CrawlSpider):
+    name = "ar2"
+    allowed_domains = ["aljazeera.net"]
+    start_urls = ["http://www.aljazeera.net"
      ]
 
-    rules=(Rule(LinkExtractor(allow=('\d[9]|.html$|sector.html$'),deny=('video|archive|slideshow|rss')) ,\
-                callback='parse_news',follow=True),
-            #  Rule(LinkExtractor(allow=('page|%'),deny=('entertain|privacy|terms'))),
+    rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss')) ,\
+                callback='parse_news',follow=True)
+
              Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login')),
              follow=True),
 
@@ -28,19 +30,22 @@ class ar1Spider(CrawlSpider):
     def parse_news(self, response):
 
         url=response.url
-
+        #print url
         try:
-            title=response.xpath("//h1[@class='headline']/text()").extract()[0].strip()
-            contents=response.xpath("//div[@class='bd']//p").extract()
+            title=response.xpath("//h1[@class='heading-story']/text()").extract()[0].strip()
+            contents=response.xpath("//div[@id='DynamicContentContainer']/p").extract()
         except BaseException,e:
             print e
             print url
             return
+        #print title
+
+        m=time_re.findall(url)
+        time=m[0]+m[1]+m[2]
+
         content=""
         for c in contents:
             content=content+c#"<p>"+c+"</p>"
-
-        time=response.xpath("//cite[@class='byline vcard']/abbr/text()").extract()[0].strip()
 
         ar=arItem()
         ar["title"]=title

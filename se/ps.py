@@ -97,8 +97,8 @@ for d_url in dept_urls:
 	print "dept"
 
 print len(teacher_urls)
-teacher_urls.reverse()
-for t_url in teacher_urls[:-1686]:
+#teacher_urls.reverse()
+for t_url in teacher_urls[1686:-1400]:
 	driver.get(t_url+commends_text)
 	get_teacher_info()
 	sleep(delay)
