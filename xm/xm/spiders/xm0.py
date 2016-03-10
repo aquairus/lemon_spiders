@@ -30,21 +30,36 @@ class xmSpider(CrawlSpider):
 
         category=response.xpath("//div[@class='detailContent_category']/a/text()").extract()[0]
         name=response.xpath("//div[@class='detailContent_title']/h1/text()").extract()[0]
+        username=response.xpath("//div[@class='username']/text()").extract()[0].strip()
+  
+        tag_list=[]
+        album_list=[]
+
+        try:
+            tags=response.xpath("//div[@class='tagBtnList']//span/text()").extract()
+            for tag in tags:
+                tag_list.append(tag)
+        except BaseException, e:
+            pass
+
+      
+
+
+        try:
+            album=response.xpath("//a[@class='title']/text()").extract()
+            for alb in album:
+                album_list.append(alb) 
+        except BaseException, e:
+            pass
+
         try:
             count=response.xpath("//div[@class='detailContent_playcountDetail']/span/text()").extract()[0]
         except BaseException, e:
             count="0"
 
-        tags=response.xpath("//div[@class='tagBtnList']//span/text()").extract()
-        username=response.xpath("//div[@class='username']/text()").extract()[0].strip()
-        tag_list=[]
-        album_list=[]
-        album=response.xpath("//a[@class='title']/text()").extract()
 
-        for tag in tags:
-            tag_list.append(tag)
-        for alb in album:
-            album_list.append(alb)
+
+
         xm=xmItem()
         xm["name"]=name
         xm["username"]=username
