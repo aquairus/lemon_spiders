@@ -46,7 +46,7 @@ class xmPipeline(object):
     def process_item(self, item, spider):
         dic=dict(item)
 
-        xm=self.client.xm
+        db=self.client.xm
         xm=db.get_collection(spider.name)
         self.cnt+=1
         print self.cnt
