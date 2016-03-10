@@ -30,7 +30,11 @@ class xmSpider(CrawlSpider):
 
         category=response.xpath("//div[@class='detailContent_category']/a/text()").extract()[0]
         name=response.xpath("//div[@class='detailContent_title']/h1/text()").extract()[0]
-        count=response.xpath("//div[@class='detailContent_playcountDetail']/span/text()").extract()[0]
+        try:
+            count=response.xpath("//div[@class='detailContent_playcountDetail']/span/text()").extract()[0]
+        except BaseException, e:
+            count="0"
+
         tags=response.xpath("//div[@class='tagBtnList']//span/text()").extract()
         username=response.xpath("//div[@class='username']/text()").extract()[0].strip()
         tag_list=[]
