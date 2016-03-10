@@ -47,7 +47,7 @@ class arPipeline(object):
         dic["type"]="news"
 
         db=self.client.ar
-        ar=db.getCollection(spider.name)
+        ar=db.get_collection(spider.name)
         self.cnt+=1
         print self.cnt
         ar.insert_one(dic)
