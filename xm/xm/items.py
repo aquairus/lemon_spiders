@@ -7,10 +7,12 @@
 
 import scrapy
 
-class arItem(scrapy.Item):
+class xmItem(scrapy.Item):
 
-    title=scrapy.Field()
+    name=scrapy.Field()
+    username=scrapy.Field()
+    count=scrapy.Field()
+    category=scrapy.Field()
+    tag_list=scrapy.Field()
+    album_list=scrapy.Field()
     url=scrapy.Field()
-    review=scrapy.Field()
-    content=scrapy.Field()
-    time=scrapy.Field()

@@ -8,15 +8,16 @@
 from scrapy.exceptions import DropItem
 import json
 import sys
-from pymongo import MongoClient
-
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-
+from pymongo import MongoClient
 import re
+
+
+
 dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|\{.*?\}|TRS_Editor|<td.*?>|</td>|<center.*?>|<iframe.*?>|</iframe>|<span.*?>|</span>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<scr.*?ipt>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>")
-dorp2_re = re.compile(r"<style.*?>|</style>|/style>|P|DIV|TD|TH|SPAN|FONT|UL|LI|A|\.|<em>|<h5>|</h5>|<h4>|</h4>|ShareFacebookEmailGoogle|LinkedInTwitter|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>|<b>|</b>")
+dorp2_re = re.compile(r"<style.*?>|</style>|/style>|P|DIV|TD|TH|SPAN|FONT|UL|LI|A|\.|<h5>|</h5>|<h4>|</h4>|ShxmeFacebookEmailGoogle|LinkedInTwitter|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>|<b>|</b>")
 
 
 r_re = re.compile(r"(\\n)+|\n+|(<p></p>)+")
@@ -30,13 +31,13 @@ t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
 
 
 
-class arPipeline(object):
+class xmPipeline(object):
     def open_spider(self, spider):
+
         self.client = MongoClient('spider06', 27017)
-        db=self.client.ar
-        ar=db.get_collection(spider.name)
-        ar.create_index("url")
-        #self.of=open("../../"+spider.name+".txt",'w+')
+        db=self.client.xm
+        xm=db.get_collection(spider.name)
+        xm.create_index("url")
         self.cnt=0
 
 
@@ -44,13 +45,12 @@ class arPipeline(object):
 
     def process_item(self, item, spider):
         dic=dict(item)
-        dic["type"]="news"
 
-        db=self.client.ar
-        ar=db.get_collection(spider.name)
+        xm=self.client.xm
+        xm=db.get_collection(spider.name)
         self.cnt+=1
         print self.cnt
-        ar.insert_one(dic)
+        xm.insert_one(dic)
 
 
 
