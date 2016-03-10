@@ -12,9 +12,12 @@ class arSpider(CrawlSpider):
      ]
 
     rules=(Rule(LinkExtractor(allow=('\d+/\d+/\d+'),deny=('entertain')) ,\
-                callback='parse_news', follow=True),
-             Rule(LinkExtractor(allow=('page|%'),deny=('entertain|privacy|terms'))),
-             Rule(LinkExtractor(allow=('.*'),deny=('entertain|privacy|terms')),
+                callback='parse_news'),
+            Rule(LinkExtractor(allow=('\d+/\w+/\d+/\d+'),deny=('entertain')) ,\
+                        callback='parse_news'),
+             Rule(LinkExtractor(allow=('page|%'),deny=('entertain|privacy|terms|archive')),
+             follow=True),
+             Rule(LinkExtractor(allow=('.*'),deny=('entertain|privacy|terms|archive')),
              follow=True),
 
      )

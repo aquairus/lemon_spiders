@@ -8,6 +8,8 @@
 from scrapy.exceptions import DropItem
 import json
 import sys
+from pymongo import MongoClient
+
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -30,15 +32,25 @@ t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
 
 class arPipeline(object):
     def open_spider(self, spider):
-        self.of=open("../../"+spider.name+".txt",'w+')
+        self.client = MongoClient('spider06', 27017)
+        db=self.client.ar
+        ar=db.get_collection(spider.name)
+        ar.create_index("url")
+        #self.of=open("../../"+spider.name+".txt",'w+')
         self.cnt=0
+
+
+
+
     def process_item(self, item, spider):
         dic=dict(item)
         dic["type"]="news"
-        self.of.write(json.dumps(dic, ensure_ascii=False)+"\n")
+
+        db=self.client.ar
+        ar=db.getCollection(spider.name)
         self.cnt+=1
         print self.cnt
-
+        ar.insert_one(dic)
 
     def close_spider(self, spider):
         self.of.close()
