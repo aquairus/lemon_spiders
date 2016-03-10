@@ -7,7 +7,7 @@ import re
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-delay=10
+delay=8
 
 
 dept_re=re.compile(r"12/dept1")
@@ -27,10 +27,10 @@ def get_url(regex):
 			#print url
 	return url_list
 
-def get_teacher_info():
+def get_teacher_info(url):
 	t_info={}
 	
-
+	t_info["url"]=url
 	name=driver.find_elements_by_xpath("//span[@class='TJtab01Mcon']//p")[0].text
 	t_info["name"]=name.split(ur"：")[1] 
 	# print name.split(ur"：")[1] 
@@ -96,11 +96,12 @@ for d_url in dept_urls:
 	sleep(delay)
 	print "dept"
 
+
+teacher_urls=set(teacher_urls[1686:])
 print len(teacher_urls)
-#teacher_urls.reverse()
-for t_url in teacher_urls[1686:-1400]:
+for t_url in teacher_urls:
 	driver.get(t_url+commends_text)
-	get_teacher_info()
+	get_teacher_info(t_url)
 	sleep(delay)
 
 
