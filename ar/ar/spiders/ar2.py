@@ -4,11 +4,11 @@ from ..items import arItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 import re
-# import sys
-# reload(sys)
-# sys.setdefaultencoding( "utf-8" )
+import sys
+reload(sys)
+sys.setdefaultencoding( "utf-8" )
 
-time_re = re.compile(r"(\d+/)")
+time_re = re.compile(r"(/\d+)")
 
 class ar2Spider(CrawlSpider):
     name = "ar2"
@@ -16,9 +16,9 @@ class ar2Spider(CrawlSpider):
     start_urls = ["http://www.aljazeera.net"
      ]
 
-    rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss|programs')) ,\
+    rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss|program|forum|multimedia|ervice|pedia|icons|event|countries|organization')) ,\
                 callback='parse_news',follow=True),\
-             Rule(LinkExtractor(allow=('.*'),deny=('video|slideshow|rss|login|programs')),\
+             Rule(LinkExtractor(allow=('news|topics|knowledgegate'),deny=('video|program|search|print')),\
              follow=True),
 
      )
@@ -29,15 +29,28 @@ class ar2Spider(CrawlSpider):
     def parse_news(self, response):
 
         url=response.url
-        #print url
+
         try:
             title=response.xpath("//h1[@class='heading-story']/text()").extract()[0].strip()
+            #contents=response.xpath("//div[@id='DynamicContentContainer']/p").extract()
+        except BaseException,e:
+            try:
+                title=response.xpath("//h1/text()").extract()[0].strip()
+            except BaseException,e:
+                print "fuck"
+                print url
+                return
+
+
+        try:
             contents=response.xpath("//div[@id='DynamicContentContainer']/p").extract()
         except BaseException,e:
-            print e
-            print url
-            return
-        #print title
+            try:
+                contents=response.xpath("//div[@id='container']//p").extract()
+            except BaseException,e:
+                print "fuck"
+                print url
+                contents=""
 
         m=time_re.findall(url)
         time=m[0]+m[1]+m[2]

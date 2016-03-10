@@ -16,7 +16,7 @@ sys.setdefaultencoding( "utf-8" )
 
 import re
 dorp_re = re.compile(r"\\r|<font.*?>|<!--.*?-->|\{.*?\}|TRS_Editor|<td.*?>|</td>|<center.*?>|<iframe.*?>|</iframe>|<span.*?>|</span>|<tbody.*?>|</tbody>|</font>|<center>|<img.*?>|</img>|<scr.*?ipt>|<meta.*?>|</meta>|</center>|<a.*?>|</a>|<shapetype.*?/shapetype>|<strong.*?>|</strong>|<embed.*?/embed>")
-dorp2_re = re.compile(r"<style.*?>|</style>|/style>|P|DIV|TD|TH|SPAN|FONT|UL|LI|A|\.|<h5>|</h5>|<h4>|</h4>|ShareFacebookEmailGoogle|LinkedInTwitter|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>|<b>|</b>")
+dorp2_re = re.compile(r"<style.*?>|</style>|/style>|P|DIV|TD|TH|SPAN|FONT|UL|LI|A|\.|<em>|<h5>|</h5>|<h4>|</h4>|ShareFacebookEmailGoogle|LinkedInTwitter|<li.*?>|</li>|<ul.*?>|</ul>|</div>|<div.*?>|<b>|</b>")
 
 
 r_re = re.compile(r"(\\n)+|\n+|(<p></p>)+")
