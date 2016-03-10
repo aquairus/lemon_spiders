@@ -16,7 +16,7 @@ class xmSpider(CrawlSpider):
             Rule(LinkExtractor(allow=('album/\d+'),deny=('entertain')) ,\
                         callback='parse_al',follow=True),
     Rule(LinkExtractor(allow=('/dq/'),deny=('enterdsadsa')) ,\
-                follow=True),
+                callback='parse_url',follow=True),
 
 
      )
@@ -25,7 +25,7 @@ class xmSpider(CrawlSpider):
         print response.url
 
     def parse_al(self, response):
-
+        print response.url
         url=response.url
 
         category=response.xpath("//div[@class='detailContent_category']/a/text()").extract()[0]
@@ -49,4 +49,5 @@ class xmSpider(CrawlSpider):
         xm["tag_list"]=tag_list
         xm["album_list"]=album_list
         xm["url"]=url[24:]
+        print "what?"
         return xm

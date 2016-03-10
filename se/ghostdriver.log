@@ -513,7 +513,6 @@ Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
-OW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
@@ -521,7 +520,17 @@ Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
+Error: cannot access member `success' of deleted QObject
+
+  :/ghostdriver/request_handlers/session_request_handler.js:187
+  :/ghostdriver/session.js:219
+Error: cannot access member `success' of deleted QObject
+
+  :/ghostdriver/request_handlers/session_request_handler.js:187
+  :/ghostdriver/session.js:219
 Asynchronous Sessions cleanup phase starting NOW
+Asynchronous Sessions cleanup phase starting NOW
+ous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW
 Asynchronous Sessions cleanup phase starting NOW

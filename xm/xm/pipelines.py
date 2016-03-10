@@ -21,7 +21,10 @@ import re
 class xmPipeline(object):
     def open_spider(self, spider):
 
-        self.of=open("../../"+spider.name+".txt",'w+')
+        self.client = MongoClient('spider02', 27017)
+        db=self.client.xm
+        xm=db.get_collection(spider.name)
+        xm.create_index("url")
         self.cnt=0
 
 
@@ -29,6 +32,29 @@ class xmPipeline(object):
 
     def process_item(self, item, spider):
         self.cnt+=1
-        print self.cnt        
+        print self.cnt
         dic=dict(item)
-        self.of.write(json.dumps(dic, ensure_ascii=False)+"\n")
+        db=self.client.xm
+        xm=db.get_collection(spider.name)
+
+        xm.insert_one(dic)
+
+
+
+class contentPipeline(object):
+
+    def process_item(self, item, spider):
+        newline=item["content"]
+
+        newline=p_re.sub("<p>",newline)
+        newline=br_re.sub("<br>",newline)
+        newline=br__re.sub("<br>",newline)
+        newline=dorp_re.sub("",newline)
+        newline=dorp2_re.sub("",newline)
+        newline=s_re.sub(r" ",newline)
+        newline=t_re.sub(r"\\t",newline)
+        newline=r_re.sub(r"\\n",newline)
+        newline=r_re.sub(r"\\n",newline)
+
+        item["content"]=newline
+        return item
