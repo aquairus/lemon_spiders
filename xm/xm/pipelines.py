@@ -34,7 +34,7 @@ t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
 class xmPipeline(object):
     def open_spider(self, spider):
 
-        self.client = MongoClient('spider06', 27017)
+        self.client = MongoClient('spider02', 27017)
         db=self.client.xm
         xm=db.get_collection(spider.name)
         xm.create_index("url")
@@ -44,12 +44,12 @@ class xmPipeline(object):
 
 
     def process_item(self, item, spider):
-        dic=dict(item)
-
-        db=self.client.xm
-        xm=db.get_collection(spider.name)
         self.cnt+=1
         print self.cnt
+        dic=dict(item)
+        db=self.client.xm
+        xm=db.get_collection(spider.name)
+
         xm.insert_one(dic)
 
 
