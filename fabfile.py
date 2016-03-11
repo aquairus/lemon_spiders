@@ -3,8 +3,8 @@ from fabric.api import cd,run,env,hosts,roles,execute,settings,local
 import os
 
 slaver_list=['spider02','spider03',\
-'spider04','spider05','spider06']
-
+'spider05','spider06']
+#04
 
 try:
 	env.password=os.environ['spider_pass']

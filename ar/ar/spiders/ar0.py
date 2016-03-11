@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from ..items import arItem
@@ -25,7 +26,7 @@ class arSpider(CrawlSpider):
     "http://arabic.cnn.com/لبنان",
     "http://arabic.cnn.com/مصر",
     "http://arabic.cnn.com/الجزائر",
-    "http://arabic.cnn.com/المغرب",    
+    "http://arabic.cnn.com/المغرب",
     "http://arabic.cnn.com/تونس",
     "http://arabic.cnn.com/ليبيا",
     "http://arabic.cnn.com/عائض-القرني",
