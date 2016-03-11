@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from ..items import arItem
@@ -13,7 +14,13 @@ time_re = re.compile(r"(/\d+)")
 class ar2Spider(CrawlSpider):
     name = "ar2"
     allowed_domains = ["aljazeera.net"]
-    start_urls = ["http://www.aljazeera.net"
+    start_urls = ["http://www.aljazeera.net",
+    "http://www.aljazeera.net/knowledgegate",
+    "http://www.aljazeera.net/topics/اللجوء-إلى-أوروبا",
+    "http://www.aljazeera.net/topics/الصراع-في-العراق",
+    "http://www.aljazeera.net/topics/الأزمة-في-اليمن",
+    "http://www.aljazeera.net/topics/الحرب-في-سوريا",
+    "http://www.aljazeera.net/news"
      ]
 
     rules=(Rule(LinkExtractor(allow=('/\d+/\d+/\d+/'),deny=('video|archive|slideshow|rss|program|forum|multimedia|ervice|pedia|icons|event|countries|organization')) ,\
