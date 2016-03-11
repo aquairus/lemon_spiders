@@ -62,7 +62,6 @@ def get_teacher_info(url):
 	t_info["comments"]=comments_list
 	ps_of.write(json.dumps(t_info, ensure_ascii=False)+"\n")
 
-	print "teacher"
 
 
 
@@ -97,13 +96,16 @@ for d_url in dept_urls:
 	print "dept"
 
 
-teacher_urls=set(teacher_urls[1686:])
-print len(teacher_urls)
-for t_url in teacher_urls:
-	driver.get(t_url+commends_text)
-	get_teacher_info(t_url)
-	sleep(delay)
+teacher_urls=set(teacher_urls[1450:])
 
+cnt =0
+for t_url in teacher_urls:
+	if cnt>2000:
+		driver.get(t_url+commends_text)
+		get_teacher_info(t_url)
+		sleep(delay)
+	cnt+=1
+	print len(teacher_urls)-cnt
 
 driver.close()
 

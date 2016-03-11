@@ -8,7 +8,36 @@ from scrapy.linkextractors import LinkExtractor
 class arSpider(CrawlSpider):
     name = "ar0"
     allowed_domains = ["arabic.cnn.com"]
-    start_urls = ["http://arabic.cnn.com"
+    start_urls = ["http://arabic.cnn.com",
+    "http://arabic.cnn.com/sport",
+    "http://arabic.cnn.com/scitech",
+    "http://arabic.cnn.com/business",
+    "http://arabic.cnn.com/special_reports/live_smart",
+    "http://arabic.cnn.com/special_reports/vital_signs",
+    "http://arabic.cnn.com/special_reports/one_square_meter",
+    "http://arabic.cnn.com/الكويت",
+    "http://arabic.cnn.com/اليمن",
+    "http://arabic.cnn.com/سلطنة-عمان",
+    "http://arabic.cnn.com/قطر",
+    "http://arabic.cnn.com/الأردن",
+    "http://arabic.cnn.com/العراق",
+    "http://arabic.cnn.com/سوريا",
+    "http://arabic.cnn.com/لبنان",
+    "http://arabic.cnn.com/مصر",
+    "http://arabic.cnn.com/الجزائر",
+    "http://arabic.cnn.com/المغرب",    
+    "http://arabic.cnn.com/تونس",
+    "http://arabic.cnn.com/ليبيا",
+    "http://arabic.cnn.com/عائض-القرني",
+    "http://arabic.cnn.com/أسامة-بن-لادن",
+    "http://arabic.cnn.com/داعش",
+
+    "http://arabic.cnn.com/حزب-الله",
+    "http://arabic.cnn.com/الحرب-السورية",
+    "http://arabic.cnn.com/gallery",
+    "http://arabic.cnn.com/world",
+    "http://arabic.cnn.com/middle_east",
+    "http://arabic.cnn.com/travel",
      ]
 
     rules=(Rule(LinkExtractor(allow=('\d+/\d+/\d+'),deny=('entertain')) ,\

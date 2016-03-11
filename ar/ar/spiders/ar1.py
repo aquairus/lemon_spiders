@@ -11,7 +11,13 @@ sys.setdefaultencoding( "utf-8" )
 class ar1Spider(CrawlSpider):
     name = "ar1"
     allowed_domains = ["maktoob.news.yahoo.com"]
-    start_urls = ["https://maktoob.news.yahoo.com"
+    start_urls = ["https://maktoob.news.yahoo.com",
+    "https://maktoob.news.yahoo.com/الاخبار-العالمية/",
+    "https://maktoob.news.yahoo.com/المال-الاقتصاد/",
+     "https://maktoob.news.yahoo.com/اخبار-متفرقة/",
+     "https://maktoob.news.yahoo.com/صور-اخبار/",
+     "https://maktoob.news.yahoo.com/فيديو/",
+     "https://maktoob.news.yahoo.com/الاخبار-عربية/",
      ]
 
     rules=(Rule(LinkExtractor(allow=('\d{9}|.html$|sector.html$'),deny=('video|archive|slideshow|rss|photo')) ,\
