@@ -3,7 +3,7 @@ from fabric.api import cd,run,env,hosts,roles,execute,settings,local
 import os
 
 slaver_list=['spider02','spider03',\
-'spider05','spider06']
+'spider05','spider04']
 #04
 
 try:

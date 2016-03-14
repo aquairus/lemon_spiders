@@ -21,7 +21,7 @@ import re
 class xmPipeline(object):
     def open_spider(self, spider):
 
-        self.client = MongoClient('spider06', 27017)
+        self.client = MongoClient('spider01', 27017)
         db=self.client.xm
         xm=db.get_collection(spider.name)
         xm.create_index("url")
