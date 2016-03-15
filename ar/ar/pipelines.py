@@ -32,7 +32,7 @@ t_re = re.compile(r"(\\t)+|t311|\t2,736|t1")
 
 class arPipeline(object):
     def open_spider(self, spider):
-        self.client = MongoClient('spider01', 27017)
+        self.client = MongoClient('spider05', 27017)
         db=self.client.ar
         ar=db.get_collection(spider.name)
         ar.create_index("url")
