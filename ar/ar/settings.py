@@ -32,9 +32,9 @@ ITEM_PIPELINES = {
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
-REDIS_HOST = 'spider05'
+REDIS_HOST = 'spider05' 
 REDIS_PORT = 6379
-
+　
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ar (+http://www.yourdomain.com)'
@@ -54,7 +54,6 @@ REDIS_PORT = 6379
 COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
-#TELNETCONSOLE_ENABLED=False
 
 # Override the default request headers:
 #DEFAULT_REQUEST_HEADERS = {
