@@ -4,6 +4,9 @@ import os
 
 slaver_list=['spider02','spider03',\
 'spider05',]
+
+country_list=['spider07','spider08','spider09','spider10','spider11','spider12',\
+'spider13','spider14','spider15','spider16','spider17','spider18']
 #04
 
 try:
@@ -21,8 +24,9 @@ env.roledefs = {
 'master': ['spider01'],
 
 'slaver': slaver_list,
+'country': country_list,
 
-'all':['spider01']+slaver_list
+'all':['spider01']+slaver_list+country_list
 
 }
 
