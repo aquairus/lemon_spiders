@@ -72,6 +72,8 @@ def new_node(host):
 		run('adduser cxy')
 		run('git clone https://github.com/aquairus/lemon_spiders.git \
 			/home/cxy/lemon_spiders')
+		with cd('/home/cxy/lemon_spiders'):
+	 		run("git pull")
 		run('source /home/cxy/lemon_spiders/conf/env.sh')
 
 def save():
