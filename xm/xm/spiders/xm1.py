@@ -85,7 +85,6 @@ class xm1Spider(CrawlSpider):
         xm["category_2"]=tag_list
 
         xm["count_list"]=count_list
-        xm["album_list"]=album_list
         xm["url_list"]=url_list
         xm["sount_cnt"]=len(url_list)
         return xm
