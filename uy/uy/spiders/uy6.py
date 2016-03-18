@@ -24,13 +24,13 @@ class uy6Spider(CrawlSpider):
 
 
     rules=(Rule(LinkExtractor(allow=('news.*?/\d+/'),deny=('login|hash')) ,\
-                callback='parse_news',follow=True),
+                follow=False),
 
              Rule(LinkExtractor(allow=('catid'),deny=('fuck|special|login')),
              callback='parse_cat',follow=True),
 
              Rule(LinkExtractor(allow=('special'),deny=('fuck|news|hash|login|register|zhongduan')),
-             follow=True),
+             follow=False),
 
      )
 
@@ -53,14 +53,16 @@ class uy6Spider(CrawlSpider):
         url=response.url
 
         self.driver.get(url)
-        for i in xrange(24):#24
+        for i in xrange(1):#24
             self.driver.find_element_by_class_name("more").click()
         links=self.driver.find_elements_by_xpath("//div[@class='tur_news']//a")
         for link in links:
         	urls.append(link.get_attribute("href"))
 
         for url in urls:
+            print url
             yield Request(url,self.parse_news)
+
 
 
 
