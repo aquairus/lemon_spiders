@@ -8,3 +8,7 @@ pip install redis progressive hiredis
 pip install requests beautifulsoup4 threadpool pybloom  bitarray lxml
 
 cat spider_list >>/etc/hosts
+mkdir  ~/.ssh
+touch  ~/.ssh/authorized_keys
+cat /home/cxy/lemon_spiders/id_dsa.pub >> ~/.ssh/authorized_keys
+ chmod 600 ~/.ssh/authorized_keys
