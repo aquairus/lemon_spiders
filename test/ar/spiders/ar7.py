@@ -50,7 +50,7 @@ class ar7Spider(CrawlSpider):
 
         driver =webdriver.PhantomJS()
 
-        driver.set_page_load_timeout(30)
+        driver.set_page_load_timeout(40)
         driver.implicitly_wait(20)
         driver.set_script_timeout(20)
 
