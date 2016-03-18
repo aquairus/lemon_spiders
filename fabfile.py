@@ -75,6 +75,7 @@ def new_node(host):
 		with cd('/home/cxy/lemon_spiders'):
 	 		run("git pull")
 		run('source /home/cxy/lemon_spiders/conf/env.sh')
+		run('cat /home/cxy/lemon_spiders/conf/spider_list >>/etc/hosts')
 
 def save():
 	local("git add -A")
