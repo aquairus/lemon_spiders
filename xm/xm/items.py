@@ -9,10 +9,18 @@ import scrapy
 
 class xmItem(scrapy.Item):
 
-    name=scrapy.Field()
-    username=scrapy.Field()
-    count=scrapy.Field()
-    category=scrapy.Field()
-    tag_list=scrapy.Field()
-    album_list=scrapy.Field()
-    url=scrapy.Field()
+
+    ablum=scrapy.Field()
+    author=scrapy.Field()
+
+#    count_list=scrapy.Field()
+
+    category_1=scrapy.Field()
+    category_2=scrapy.Field()
+
+    name_list=scrapy.Field()
+    url_list=scrapy.Field()
+    count_list=scrapy.Field()
+    sount_cnt=scrapy.Field()
+
+#    url=scrapy.Field()

@@ -33,11 +33,22 @@ class xmPipeline(object):
     def process_item(self, item, spider):
         self.cnt+=1
         print self.cnt
-        dic=dict(item)
         db=self.client.xm
         xm=db.get_collection(spider.name)
 
-        xm.insert_one(dic)
+        sound_list=[]
+
+        for cnt in xrange(item["sount_cnt"]):
+            sound={}
+            sound["ablum"]=item["ablum"]
+            sound["author"]=item["author"]
+            sound["category_1"]=item["category_1"]
+            sound["category_2"]=item["category_2"]
+            sound["count"]=item["count_list"][cnt]
+            sound["url"]=item["url_list"][cnt]
+            sound["name"]=item["name_list"][cnt]
+            sound_list.append(sound)
+        xm.insert_many(sound_list)
 
 
 
