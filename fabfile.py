@@ -6,7 +6,7 @@ slaver_list=['spider02','spider03',\
 'spider05',]
 
 country_list=['spider07','spider08','spider09','spider10','spider11','spider12',\
-'spider13','spider14','spider15','spider16','spider17','spider18']
+'spider13','spider14','spdier15','spider16','spider17']
 #04
 
 try:
@@ -35,10 +35,11 @@ env.roledefs = {
 
 
 
-@roles('all')
+@roles('country')
 def do():
-	run("git config --global user.email 18650013469@163.com ")
-	run("git config --global user.name cxy")
+	#run("apt-get install mongodb screen -y")
+	#run("mkdir /data")
+	run("mkdir /data/db")
 
 
 @roles('all')

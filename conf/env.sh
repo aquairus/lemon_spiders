@@ -7,7 +7,7 @@ apt-get install redis-server python-pip -y
 pip install redis progressive hiredis scrapy_redis pymongo
 pip install requests beautifulsoup4 threadpool pybloom  bitarray lxml
 
-cat /home/cxy/lemon_spiders/conf/spider_list >>/etc/hosts
+
 mkdir  ~/.ssh
 touch  ~/.ssh/authorized_keys
 cat /home/cxy/lemon_spiders/id_dsa.pub >> ~/.ssh/authorized_keys

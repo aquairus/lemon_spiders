@@ -32,7 +32,7 @@ ITEM_PIPELINES = {
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
-REDIS_HOST = 'spider03'
+REDIS_HOST = 'spider08'
 REDIS_PORT = 6379
 
 
