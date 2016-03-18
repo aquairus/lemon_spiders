@@ -5,8 +5,8 @@ from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 
 
-class xmSpider(CrawlSpider):
-    name = "xm0"
+class xm1Spider(CrawlSpider):
+    name = "xm1"
     allowed_domains = ["ximalaya.com"]
     start_urls = ["http://www.ximalaya.com/dq/all",
 
