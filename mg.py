@@ -9,7 +9,7 @@ sys.setdefaultencoding( "utf-8" )
 client = MongoClient()
 client = MongoClient('spider08', 27017)
 db = client.xm
-yahoo = db.xm0
+yahoo = db.xm1
 
 
 
