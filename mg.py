@@ -9,7 +9,7 @@ print "name?"
 name=raw_input()
 
 
-name="ar3"
+#name="ar3"
 client = MongoClient()
 client = MongoClient('spider05', 27017)
 db = client.ar
