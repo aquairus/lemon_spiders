@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 #-*- coding:UTF-8 -*-
-import requests 
+import requests
 from requests import ConnectionError
 import sys
 from bs4 import BeautifulSoup
@@ -76,7 +76,7 @@ def new_node(url):
 	#print "child"
 	#print flag
 	next=get_content(url)
-						#to balance the  queue 
+						#to balance the  queue
 
 	if flag>1:
 		for child in childen:
@@ -84,7 +84,7 @@ def new_node(url):
 				urlqueue.put(child)
 				urlfilter.add(child)
 			else:
-				print "---------repeat"	
+				print "---------repeat"
 	while next:
 		next=get_content(pre_url_fenlei+next)
 
@@ -93,7 +93,7 @@ def new_node(url):
 def get_children(url):
 	try:
 		r = requests.get(url,headers = fake_headers)
-		r.encoding="utf-8" 
+		r.encoding="utf-8"
 		text=r.text
 
 
@@ -140,11 +140,11 @@ bd_en=open('../en.txt','w+')
 
 urlfilter = BloomFilter(capacity=urlcapacity,error_rate=0.001)
 urlqueue=Queue.LifoQueue()
-pool = threadpool.ThreadPool(thread_cnt) 
+pool = threadpool.ThreadPool(thread_cnt)
 start_time=time.time()
 for url in start_url:
 	urlqueue._put(url)
-	
+
 
 while not urlqueue.empty():
 	data=[urlqueue.get()]

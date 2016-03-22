@@ -5,17 +5,23 @@ import sys
 
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
+print "name?"
+name=raw_input()
 
+
+name="ar3"
 client = MongoClient()
-client = MongoClient('spider08', 27017)
-db = client.xm
-yahoo = db.xm1
+client = MongoClient('spider05', 27017)
+db = client.ar
+
+yahoo=db.get_collection(name)
+
 
 
 
 cnt=0
 
-f =open ("../xm.txt","w+")
+f =open ("../"+name+".txt","w+")
 
 cursor=yahoo.find()
 for line in cursor:

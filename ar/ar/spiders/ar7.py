@@ -10,6 +10,8 @@ from scrapy.linkextractors import LinkExtractor
 from time import sleep
 import re
 import Queue
+
+
 #myqueue = Queue.Queue(maxsize = 10)
 
 
@@ -33,25 +35,26 @@ class ar7Spider(CrawlSpider):
                     follow=True,callback='parse_news'),\
         # Rule(LinkExtractor(allow=('hpnav'),deny=('program|video|podcast|stud|Videos|Islameyat|Jokes')),
         #             follow=True),
-        # Rule(LinkExtractor(allow=('News|slides|news|ports|Autos|Howa_w_Hya|art|Arts'),deny=('program|video|podcast|stud|Islameyat|Videos|rss|Jokes')),
-        #             follow=True),
+        Rule(LinkExtractor(allow=('News|slides|news|ports|Autos|Howa_w_Hya|art|Arts'),deny=('program|video|podcast|stud|Islameyat|Videos|rss|Jokes')),
+                    follow=True),
 
               )
 
 
     def __init__(self, *args, **kwargs):
-        ##driver=webdriver.Firefox()
+        driver=webdriver.Firefox()
 
         super(ar7Spider,self).__init__(*args, **kwargs)
         self.driver_queue=Queue.Queue()
         self.cnt=0
-        #driver = webdriver.Firefox()
-        driver =webdriver.PhantomJS()
-        # driver.set_page_load_timeout(30)
-        # driver.implicitly_wait(20)
-        # driver.set_script_timeout(20)
+
+        #driver =webdriver.PhantomJS()
+
+        driver.set_page_load_timeout(30)
+        driver.implicitly_wait(20)
+        driver.set_script_timeout(8)
+
         self.driver_queue.put(driver)
-        #driver = webdriver.Firefox()
 
 
 
@@ -63,9 +66,7 @@ class ar7Spider(CrawlSpider):
     def parse_nav(self, response):
 
         driver = self.driver_queue.get()
-        driver.set_page_load_timeout(30)
-        driver.implicitly_wait(20)
-        driver.set_script_timeout(20)
+
 
         urls=set()
         url=response.url
@@ -73,26 +74,25 @@ class ar7Spider(CrawlSpider):
         try:
             driver.get(url)
         except BaseException,e:
-            pass
-        #sleep(5)
-        print "try"
+            print "fail to load all"
+
+        #print "try"
         try:
-        	for i in xrange(2):
-        		driver.execute_script(script_click)
-        		sleep(1)
+            for i in xrange(400):
+                sleep(0.1)
+                print "js"
+                driver.execute_script(script_click)
+
         except BaseException,e:
-            #print e
-            print "orz"
-            print url
-            #driver.save_screenshot("/Screenshots/foo.png")
             self.driver_queue.put(driver)
+            print url
             return
 
-        sleep(1)
+
         try:
             links=driver.find_elements_by_tag_name("a")
         except BaseException,e:
-            print "fuck"
+            print "no a "
             return
 
         for a in links:
@@ -101,14 +101,18 @@ class ar7Spider(CrawlSpider):
                 urls.add(href)
 
         if not len(urls):
-            print "fail:"
+            print "no :"
             print url
             return
 
         for url in urls:
             yield Request(url,callback=self.parse_news)
         self.driver_queue.put(driver)
-        print "=="
+      #  print "=="
+
+
+
+
 
     def parse_news(self, response):
         print "news"
