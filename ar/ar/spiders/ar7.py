@@ -42,19 +42,19 @@ class ar7Spider(CrawlSpider):
 
 
     def __init__(self, *args, **kwargs):
-        driver=webdriver.Firefox()
+        self.driver=webdriver.Firefox()
 
         super(ar7Spider,self).__init__(*args, **kwargs)
-        self.driver_queue=Queue.Queue()
+        #self.driver_queue=Queue.Queue()
         self.cnt=0
 
         #driver =webdriver.PhantomJS()
 
-        driver.set_page_load_timeout(30)
-        driver.implicitly_wait(20)
-        driver.set_script_timeout(8)
+        self.driver.set_page_load_timeout(30)
+        self.driver.implicitly_wait(20)
+        self.driver.set_script_timeout(8)
 
-        self.driver_queue.put(driver)
+        #self.driver_queue.put(driver)
 
 
 
@@ -65,14 +65,14 @@ class ar7Spider(CrawlSpider):
 
     def parse_nav(self, response):
 
-        driver = self.driver_queue.get()
+        #driver = self.driver_queue.get()
 
 
         urls=set()
         url=response.url
         script_click="document.getElementById('MainContent_CatListingCtrl_divMore').click()"
         try:
-            driver.get(url)
+            self.driver.get(url)
         except BaseException,e:
             print "fail to load all"
 
@@ -81,16 +81,17 @@ class ar7Spider(CrawlSpider):
             for i in xrange(400):
                 sleep(0.1)
                 print "js"
-                driver.execute_script(script_click)
+                self.driver.execute_script(script_click)
 
         except BaseException,e:
-            self.driver_queue.put(driver)
+            self.close()
+            #self.driver_queue.put(driver)
             print url
             return
 
 
         try:
-            links=driver.find_elements_by_tag_name("a")
+            links=self.driver.find_elements_by_tag_name("a")
         except BaseException,e:
             print "no a "
             return
@@ -107,8 +108,8 @@ class ar7Spider(CrawlSpider):
 
         for url in urls:
             yield Request(url,callback=self.parse_news)
-        self.driver_queue.put(driver)
-      #  print "=="
+        self.close()
+
 
 
 
