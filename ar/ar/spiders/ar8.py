@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+# -*- coding: utf-8 -*-
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from ..items import arItem
@@ -12,15 +13,15 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 time_re = re.compile(r"(\d+/)")
 
-class ar8Spider(CrawlSpider):
-    name = "ar8"
+class ar18Spider(CrawlSpider):
+    name = "ar18"
     allowed_domains = ["alwatanvoice.com"]
     start_urls = ["http://www.alwatanvoice.com",]
 
     rules=(
     Rule(LinkExtractor(allow=('/\d+/\d+/\d+/\d+'),deny=('program|podcast|video|error')) ,\
                 follow=True,callback='parse_news'),\
-    Rule(LinkExtractor(allow=('arabic|news|category|pulpit|\d{,4}.html$'),deny=('program|feed|cartoon|vedio|podcast|error')),
+    Rule(LinkExtractor(allow=('arabic|news|category|pulpit'),deny=('program|feed|cartoon|vedio|podcast|error')),
                 follow=True,callback='parse_url'),
 
               )
