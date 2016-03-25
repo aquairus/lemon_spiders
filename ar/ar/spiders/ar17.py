@@ -2,6 +2,7 @@
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
 from ..items import arItem
+#from ajaxcrawl import driverSpider
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from time import sleep
@@ -12,25 +13,26 @@ from scrapy.http import Request
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-tag_re = re.compile(r"\\t+|<h4.*?>|<h3.*?>|</h3>|<div.*?>|<section.*?>|</section>|</article>")
+tag_re = re.compile(r"\\t+|<h1.*?>|</h1>|<tr.*?>|</tr>|<tr>|<div.*?>|<table.*?>|</table>|</article>")
 space_re = re.compile(r"\s+")
+date_re = re.compile(r"\d+-\d+\d+")
 
-class ar8Spider(CrawlSpider):
-    name = "ar8"
-    allowed_domains = ["almotamar.net"]
-    start_urls = ["http://www.almotamar.net/news/"]
+class ar17Spider(CrawlSpider):
+    name = "ar17"
+    allowed_domains = ["yemen-press.com"]
+    start_urls = ["http://yemen-press.com/"]
 
     rules=(
-    Rule(LinkExtractor(allow=('news/\d+.htm'),deny=('program|podcast|video|error')) ,\
+    Rule(LinkExtractor(allow=('news\d'),deny=('program|podcast|video|error')) ,\
                 follow=True,callback='parse_news'),\
 
     )
 
 
     def parse_start_url(self,response):
-        pre_url="http://www.almotamar.net/news/"
-        for id in xrange(2024,129242):
-            url=pre_url+str(id)+".htm"
+        pre_url="http://yemen-press.com/news"
+        for id in xrange(1055,70626):
+            url=pre_url+str(id)+".html"
             sleep(0.01)
             yield Request(url,callback=self.parse_news)
 
@@ -39,16 +41,19 @@ class ar8Spider(CrawlSpider):
         url=response.url
         #print url
         try:
-            title=response.css("a[class*=title]::text").extract()[0].strip()
-            time=response.css('div[class*=comments]::text').extract()[0].strip()
-            contents=response.css('div[class=news]').extract()[0].strip()
+            title=response.css("div[class*=newstitle]::text").extract()[0].strip()
+            time=response.css('div[class*=date]::text').extract()[0].strip()
+            contents=response.css("div[class=complete]").extract()[0]
+            #contents=response.xpath("div[@class='mainContent']").extract()[0]
 
         except BaseException,e:
             print e
-            print url
             return
+
+
         contents=tag_re.sub(" ",contents)
         contents=space_re.sub(" ",contents)
+
         review=""
 
         ar=arItem()
