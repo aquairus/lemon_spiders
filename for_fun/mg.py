@@ -21,7 +21,7 @@ yahoo=db.get_collection(name)
 
 cnt=0
 
-f =open ("../"+name+".txt","w+")
+f =open ("../../"+name+".txt","w+")
 
 cursor=yahoo.find()
 for line in cursor:
