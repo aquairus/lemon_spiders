@@ -2,8 +2,7 @@
 from fabric.api import cd,run,env,hosts,roles,execute,settings,local
 import os
 
-slaver_list=['spider02','spider03',\
-'spider05',]
+slaver_list=['spider02','spider03',]
 
 country_list=['spider07','spider08','spider09','spider10','spider11','spider12',\
 'spider13','spider14','spdier15','spider16','spider17']
