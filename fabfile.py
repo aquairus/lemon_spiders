@@ -25,7 +25,7 @@ env.roledefs = {
 'slaver': slaver_list,
 'country': country_list,
 
-'all':['spider01']+slaver_list+country_list
+'all':slaver_list+country_list
 
 }
 
