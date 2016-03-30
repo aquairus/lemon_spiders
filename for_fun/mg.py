@@ -35,7 +35,10 @@ for line in cursor:
 
 	duplicate.add(url)
 	
-	print "set:"+str(len(duplicate))
+	#print "set:"+str(len(duplicate))
 	cnt+=1
 	print cnt
-	
+
+print "final"
+print "set:"+str(len(duplicate))
+print "count"+str(cnt)
