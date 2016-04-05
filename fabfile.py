@@ -38,7 +38,7 @@ env.roledefs = {
 def do():
 	#run("apt-get install mongodb screen -y")
 	#run("mkdir /data")
-	run("mkdir /data/db")
+	run("pip install supervisor")
 
 
 @roles('all')
