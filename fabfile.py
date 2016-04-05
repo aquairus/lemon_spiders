@@ -38,8 +38,8 @@ env.roledefs = {
 def do():
 	#run("apt-get install mongodb screen -y")
 	#run("mkdir /data")
-	run("pip install supervisor")
-
+	#run("pip install supervisor")
+	run("/home/cxy/lemon_spiders/supervisord.conf>>/etc/supervisord.conf")
 
 @roles('all')
 def ls():
