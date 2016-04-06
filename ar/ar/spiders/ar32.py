@@ -33,7 +33,7 @@ class ar32Spider(CrawlSpider):
         pre_url="http://www.elfagr.org/"
         for id in xrange(151073,1091573):
             url=pre_url+str(id)
-            sleep(0.1)
+            sleep(0.5)
             yield Request(url,callback=self.parse_news)
 
     def parse_news(self, response):
