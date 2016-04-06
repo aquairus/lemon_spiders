@@ -4,7 +4,7 @@ import os
 
 slaver_list=['spider02',]
 
-country_list=['spider07','spider09','spider10','spider11','spider12',\
+country_list=['spider07','spider10','spider11','spider12',\
 'spider13','spider14','spdier15','spider16','spider17']
 #04
 
@@ -25,7 +25,7 @@ env.roledefs = {
 'slaver': slaver_list,
 'country': country_list,
 
-'all':country_list
+'all':slaver_list+country_list
 
 }
 
@@ -37,7 +37,7 @@ def do():
 	#run("apt-get install mongodb screen -y")
 	#run("mkdir /data")
 	#run("pip install supervisor")
-	run("cat /home/cxy/lemon_spiders/supervisord.conf>>/etc/supervisord.conf")
+	run("cp /home/cxy/lemon_spiders/supervisord.conf /etc/supervisord.conf")
 
 @roles('all')
 def ls():
