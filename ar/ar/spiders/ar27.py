@@ -34,7 +34,7 @@ class ar27Spider(CrawlSpider):
         pre_url="http://www.alriyadh.com/"
         for id in xrange(111111,1143854):
             url=pre_url+str(id)
-            sleep(0.5)
+            sleep(0.2)
             yield Request(url,callback=self.parse_news)
 
 
