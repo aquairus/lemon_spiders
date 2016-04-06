@@ -33,7 +33,7 @@ class ar21Spider(CrawlSpider):
         pre_url="http://www.dostor.org/"
         for id in xrange(10001,1018088):
             url=pre_url+str(id)
-            sleep(0.01)
+            sleep(0.02)
             yield Request(url,callback=self.parse_news)
 
     def parse_news(self, response):
