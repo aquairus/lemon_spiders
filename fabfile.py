@@ -3,8 +3,8 @@ from fabric.api import cd,run,env,hosts,roles,execute,settings,local
 import os
 
 slaver_list=['spider02',]
-
-country_list=['spider07','spider10','spider11','spider12',\
+#'spider07','spider10',
+country_list=['spider11','spider12',\
 'spider13','spider14','spider16','spider17']
 #04
 
@@ -34,14 +34,15 @@ env.roledefs = {
 
 @roles('country')
 def do():
-	#run("apt-get install mongodb screen -y")
-	#run("mkdir /data")
-	#run("pip install supervisor")
-	run("cp /home/cxy/lemon_spiders/supervisord.conf /etc/supervisord.conf")
+	# with cd('/home/cxy'):
+	# 	run("git clone https://github.com/firehol/netdata.git --depth=1")
+	with cd('/home/cxy/netdata'):
+		run("./netdata-installer.sh")
+
 
 @roles('all')
 def ls():
-	with cd('/home/cxy'):
+
  		run ("ls -l")
  		run ("du -sh *")
  		run ("date")
