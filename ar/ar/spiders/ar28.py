@@ -33,7 +33,7 @@ class ar28Spider(CrawlSpider):
         pre_url="http://maannews.net/Content.aspx?id="
         for id in xrange(11111,839126):
             url=pre_url+str(id)
-            sleep(0.01)
+            sleep(0.3)
             yield Request(url,callback=self.parse_news)
 
     def parse_news(self, response):
