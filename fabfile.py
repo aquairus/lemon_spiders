@@ -3,9 +3,9 @@ from fabric.api import cd,run,env,hosts,roles,execute,settings,local
 import os
 
 slaver_list=['spider02',]
-#'spider07','spider10',
-country_list=['spider11','spider12',\
-'spider13','spider14','spider16','spider17']
+
+country_list=['spider07','spider10','spider11','spider12',\
+'spider13','spider14','spider16']
 #04
 
 try:
@@ -34,10 +34,10 @@ env.roledefs = {
 
 @roles('country')
 def do():
-	# with cd('/home/cxy'):
-	# 	run("git clone https://github.com/firehol/netdata.git --depth=1")
-	with cd('/home/cxy/netdata'):
-		run("./netdata-installer.sh")
+	run("echo 1 >/sys/kernel/mm/ksm/run")
+	run("echo 1000 >/sys/kernel/mm/ksm/sleep_millisecs")
+	# with cd('/home/cxy/netdata'):
+	# 	run("./netdata-installer.sh")
 
 
 @roles('all')
@@ -71,6 +71,8 @@ def new_node(host):
 		run('adduser cxy')
 		run('git clone https://github.com/aquairus/lemon_spiders.git \
 			/home/cxy/lemon_spiders')
+		run('git clone https://github.com/firehol/netdata.git --depth=1 \
+			/home/cxy/netdata')
 		with cd('/home/cxy/lemon_spiders'):
 	 		run("git pull")
 		run('source /home/cxy/lemon_spiders/conf/env.sh')
