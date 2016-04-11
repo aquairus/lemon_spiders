@@ -17,8 +17,8 @@ tag_re = re.compile(r"\\t+|<h1.*?>|</h1>|<a.*?>|</a>|<ul.*?>|</ul>|<div.*?>|</di
 space_re = re.compile(r"\s+")
 out_re = re.compile(r"<br>&amp.*?<br>|<br>http.*?<br>|<br>.*?&gt;<br>")
 
-class ar27Spider(CrawlSpider):
-    name = "ar27"
+class ar34Spider(CrawlSpider):
+    name = "ar34"
     allowed_domains = ["www.alriyadh.com"]
     start_urls = ["http://www.alriyadh.com/home"]
 
