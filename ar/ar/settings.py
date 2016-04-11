@@ -30,11 +30,11 @@ ITEM_PIPELINES = {
    'ar.pipelines.arPipeline': 300,
 }
 
-SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-SCHEDULER_PERSIST = True
+# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+# SCHEDULER_PERSIST = True
 # REDIS_HOST = 'spider08'
 # REDIS_PORT = 6366
-REDIS_URL = 'redis://*:secret_passwordd@spider10:6366'
+# REDIS_URL = 'redis://*:secret_passwordd@spider10:6366'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ar (+http://www.yourdomain.com)'
 
