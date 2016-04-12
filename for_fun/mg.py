@@ -5,40 +5,40 @@ import sys
 from time import sleep
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-print "name?"
-name=raw_input()
+
+cnt=len(sys.argv)
+print cnt
 
 
-#name="ar3"
-client = MongoClient()
-client = MongoClient('spider08', 27017)
+client = MongoClient("spider09", 27017)
 db = client.ar
 
-yahoo=db.get_collection(name)
 
+for name in  sys.argv[1:]:
+	print name
+	#print type(db)
+	yahoo=db[name]
+	duplicate=set() 
+	cnt=0
 
+	f =open ("../../"+name+".txt","w+")
 
-duplicate=set() 
-cnt=0
+	cursor=yahoo.find()
+	for line in cursor:
+		line.pop("_id")
+		url=line["url"]
 
-f =open ("../../"+name+".txt","w+")
+		if not url in duplicate:
+			f.write(json.dumps(line, ensure_ascii=False)+"\n")
+		else:
+			print "different"	
 
-cursor=yahoo.find()
-for line in cursor:
-	line.pop("_id")
-	url=line["url"]
+		duplicate.add(url)
+		
+		#print "set:"+str(len(duplicate))
+		cnt+=1
+		print cnt
 
-	if not url in duplicate:
-		f.write(json.dumps(line, ensure_ascii=False)+"\n")
-	else:
-		print "different"	
-
-	duplicate.add(url)
-	
-	#print "set:"+str(len(duplicate))
-	cnt+=1
-	print cnt
-
-print "final"
-print "set:"+str(len(duplicate))
-print "count"+str(cnt)
+	print "final"
+	print "set:"+str(len(duplicate))
+	print "count"+str(cnt)
