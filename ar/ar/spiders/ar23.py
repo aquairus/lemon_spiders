@@ -20,7 +20,7 @@ out_re = re.compile(r"<br>&amp.*?<br>|<br>http.*?<br>|<br>.*?&gt;<br>")
 class ar23Spider(CrawlSpider):
     name = "ar23"
     allowed_domains = ["tahrirnews.com"]
-    start_urls = ["http://www.tahrirnews.com/wiki/category/309"]
+    start_urls = ["http://www.tahrirnews.com/wiki/category/318"]
 
     rules=(
     Rule(LinkExtractor(allow=('posts/\d+'),deny=('program|podcast|video|error')) ,\
