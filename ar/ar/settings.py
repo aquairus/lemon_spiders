@@ -23,18 +23,18 @@ USER_AGENT_LIST=['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/2
   ]
 #USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=0.5
+DOWNLOAD_DELAY=1.5
 
 ITEM_PIPELINES = {
     'ar.pipelines.contentPipeline': 100,
    'ar.pipelines.arPipeline': 300,
 }
 
-# SCHEDULER = "scrapy_redis.scheduler.Scheduler"
-# SCHEDULER_PERSIST = True
+SCHEDULER = "scrapy_redis.scheduler.Scheduler"
+SCHEDULER_PERSIST = True
 # REDIS_HOST = 'spider08'
 # REDIS_PORT = 6366
-# REDIS_URL = 'redis://*:secret_passwordd@spider10:6366'
+REDIS_URL = 'redis://*:secret_passwordd@spider01:6366'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ar (+http://www.yourdomain.com)'
 
