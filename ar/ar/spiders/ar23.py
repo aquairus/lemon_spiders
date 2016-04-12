@@ -20,7 +20,7 @@ out_re = re.compile(r"<br>&amp.*?<br>|<br>http.*?<br>|<br>.*?&gt;<br>")
 class ar23Spider(CrawlSpider):
     name = "ar23"
     allowed_domains = ["tahrirnews.com"]
-    start_urls = ["http://www.tahrirnews.com/wiki/category/323"]
+    start_urls = ["http://www.tahrirnews.com/wiki/category/324"]
 
     rules=(
     Rule(LinkExtractor(allow=('posts/\d+'),deny=('program|podcast|video|error')) ,\
@@ -31,9 +31,9 @@ class ar23Spider(CrawlSpider):
 
     def parse_start_url(self,response):
         pre_url="http://www.tahrirnews.com/wiki/posts/"
-        for id in xrange(235188,505425):
+        for id in xrange(237188,505425):
             url=pre_url+str(id)
-            sleep(0.35)
+            sleep(0.4)
             yield Request(url,callback=self.parse_news)
 
     def parse_news(self, response):
