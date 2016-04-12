@@ -7,10 +7,9 @@
 
 import scrapy
 
-class arItem(scrapy.Item):
+class cookItem(scrapy.Item):
 
     title=scrapy.Field()
+    ingredient=scrapy.Field()
+    recipe=scrapy.Field()
     url=scrapy.Field()
-    review=scrapy.Field()
-    content=scrapy.Field()
-    time=scrapy.Field()

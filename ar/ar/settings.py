@@ -50,7 +50,7 @@ REDIS_URL = 'redis://*:secret_passwordd@spider08:6366'
 #CONCURRENT_REQUESTS_PER_IP=16
 
 # Disable aries (enabled by default)
-arIES_ENABLED=False
+COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 

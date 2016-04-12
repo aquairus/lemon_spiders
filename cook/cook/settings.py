@@ -1,33 +1,33 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for ar project
+# Scrapy settings for cook project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
 #
 #     http://doc.scrapy.org/en/latest/topics/settings.html
-#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-#     http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
+#     http://scrapy.readthedocs.org/en/latest/topics/downloader-middlewcooke.html
+#     http://scrapy.readthedocs.org/en/latest/topics/spider-middlewcooke.html
 
-BOT_NAME = 'ar'
+BOT_NAME = 'cook'
 
-SPIDER_MODULES = ['ar.spiders']
-NEWSPIDER_MODULE = 'ar.spiders'
+SPIDER_MODULES = ['cook.spiders']
+NEWSPIDER_MODULE = 'cook.spiders'
 
 USER_AGENT_LIST=['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0',\
-'Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13 (KHTML, like Gecko) Version/3.1 Safari/525.13',\
+'Mozilla/5.0 (Windows; U; Windows NT 5.2) AppleWebKit/525.13 (KHTML, like Gecko) Version/3.1 Safcooki/525.13',\
 'Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; Win64; x64; Trident16.0)',\
-"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
-"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
-"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safari/536.3",\
+"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safcooki/536.3",\
+"Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safcooki/536.3",\
+"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safcooki/536.3",\
   ]
 #USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
-DOWNLOAD_DELAY=0.4
+DOWNLOAD_DELAY=0.2
 
 ITEM_PIPELINES = {
-    'ar.pipelines.contentPipeline': 100,
-   'ar.pipelines.arPipeline': 300,
+    'cook.pipelines.contentPipeline': 100,
+   'cook.pipelines.cookPipeline': 300,
 }
 
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
@@ -36,7 +36,7 @@ SCHEDULER_PERSIST = True
 # REDIS_PORT = 6366
 REDIS_URL = 'redis://*:secret_passwordd@spider08:6366'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'ar (+http://www.yourdomain.com)'
+#USER_AGENT = 'cook (+http://www.yourdomain.com)'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 #CONCURRENT_REQUESTS=32
@@ -60,17 +60,17 @@ COOKIES_ENABLED=False
 #   'Accept-Language': 'en',
 #}
 
-# Enable or disable spider middlewares
-# See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'ar.middlewares.MyCustomSpiderMiddleware': 543,
+# Enable or disable spider middlewcookes
+# See http://scrapy.readthedocs.org/en/latest/topics/spider-middlewcooke.html
+#SPIDER_MIDDLEWcookES = {
+#    'cook.middlewcookes.MyCustomSpiderMiddlewcooke': 543,
 #}
 
-# Enable or disable downloader middlewares
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWARES = {
-    'ar.random_user_agent.RandomUserAgentMiddleware': 400,
-      'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware':None,
+# Enable or disable downloader middlewcookes
+# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middlewcooke.html
+DOWNLOADER_MIDDLEWcookES = {
+    'cook.random_user_agent.RandomUserAgentMiddlewcooke': 400,
+      'scrapy.contrib.downloadermiddlewcooke.useragent.UserAgentMiddlewcooke':None,
 
 }
 
@@ -83,22 +83,22 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
 #ITEM_PIPELINES = {
-#    'ar.pipelines.SomePipeline': 300,
+#    'cook.pipelines.SomePipeline': 300,
 #}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See http://doc.scrapy.org/en/latest/topics/autothrottle.html
-# NOTE: AutoThrottle will honour the standard settings for concurrency and delay
+# NOTE: AutoThrottle will honour the standcookd settings for concurrency and delay
 #AUTOTHROTTLE_ENABLED=True
 # The initial download delay
-#AUTOTHROTTLE_START_DELAY=5
+#AUTOTHROTTLE_STcookT_DELAY=5
 # The maximum download delay to be set in case of high latencies
 #AUTOTHROTTLE_MAX_DELAY=60
 # Enable showing throttling stats for every response received:
 #AUTOTHROTTLE_DEBUG=False
 
 # Enable and configure HTTP caching (disabled by default)
-# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
+# See http://scrapy.readthedocs.org/en/latest/topics/downloader-middlewcooke.html#httpcache-middlewcooke-settings
 #HTTPCACHE_ENABLED=True
 #HTTPCACHE_EXPIRATION_SECS=0
 #HTTPCACHE_DIR='httpcache'
