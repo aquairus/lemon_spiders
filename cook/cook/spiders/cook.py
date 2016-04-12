@@ -35,7 +35,7 @@ class cookSpider(CrawlSpider):
         for id in xrange(1,1085642):
             url=pre_url+str(id)
             ##print url
-            sleep(0.07)
+            sleep(0.06)
             yield Request(url,callback=self.parse_cook)
 
 
