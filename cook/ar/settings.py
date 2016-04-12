@@ -49,8 +49,8 @@ REDIS_URL = 'redis://*:secret_passwordd@spider08:6366'
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
 
-# Disable aries (enabled by default)
-arIES_ENABLED=False
+# Disable cookies (enabled by default)
+COOKIES_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 
@@ -62,13 +62,13 @@ arIES_ENABLED=False
 
 # Enable or disable spider middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWarES = {
+#SPIDER_MIDDLEWARES = {
 #    'ar.middlewares.MyCustomSpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See http://scrapy.readthedocs.org/en/latest/topics/downloader-middleware.html
-DOWNLOADER_MIDDLEWarES = {
+DOWNLOADER_MIDDLEWARES = {
     'ar.random_user_agent.RandomUserAgentMiddleware': 400,
       'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware':None,
 
@@ -91,7 +91,7 @@ DOWNLOADER_MIDDLEWarES = {
 # NOTE: AutoThrottle will honour the standard settings for concurrency and delay
 #AUTOTHROTTLE_ENABLED=True
 # The initial download delay
-#AUTOTHROTTLE_STarT_DELAY=5
+#AUTOTHROTTLE_START_DELAY=5
 # The maximum download delay to be set in case of high latencies
 #AUTOTHROTTLE_MAX_DELAY=60
 # Enable showing throttling stats for every response received:
