@@ -4,7 +4,7 @@ import os
 
 slaver_list=['spider02',]
 
-country_list=['spider07','spider09','spider10','spider11','spider12',\
+country_list=['spider07','spider09','spider10','spider17','spdier15',\
 'spider13','spider14','spider16']
 #04
 
