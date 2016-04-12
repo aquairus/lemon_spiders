@@ -34,7 +34,7 @@ SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 SCHEDULER_PERSIST = True
 # REDIS_HOST = 'spider08'
 # REDIS_PORT = 6366
-REDIS_URL = 'redis://*:secret_passwordd@spider01:6366'
+REDIS_URL = 'redis://*:secret_passwordd@spider08:6366'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'ar (+http://www.yourdomain.com)'
 
