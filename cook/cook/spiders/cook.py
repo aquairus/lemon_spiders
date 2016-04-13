@@ -32,7 +32,7 @@ class cookSpider(CrawlSpider):
     def parse_start_url(self,response):
 
         pre_url="http://www.cookbooks.com/cookbooks_recipes/Recipe-Details.asp?id="
-        for id in xrange(500000,1085642):
+        for id in xrange(400000,1085642):
             url=pre_url+str(id)
             ##print url
             sleep(0.2)
