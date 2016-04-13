@@ -52,8 +52,7 @@ class cookSpider(CrawlSpider):
             print e
             print url
             return
-        ingre=tag_re.sub("",ingre)
-        recipe=tag_re.sub("",recipe)
+
         # print title[1]
         # print ingre
         # print recipe
@@ -73,9 +72,9 @@ class cookSpider(CrawlSpider):
         # for r in reviews:
         #     review=review+r.strip()+"<p>"
         #
-        #
-        #
-        #
+        ingre=tag_re.sub("",ingre)
+        recipe=tag_re.sub("",recipe)
+        
         cook=cookItem()
         cook["title"]=title
         cook["ingredient"]=ingre
