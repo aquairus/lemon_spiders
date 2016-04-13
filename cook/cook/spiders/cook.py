@@ -45,8 +45,8 @@ class cookSpider(CrawlSpider):
         try:
             #title=response.css("h2::text").extract()[0].strip()
             title=response.css("font[size='5']::text")[0].extract()
-            ingre=response.css("span[class*=H1]").extract()[0]
-            recipe=response.css("p[class*=H1]").extract()[0]
+            ingres=response.css("span[class*=H1]").extract()
+            recipes=response.css("p[class*=H1]").extract()
             # reviews=response.css("p[class=body]::text").extract()
         except BaseException,e:
             print e
@@ -58,10 +58,13 @@ class cookSpider(CrawlSpider):
         # print ingre
         # print recipe
         # content=""
-        #
-        # for c in contents:
-        #     content=content+"<p>"+c+"</p>"
-        #
+        recipe=""
+        for r in recipes:
+            recipe=recipe+r
+
+        ingre=""
+        for i in ingres:
+            ingre=ingre+i
         #content=tag_re.sub("",content)
         # content=space_re.sub(" ",content)
         # content=out_re.sub(" ",content)

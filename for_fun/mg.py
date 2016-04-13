@@ -30,10 +30,11 @@ for name in  sys.argv[1:]:
 
 		if not url in duplicate:
 			f.write(json.dumps(line, ensure_ascii=False)+"\n")
+			duplicate.add(url)
 		else:
 			print "different"
 
-		duplicate.add(url)
+		#duplicate.add(url)
 
 		#print "set:"+str(len(duplicate))
 		cnt+=1
