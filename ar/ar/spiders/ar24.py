@@ -31,9 +31,9 @@ class ar24Spider(CrawlSpider):
 
     def parse_start_url(self,response):
         pre_url="http://www.almasryalyoum.com/news/details/"
-        for id in xrange(12939,922939):
+        for id in xrange(312939,922939):
             url=pre_url+str(id)
-            sleep(0.4)
+            sleep(0.3)
             yield Request(url,callback=self.parse_news)
 
     def parse_news(self, response):

@@ -31,7 +31,7 @@ class ar25Spider(CrawlSpider):
 
     def parse_start_url(self,response):
         pre_url="http://www.el-balad.com/"
-        for id in xrange(19306,2119306):
+        for id in xrange(319306,2119306):
             url=pre_url+str(id)
             sleep(0.3)
             yield Request(url,callback=self.parse_news)
