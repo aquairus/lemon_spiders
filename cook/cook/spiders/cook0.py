@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 from scrapy.spiders import Spider
 from scrapy.selector import Selector
@@ -17,8 +18,8 @@ tag_re = re.compile(r"\\t+|<h1.*?>|</h1>|<a.*?>|</a>|<ul.*?>|</ul>|<span.*?>|</s
 space_re = re.compile(r"\s+")
 out_re = re.compile(r"<br>&amp.*?<br>|<br>http.*?<br>|<br>.*?&gt;<br>")
 
-class cookSpider(CrawlSpider):
-    name = "cook"
+class cook0Spider(CrawlSpider):
+    name = "cook0"
     allowed_domains = ["www.cookbooks.com"]
     start_urls = ["http://www.cookbooks.com/cookbooks_recipes/index.asp"]
 
@@ -32,7 +33,7 @@ class cookSpider(CrawlSpider):
     def parse_start_url(self,response):
 
         pre_url="http://www.cookbooks.com/cookbooks_recipes/Recipe-Details.asp?id="
-        for id in xrange(500000,1085642):
+        for id in xrange(400000,1085642):
             url=pre_url+str(id)
             ##print url
             sleep(0.2)
