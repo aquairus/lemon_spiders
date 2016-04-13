@@ -11,14 +11,14 @@ print cnt
 
 
 client = MongoClient("spider09", 27017)
-db = client.ar
+db = client.cook
 
 
 for name in  sys.argv[1:]:
 	print name
 	#print type(db)
 	yahoo=db[name]
-	duplicate=set() 
+	duplicate=set()
 	cnt=0
 
 	f =open ("../../"+name+".txt","w+")
@@ -31,10 +31,10 @@ for name in  sys.argv[1:]:
 		if not url in duplicate:
 			f.write(json.dumps(line, ensure_ascii=False)+"\n")
 		else:
-			print "different"	
+			print "different"
 
 		duplicate.add(url)
-		
+
 		#print "set:"+str(len(duplicate))
 		cnt+=1
 		print cnt

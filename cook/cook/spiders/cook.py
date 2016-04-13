@@ -32,10 +32,10 @@ class cookSpider(CrawlSpider):
     def parse_start_url(self,response):
 
         pre_url="http://www.cookbooks.com/cookbooks_recipes/Recipe-Details.asp?id="
-        for id in xrange(1,1085642):
+        for id in xrange(500000,1085642):
             url=pre_url+str(id)
             ##print url
-            sleep(0.06)
+            sleep(0.2)
             yield Request(url,callback=self.parse_cook)
 
 
@@ -50,6 +50,7 @@ class cookSpider(CrawlSpider):
             # reviews=response.css("p[class=body]::text").extract()
         except BaseException,e:
             print e
+            print url
             return
         ingre=tag_re.sub("",ingre)
         recipe=tag_re.sub("",recipe)
