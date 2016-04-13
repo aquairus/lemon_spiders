@@ -26,7 +26,7 @@ for name in  sys.argv[1:]:
 	cursor=yahoo.find()
 	for line in cursor:
 		line.pop("_id")
-		url=line["url"]
+		url=line["title"]
 
 		if not url in duplicate:
 			f.write(json.dumps(line, ensure_ascii=False)+"\n")
