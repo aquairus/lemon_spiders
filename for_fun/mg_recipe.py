@@ -27,17 +27,13 @@ for name in  sys.argv[1:]:
 	for line in cursor:
 		line.pop("_id")
 		url=line["title"]
-		recipe=line["recipe"]
-		if len(recipe)>10:
-			if not url in duplicate:
-				f.write(json.dumps(line, ensure_ascii=False)+"\n")
-				duplicate.add(url)
-			else:
-				print "different"
 
-		#duplicate.add(url)
-
-		#print "set:"+str(len(duplicate))
+		if not url in duplicate:
+			f.write(json.dumps(line, ensure_ascii=False)+"\n")
+			duplicate.add(url)
+		else:
+			print "different"
+			
 		cnt+=1
 		print cnt
 

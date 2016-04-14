@@ -74,7 +74,7 @@ class cookSpider(CrawlSpider):
         #
         ingre=tag_re.sub("",ingre)
         recipe=tag_re.sub("",recipe)
-        
+
         cook=cookItem()
         cook["title"]=title
         cook["ingredient"]=ingre
