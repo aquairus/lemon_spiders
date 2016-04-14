@@ -15,8 +15,8 @@ class fbSpider(CrawlSpider):
          "https://m.facebook.com/profile.php?v=friends&id=100005145335207",
      ]
 
-    rules=(Rule(LinkExtractor(allow=('people|profile')), callback='parse_item',follow=True),\
-    Rule(LinkExtractor(allow=('friends')),follow=True),\
+    rules=(Rule(LinkExtractor(allow=('people|profile')),follow=True),\
+    Rule(LinkExtractor(allow=('v=friends')),callback='parse_item',follow=True),\
      )
 
 
@@ -25,12 +25,13 @@ class fbSpider(CrawlSpider):
 
     def parse_item(self, response):
 
-        name=response.css('div[class=bq] strong::text').extract()
-        print name
+        names=response.xpath("//a[@class='cb']/text()").extract()
+        for name in names:
+            print name
         url=response.url
         print url
 
-        item =fbItem()
-        item['name']=name
-        item['url']=url
-        return item
+        # item =fbItem()
+        # item['name']=name
+        # item['url']=url
+        # return item

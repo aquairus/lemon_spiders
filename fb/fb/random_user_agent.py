@@ -5,8 +5,7 @@ import random
 
 
 
-cookies=
-"c_user":"100011698728234",
+cookies={"c_user":"100011698728234",
 "csm":"2",
 "datr:B0EPV-vzabw01XSOiDbPoRbA,
 "fr":"0IdhVLF5E5Rzvpp2k.AWXshiFFSV9xNJtLDbAAL8zCSCM.BXD0fL.Zq.AAA.0.AWXtjpKC",
@@ -16,7 +15,7 @@ cookies=
 "s":"Aa5Q0D_-DsbAgVFV.BXD0fL",
 "sb":"y0cPV-vxzyVeLy2AMl08919a",
 "x-src":'%2Fpeople%2F%25D8%25B3%25D8%25A7%25D9%2585%25D8%25B1-%25D8%25A7%25D9%2584%25D8%25B3%25D8%25B9%25D9%258A%25D8%25AF%2F100005145335207%7Cpage_footer',
-"xs":"167%3A75hklqrBothiyA%3A2%3A1460619211%3A-1"
+"xs":"167%3A75hklqrBothiyA%3A2%3A1460619211%3A-1"}
 
 
 
@@ -27,5 +26,5 @@ class RandomUserAgentMiddleware(object):
         #print ua
         if ua:
             request.headers.setdefault('User-Agent', ua)
-        request.cookies=
+        request.cookies=cookies
         print request.cookies

@@ -19,7 +19,7 @@ USER_AGENT_LIST=['Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/2
 "Mozilla/5.0 (Windows NT 5.1) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safcooki/536.3",\
 "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_8_0) AppleWebKit/536.3 (KHTML, like Gecko) Chrome/19.0.1063.0 Safcooki/536.3",\
   ]
-  
+
 DOWNLOADER_MIDDLEWcookES = {
     'fb.random_user_agent.RandomUserAgentMiddlewcooke': 400,
       'scrapy.contrib.downloadermiddlewcooke.useragent.UserAgentMiddlewcooke':None,
@@ -33,7 +33,7 @@ ITEM_PIPELINES = {'fb.pipelines.emptyPipeline': 1\
     ,'fb.pipelines.fbPipeline': 10}
 # FEED_FORMAT= 'jsonlines'
 # FEED_URI='file:///Users/apple/Desktop/export.json'
-USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
+#USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
 LOG_LEVEL='ERROR'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'fb (+http://www.yourdomain.com)'
@@ -44,7 +44,7 @@ LOG_LEVEL='ERROR'
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY=0.1
+DOWNLOAD_DELAY=0.8
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
