@@ -11,7 +11,7 @@ sys.setdefaultencoding( "utf-8" )
 class fbSpider(CrawlSpider):
     name = "fb"
     allowed_domains = ["m.facebook.com"]
-    start_urls = [
+    start_urls = [s
          "https://m.facebook.com/profile.php?v=friends&id=100005145335207",
      ]
 
@@ -31,6 +31,6 @@ class fbSpider(CrawlSpider):
         print url
 
         item =fbItem()
-        item['content']=name
+        item['name']=name
         item['url']=url
         return item
