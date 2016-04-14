@@ -27,9 +27,7 @@ for name in  sys.argv[1:]:
 	cursor=yahoo.find()
 	for line in cursor:
 		line.pop("_id")
-		line.pop("recipe")
-		line.pop("ingredient")
-		url=line["title"]
+		url=line["url"]
 
 		if not url in duplicate:
 			f.write(json.dumps(line, ensure_ascii=False)+"\n")
