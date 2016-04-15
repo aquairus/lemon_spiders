@@ -8,24 +8,16 @@
 ##101
 101 
 
-* requests 
-
-[requests]("http://cn.python-requests.org/zh_CN/latest/")
+* [requests](http://cn.python-requests.org/zh_CN/latest/)
 
   
-* beautifulsoup
-
-[beautifulsoup]("https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#id40")
+* [beautifulsoup](https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#id40)
 
 
-* python-bloomfilter
-
-[python-bloomfilter]("https://github.com/jaybaird/python-bloomfilter")
+* [python-bloomfilter](https://github.com/jaybaird/python-bloomfilter)
 
 
-* threadpool
-
-[threadpool]("http://chrisarndt.de/projects/threadpool/api/")
+* [threadpool]("http://chrisarndt.de/projects/threadpool/api/")
 
 
 
@@ -33,9 +25,9 @@
 
 scrapy
 ![image](http://)
-![404]("https://github.com/aquairus/lemon_spiders/blob/master/doc/scrapy_architecture.png")
+![404](https://github.com/aquairus/lemon_spiders/blob/master/doc/scrapy_architecture.png)
 
-[中文文档]("http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html")
+[中文文档](http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html)
 ##内容获取
    crwal rule
     ajax
@@ -45,12 +37,12 @@ scrapy
     redis
 
 
-[redis-py]("https://github.com/andymccurdy/redis-py")
+[redis-py](https://github.com/andymccurdy/redis-py)
 
-[scrapy-redis]("https://github.com/rolando/scrapy-redis")
+[scrapy-redis](https://github.com/rolando/scrapy-redis)
 
 
-[mongodb]("https://github.com/mongodb/mongo-python-driver")
+[mongodb](https://github.com/mongodb/mongo-python-driver)
 ##性能
 
 ##维护
