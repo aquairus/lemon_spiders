@@ -25,7 +25,7 @@
 
 scrapy
 ![image](http://)
-![404]("doc/scrapy_architecture.png")
+![404]("https://github.com/aquairus/lemon_spiders/blob/master/doc/scrapy_architecture.png")
 
 [中文文档]("http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html")
 ##内容获取
