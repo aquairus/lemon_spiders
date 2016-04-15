@@ -24,7 +24,8 @@
 ##框架scrapy 
 
 scrapy
-![404]("http://scrapy-chs.readthedocs.org/zh_CN/latest/_images/scrapy_architecture.png")
+![image](http://)
+![404]("doc/scrapy_architecture.png")
 
 [中文文档]("http://scrapy-chs.readthedocs.org/zh_CN/latest/intro/tutorial.html")
 ##内容获取
@@ -36,13 +37,12 @@ scrapy
     redis
 
 
-https://github.com/andymccurdy/redis-py
+[redis-py]("https://github.com/andymccurdy/redis-py")
 
-https://github.com/rolando/scrapy-redis
+[scrapy-redis]("https://github.com/rolando/scrapy-redis")
 
 
-mongodb
-https://github.com/mongodb/mongo-python-driver
+[mongodb]("https://github.com/mongodb/mongo-python-driver")
 ##性能
 
 ##维护
