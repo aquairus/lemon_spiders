@@ -80,7 +80,7 @@ scrapy的文档相对来讲还是比较清晰的。但要深度定制的话可�
    
    supervisor(http://supervisor.readthedocs.org/en/stable/)
    
-   ![404](https://github.com/aquairus/lemon_spiders/blob/master/doc/supervisord)
+   ![404](https://github.com/aquairus/lemon_spiders/blob/master/doc/supervisord.png)
 
 ##Note
 
