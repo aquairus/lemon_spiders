@@ -49,11 +49,6 @@ def ls():
 
 
 
-@roles('country')
-def update():
-	with cd('/home/cxy/lemon_spiders'):
- 		run ("git reset --hard HEAD^^^")
- 		run("git pull")
 
 @roles('country')
 def update():
@@ -88,7 +83,7 @@ def save():
 	local("git add -A")
 	with settings(warn_only=True):
 		local("git commit -m 'save' ")
-		local("git push")
+		local("git push -f")
 
 
 
