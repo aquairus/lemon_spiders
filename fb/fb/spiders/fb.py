@@ -4,6 +4,8 @@ from ..items import fbItem
 from scrapy.spiders import CrawlSpider, Rule
 from scrapy.linkextractors import LinkExtractor
 from bs4 import BeautifulSoup
+from scrapy.http import Request
+from ..settings import USER_AGENT_LIST,cookies
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
@@ -11,15 +13,20 @@ sys.setdefaultencoding( "utf-8" )
 class fbSpider(CrawlSpider):
     name = "fb"
     allowed_domains = ["m.facebook.com"]
-    start_urls = [
-         "https://m.facebook.com/profile.php?v=friends&id=100005145335207",
-     ]
+    # start_urls = [
+    #      "https://m.facebook.com/profile.php?v=friends&id=100005145335207",
+    #  ]
 
     rules=(Rule(LinkExtractor(allow=('people|profile')),follow=True),\
     Rule(LinkExtractor(allow=('v=friends')),callback='parse_item',follow=True),\
      )
 
 
+
+
+    def start_requests(self):
+        return [Request(url= "https://m.facebook.com/profile.php?v=friends&id=100005145335207",
+                               cookies=cookies)]
 
 
 

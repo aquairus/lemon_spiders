@@ -12,7 +12,7 @@ print cnt
 
 
 client = MongoClient("spider09", 27017)
-db = client.cook
+db = client.ar
 
 
 for name in  sys.argv[1:]:

@@ -7,7 +7,9 @@ import re
 import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
-delay=8
+
+
+delay=3
 
 
 dept_re=re.compile(r"12/dept1")
@@ -67,9 +69,7 @@ def get_teacher_info(url):
 
 
 commends_text="/commend_all"
-start_urls=["http://www.xuebang.com.cn",
-"http://www.xuebang.com.cn/collegedb/list?province=11",
-"http://www.xuebang.com.cn/schoolId12"]
+start_urls=["https://m.facebook.com/profile.php?v=friends&id=100005145335207"]
 
 
 

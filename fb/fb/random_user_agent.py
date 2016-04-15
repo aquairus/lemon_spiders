@@ -1,5 +1,5 @@
 
-from settings import USER_AGENT_LIST
+from settings import USER_AGENT_LIST,cookies
 import random
 
 
@@ -22,9 +22,10 @@ cookies={"c_user":"100011698728234",
 class RandomUserAgentMiddleware(object):
 
     def process_request(self, request, spider):
+
         ua  = random.choice(USER_AGENT_LIST)
-        #print ua
+        print ua
         if ua:
             request.headers.setdefault('User-Agent', ua)
         request.cookies=cookies
-        print request.cookies
+        print cookies#request.cookies

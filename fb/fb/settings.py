@@ -25,6 +25,18 @@ DOWNLOADER_MIDDLEWcookES = {
       'scrapy.contrib.downloadermiddlewcooke.useragent.UserAgentMiddlewcooke':None,
 
 }
+cookies={"c_user":"100011698728234",
+"csm":"2",
+"datr":"B0EPV-vzabw01XSOiDbPoRbA",\
+"fr":"0IdhVLF5E5Rzvpp2k.AWXshiFFSV9xNJtLDbAAL8zCSCM.BXD0fL.Zq.AAA.0.AWXtjpKC",\
+"locale":"zh_CN",\
+"lu":"RgBQDUfzKadnVjiobkkx_6HA",\
+"m_user":"0%3A0%3A0%3A0%3Av_1%2Cajax_0%2Cwidth_0%2Cpxr_0%2Cgps_0%3A1460619211%3A2",\
+"s":"Aa5Q0D_-DsbAgVFV.BXD0fL",\
+"sb":"y0cPV-vxzyVeLy2AMl08919a",\
+"x-src":'%2Fpeople%2F%25D8%25B3%25D8%25A7%25D9%2585%25D8%25B1-%25D8%25A7%25D9%2584%25D8%25B3%25D8%25B9%25D9%258A%25D8%25AF%2F100005145335207%7Cpage_footer',\
+"xs":"167%3A75hklqrBothiyA%3A2%3A1460619211%3A-1",\
+}
 
 SPIDER_MODULES = ['fb.spiders']
 NEWSPIDER_MODULE = 'fb.spiders'
@@ -34,7 +46,7 @@ ITEM_PIPELINES = {'fb.pipelines.emptyPipeline': 1\
 # FEED_FORMAT= 'jsonlines'
 # FEED_URI='file:///Users/apple/Desktop/export.json'
 #USER_AGENT='Mozilla/5.0 (Macintosh; Intel Mac OS X 10.10; rv:43.0) Gecko/20100101 Firefox/43.0'
-LOG_LEVEL='ERROR'
+#LOG_LEVEL='ERROR'
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'fb (+http://www.yourdomain.com)'
 
@@ -44,7 +56,7 @@ LOG_LEVEL='ERROR'
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-DOWNLOAD_DELAY=0.8
+DOWNLOAD_DELAY=2.8
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN=16
 #CONCURRENT_REQUESTS_PER_IP=16
