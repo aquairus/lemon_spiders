@@ -8,16 +8,24 @@
 ##101
 101 
 
-* [requests]("http://cn.python-requests.org/zh_CN/latest/")
+* requests 
+
+[requests]("http://cn.python-requests.org/zh_CN/latest/")
 
   
-* [beautifulsoup]("https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#id40")
+* beautifulsoup
+
+[beautifulsoup]("https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#id40")
 
 
-* [python-bloomfilter]("https://github.com/jaybaird/python-bloomfilter")
+* python-bloomfilter
+
+[python-bloomfilter]("https://github.com/jaybaird/python-bloomfilter")
 
 
-* [threadpool]("http://chrisarndt.de/projects/threadpool/api/")
+* threadpool
+
+[threadpool]("http://chrisarndt.de/projects/threadpool/api/")
 
 
 
