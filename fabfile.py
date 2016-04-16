@@ -72,12 +72,18 @@ def new_node(host):
 		run('adduser cxy')
 		run('git clone https://github.com/aquairus/lemon_spiders.git \
 			/home/cxy/lemon_spiders')
+		run('source /home/cxy/lemon_spiders/conf/env.sh')
+		run('cat /home/cxy/lemon_spiders/conf/spider_list >>/etc/hosts')
+
+
+
+
+
 		run('git clone https://github.com/firehol/netdata.git --depth=1 \
 			/home/cxy/netdata')
 		with cd('/home/cxy/lemon_spiders'):
 	 		run("git pull")
-		run('source /home/cxy/lemon_spiders/conf/env.sh')
-		run('cat /home/cxy/lemon_spiders/conf/spider_list >>/etc/hosts')
+
 
 def save():
 	local("git add -A")
