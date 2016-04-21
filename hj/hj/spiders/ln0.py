@@ -32,12 +32,24 @@ class ln2Spider(CrawlSpider):
         #print response.url
         pass
     def parse_al(self, response):
-        url=response.url
-        name=response.xpath("//h1[@class='title']/text()").extract()[0]
-        krs=response.xpath("//div[@class='langs_en']/text()").extract()
-        zhs=response.xpath("//div[@class='langs_cn']/text()").extract()
-        if len(krs):
-
+        # url=response.url
+        # name=response.xpath("//h1[@class='title']/text()").extract()[0]
+        # krs=response.xpath("//div[@class='langs_en']/text()").extract()
+        # zhs=response.xpath("//div[@class='langs_cn']/text()").extract()
+        # if len(krs):
+        #
+        #     pair_num=len(krs)
+        #     content=[]
+        #     for i in range(pair_num):
+        #         pair={}
+        #         pair["kr"]=krs[i]
+        #         pair["zh"]=zhs[i]
+        #
+        #         content.append(pair)
+        # else:
+        krs=response.xpath("//div[@class='para original']/text()").extract()
+        zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
+        if len(krs) and len(zhs):
             pair_num=len(krs)
             content=[]
             for i in range(pair_num):
@@ -47,20 +59,7 @@ class ln2Spider(CrawlSpider):
 
                 content.append(pair)
         else:
-            krs=response.xpath("//div[@class='para original']/text()").extract()
-            zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
-            if len(krs):
-
-                pair_num=len(krs)
-                content=[]
-                for i in range(pair_num):
-                    pair={}
-                    pair["kr"]=krs[i]
-                    pair["zh"]=zhs[i]
-
-                    content.append(pair)
-            else:
-                return
+            return
 
         hj=hjItem()
         hj["title"]=name
