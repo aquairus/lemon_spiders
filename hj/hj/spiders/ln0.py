@@ -32,8 +32,8 @@ class ln2Spider(CrawlSpider):
         #print response.url
         pass
     def parse_al(self, response):
-        # url=response.url
-        # name=response.xpath("//h1[@class='title']/text()").extract()[0]
+        url=response.url
+        name=response.xpath("//h1[@class='title']/text()").extract()[0]
         # krs=response.xpath("//div[@class='langs_en']/text()").extract()
         # zhs=response.xpath("//div[@class='langs_cn']/text()").extract()
         # if len(krs):
