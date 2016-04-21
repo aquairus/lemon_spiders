@@ -38,9 +38,10 @@ class lnSpider(CrawlSpider):
     def parse_al(self, response):
         url=response.url
         name=response.xpath("//h1[@class='title']/text()").extract()[0]
+
         krs=response.xpath("//div[@class='langs_en']/text()").extract()
         zhs=response.xpath("//div[@class='langs_cn']/text()").extract()
-        if len(krs)==len(zhs):
+        if len(krs) and len(krs)==len(zhs):
 
             pair_num=len(krs)
             content=[]
@@ -53,7 +54,7 @@ class lnSpider(CrawlSpider):
         else:
             krs=response.xpath("//div[@class='para original']/text()").extract()
             zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
-            if len(krs)==len(zhs):
+            if len(krs) and len(krs)==len(zhs):
                 pair_num=len(krs)
                 content=[]
                 for i in range(pair_num):
@@ -64,9 +65,8 @@ class lnSpider(CrawlSpider):
                     content.append(pair)
             else:
                 return
-        if len(krs):
-            hj=hjItem()
-            hj["title"]=name
-            hj["content"]=content
-            hj["url"]=url
-            return hj
+        hj=hjItem()
+        hj["title"]=name
+        hj["content"]=content
+        hj["url"]=url
+        return hj
