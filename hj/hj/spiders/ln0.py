@@ -14,8 +14,8 @@ class ln2Spider(CrawlSpider):
     name = "learn_2"
     allowed_domains = ["kr.300168.com"]
     start_urls = [
-"http://kr.300168.com/news/list-12.html",
-"http://kr.300168.com/news/list-13.html",
+"http://kr.300168.com/xuexi/list-12.html",
+"http://kr.300168.com/xuexi/list-13.html",
 
  ]
 
