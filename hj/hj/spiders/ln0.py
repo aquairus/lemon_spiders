@@ -60,9 +60,9 @@ class ln2Spider(CrawlSpider):
                 content.append(pair)
         else:
             return
-
-        hj=hjItem()
-        hj["title"]=name
-        hj["content"]=content
-        hj["url"]=url
-        return hj
+        if len(krs):
+            hj=hjItem()
+            hj["title"]=name
+            hj["content"]=content
+            hj["url"]=url
+            return hj

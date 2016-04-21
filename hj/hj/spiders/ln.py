@@ -54,7 +54,6 @@ class lnSpider(CrawlSpider):
             krs=response.xpath("//div[@class='para original']/text()").extract()
             zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
             if len(krs)==len(zhs):
-
                 pair_num=len(krs)
                 content=[]
                 for i in range(pair_num):
@@ -65,9 +64,9 @@ class lnSpider(CrawlSpider):
                     content.append(pair)
             else:
                 return
-
-        hj=hjItem()
-        hj["title"]=name
-        hj["content"]=content
-        hj["url"]=url
-        return hj
+        if len(krs):
+            hj=hjItem()
+            hj["title"]=name
+            hj["content"]=content
+            hj["url"]=url
+            return hj
