@@ -49,7 +49,7 @@ class ln2Spider(CrawlSpider):
         # else:
         krs=response.xpath("//div[@class='para original']/text()").extract()
         zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
-        if len(krs) and len(zhs):
+        if len(krs)==len(zhs):
             pair_num=len(krs)
             content=[]
             for i in range(pair_num):
