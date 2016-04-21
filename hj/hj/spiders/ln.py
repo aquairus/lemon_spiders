@@ -40,7 +40,7 @@ class lnSpider(CrawlSpider):
         name=response.xpath("//h1[@class='title']/text()").extract()[0]
         krs=response.xpath("//div[@class='langs_en']/text()").extract()
         zhs=response.xpath("//div[@class='langs_cn']/text()").extract()
-        if len(krs):
+        if len(krs)==len(zhs):
 
             pair_num=len(krs)
             content=[]
@@ -53,7 +53,7 @@ class lnSpider(CrawlSpider):
         else:
             krs=response.xpath("//div[@class='para original']/text()").extract()
             zhs=response.xpath("//div[@class='para translate grey']/text()").extract()
-            if len(krs):
+            iif len(krs)==len(zhs):
 
                 pair_num=len(krs)
                 content=[]
