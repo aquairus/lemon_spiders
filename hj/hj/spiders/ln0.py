@@ -11,15 +11,11 @@ reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
 class lnSpider(CrawlSpider):
-    name = "learn"
+    name = "learn_2"
     allowed_domains = ["kr.300168.com"]
     start_urls = [
-"http://kr.300168.com/news/list-16.html",
-"http://kr.300168.com/news/list-17.html",
-"http://kr.300168.com/news/list-5.html",
-"http://kr.300168.com/shangwu/list-19.html"
-
-
+"http://kr.300168.com/news/list-12.html",
+"http://kr.300168.com/news/list-13.html",
 
  ]
 
