@@ -10,7 +10,7 @@ import sys
 reload(sys)
 sys.setdefaultencoding( "utf-8" )
 
-class lnSpider(CrawlSpider):
+class ln2Spider(CrawlSpider):
     name = "learn_2"
     allowed_domains = ["kr.300168.com"]
     start_urls = [
