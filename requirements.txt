@@ -12,7 +12,7 @@ chardet==2.0.1
 colorama==0.2.5
 cryptography==1.2.3
 cssselect==0.9.1
-ecdsa==0.13
+ecdsa==0.13.3
 enum34==1.1.2
 hiredis==0.2.0
 html5lib==0.999
