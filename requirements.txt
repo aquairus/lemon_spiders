@@ -10,7 +10,7 @@ blessings==1.6
 cffi==1.5.2
 chardet==2.0.1
 colorama==0.2.5
-cryptography==1.2.3
+cryptography==3.2
 cssselect==0.9.1
 ecdsa==0.13
 enum34==1.1.2
