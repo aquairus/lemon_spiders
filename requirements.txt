@@ -1,5 +1,5 @@
 Fabric==1.11.1
-Scrapy==1.0.5
+Scrapy==1.8.2
 Twisted==16.0.0
 apt-xapian-index==0.45
 argparse==1.2.1
